@@ -8,7 +8,7 @@ KL;kl_name;UK;uk_name;grp;grp_name;ehh_e2;fhh_ein_e2;fhh_aus_e2;vhh_e2;quer
 const fs = require('fs')
 const csv = require('csvtojson')
 const knex = require('knex')
-const knexfile = require(__dirname + '/../config/knexfile')
+const knexfile = require(__dirname + '/../../config/knexfile')
 const db = knex(knexfile)
 
 const csvIn = csv({
@@ -17,8 +17,8 @@ const csvIn = csv({
   ignoreEmpty: false  // false is default
 })
 
-const dataDir = __dirname + '/../data-localonly/'
-const inputFile = dataDir + 'konten15.csv'
+const dataDir = __dirname + '/data/'
+const inputFile = dataDir + 'vrv2015_konten.csv'
 if(fs.existsSync(inputFile)) {
   console.log('Daten von: ' + inputFile)
 }
@@ -28,21 +28,8 @@ else {
 }
 
 
-// haupt app (separate funktion wegen await/async)
-main()
-.then(() => {
-    console.log('*** ENDE THEN ***')
-    process.exit()
-  }
-)
-.catch((err) => {
-  console.log(err)
-  process.exit()
-})
-
-
-// main app
-async function main() {
+// separated because of await/async
+async function fake_main() {
 
   let recOutAll = []
   const recInAll = await csvIn.fromFile(inputFile)
@@ -82,3 +69,15 @@ async function main() {
   await db.batchInsert(tableName, recOutAll)
   console.log('End: Write to db.')
 }  // eo main
+
+
+// start main function
+(async () => {
+  try {
+    await fake_main();
+  } catch (ex) {
+    console.log('Fehlerbehandlung nicht implementiert.')
+    console.log(e)
+  }
+  process.exit(0)
+})();

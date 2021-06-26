@@ -169,7 +169,7 @@ CREATE TABLE `finanzierungshaushalt` (
   `wert_fj3` decimal(20,2) NOT NULL DEFAULT '0.00',
   `wert_fj4` decimal(20,2) NOT NULL DEFAULT '0.00',
   `wert_fj5` decimal(20,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`iid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1290 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -349,7 +349,7 @@ CREATE TABLE `beteiligungen` (
   `guthaben` decimal(20,2) NOT NULL DEFAULT '0.00',
   `forderungen` decimal(20,2) NOT NULL DEFAULT '0.00',
   `gem_beitrag` decimal(20,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`iid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -570,46 +570,6 @@ CREATE TABLE `vorhaben` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `vrv_ansatzgruppe`
---
-
-DROP TABLE IF EXISTS `vrv_ansatzgruppe`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vrv_ansatzgruppe` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `vrv` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `grpnum` char(3) NOT NULL,
-  `name` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `grpnum` (`grpnum`)
-) ENGINE=InnoDB AUTO_INCREMENT=493 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `vrv_kontogruppe`
---
-
-DROP TABLE IF EXISTS `vrv_kontogruppe`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vrv_kontogruppe` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `vrv` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `grpnum` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `name` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `ehh_e2` varchar(4) NOT NULL DEFAULT '',
-  `fhh_ein_e2` varchar(4) NOT NULL DEFAULT '',
-  `fhh_aus_e2` varchar(4) NOT NULL DEFAULT '',
-  `vhh_e2` varchar(4) NOT NULL DEFAULT '',
-  `quer_ein` varchar(4) NOT NULL DEFAULT '',
-  `quer_aus` varchar(4) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `grpnum` (`grpnum`)
-) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

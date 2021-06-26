@@ -1,0 +1,481 @@
+KL;kl_name;UK;uk_name;grp;grp_name;ehh_e2;fhh_ein_e2;fhh_aus_e2;vhh_e2;quer
+"0";"Anlagen";;;;;;;;;
+;;"00";"Grundstücke und Grundstückeinrichtungen";;;;;;;
+;;;;"000";"Bebaute Grundstücke";;3312;3412;1021;"30/40"
+;;;;"001";"Unbebaute Grundstücke";;3312;3412;1021;"30/40"
+;;;;"002";"Straßenbauten";;3312;3412;1021;"30/40"
+;;;;"003";"Grundstücke zu Straßenbauten";;3312;3412;1021;"30/40"
+;;;;"004";"Wasser- und Abwasserbauten und -anlagen";;3312;3412;1023;"30/40"
+;;;;"005";"Anlagen zu Straßenbauten";;3312;3412;1021;"30/40"
+;;;;"006";"Sonstige Grundstückseinrichtungen";;3312;3412;1021;"30/40"
+;;"01";"Gebäude und Bauten";;;;;;;
+;;;;"010";"Gebäude und Bauten";;3313;3413;1022;"30/40"
+;;;;"015";"Kulturgüter unbeweglich";;3316;3416;1027;"30/40"
+;;"02";"Maschinen und maschinelle Anlagen";;;;;;;
+;;;;"020";"Maschinen und maschinelle Anlagen";;3314;3414;1025;"31/41"
+;;"03";"Werkzeuge und sonstige Erzeugungsmittel";;;;;;;
+;;;;"030";"Werkzeuge und sonstige Erzeugungsmittel";;3314;3414;1025;"31/41"
+;;"04";"Amts-, Betriebs- und Geschäftsausstattung";;;;;;;
+;;;;"040";"Fahrzeuge";;3314;3414;1025;"31/41"
+;;;;"042";"Amts-, Betriebs- und Geschäftsausstattung";;3315;3415;1026;"31/41"
+;;;;"046";"Kulturgüter beweglich";;3316;3416;1027;"31/41"
+;;"05";"Sonderanlagen";;;;;;;
+;;;;"050";"Sonderanlagen";;"3312";"3412";1024;"30/40"
+;;"06";"Im Bau befindliche Anlagen";;;;;;;
+;;;;"060";"Im Bau befindliche Grundstückseinrichtungen";;3312;3412;1028;"30/40"
+;;;;"061";"Im Bau befindliche Gebäude und Bauten";;3313;3413;1028;"30/40"
+;;;;"062";"Im Bau befindliche technische Anlagen/Fahrzeuge/Maschinen";;3314;3414;1028;"30/41"
+;;;;"063";"Im Bau befindliche Anlagen (Amts-, Betriebs- und Geschäftsausstattung)";;3315;3415;1028;"30/40"
+;;"07";"Aktivierungsfähige Rechte (immaterielle Vermögenswerte)";;;;;;;
+;;;;"070";"Aktivierungsfähige Rechte (immaterielle Vermögenswerte)";;3311;3411;1010;"32/42"
+;;"08";"Beteiligungen und aktive Finanzinstrumente";;;;;;;
+;;;;"080";"Beteiligungen an verbundenen Unternehmen";;3317;3417;1041;"50/60"
+;;;;"081";"Beteiligungen an assoziierten Unternehmen";;3317;3417;1042;"50/60"
+;;;;"082";"Sonstige Beteiligungen";;3317;3417;1043;"50/60"
+;;;;"083";"Verwaltete Einrichtungen, die der Kontrolle unterliegen";;3317;3417;1044;"50/60"
+;;;;"084";"Bis zur Endfälligkeit gehaltene Finanzinstrumente - langfristig";;3550;3650;1031;"50/60"
+;;;;"085";"Zur Veräußerung verfügbare Finanzinstrumente - langfristig";;3550;3650;1032;"50/60"
+;;;;"086";"Derivative Finanzinstrumente ohne Grundgeschäft - langfristig";;3550;3650;1034;"50/60"
+;;;;"088";"Partizipationskapital";;3550;3650;1033;"50/60"
+;;;;"089";"Hybridkapital";;3550;3650;1033;"50/60"
+;;"09";"Wertberichtigungen zu Anlagen und immateriellen Vermögenswerten (nur Anlagenbuchführung)";;;;;;;
+;;;;"090";"Wertberichtigungen zu aktivierungsfähigen Rechten (immaterielle Vermögenswerte)";;;;1010;
+;;;;"091";"Wertberichtigungen zu Grundstücken, Grundstückseinrichtungen und Infrastruktur";;;;1021;
+;;;;"092";"Wertberichtigungen zu Gebäuden und Bauten";;;;1022;
+;;;;"093";"Wertberichtigungen zu Wasser- und Abwasserbauten- und anlagen";;;;1023;
+;;;;"094";"Wertberichtigungen zu Sonderanlagen";;;;1024;
+;;;;"095";"Wertberichtigungen zu technischen Anlagen, Fahrzeugen und Maschinen";;;;1025;
+;;;;"096";"Wertberichtigungen zu Amts-, Betriebs- und Geschäftsausstattung";;;;1026;
+;;;;"097";"Wertberichtigungen zu Kulturgütern";;;;1027;
+"1";"Vorräte";;;;;;;;;
+;;"10";"Gebrauchsgüter";;;;;;;
+;;;;"100";"Gebrauchtsgüter";;;3221;1141;"31/41"
+;;11;"Handelswaren";;;;;;;
+;;;;113;"Handelswaren";;;3221;1141;"31/41"
+;;"12";"Roh-,Hilfs- und Baustoffe";;;;;;;
+;;;;"120";"Roh-,Hilfs- und Baustoffe";;;3221;1141;"31/41"
+;;13;"Lebens- und Futtermittel";;;;;;;
+;;;;130;"Lebensmittel";;;3221;1141;"31/41"
+;;;;135;"Futtermittel";;;3221;1141;"31/41"
+;;15;"Betriebsstoffe und sonstige Verbrauchsgüter";;;;;;;
+;;;;150;"Betriebsstoffe";;;3221;1141;"31/41"
+;;;;159;"Sonstige Verbrauchsgüter";;;3221;1141;"31/41"
+;;"17";"Fertige und unfertige Erzeugnisse";;;;;;;
+;;;;"170";"Fertige Erzeugnisse";;;3221;1141;"31/41"
+;;;;"175";"Unfertige Erzeugnisse";;;3221;1141;"31/41"
+"2";"Geld, Forderungen, aktive Rechnungsabgrenzung, Zahlungsmittelreserven";;;;;;;;;
+;;"20";"Kassenbestände";;;;;;;
+;;;;"200";"Kassenbestände";;;;1151;
+;;"21";"Konten bei Kreditinstituten";;;;;;;
+;;;;"210";"Konten bei Kreditinstituten";;;;"1151/1511";
+;;"22";"Schecks, geldgleiche Wertgegenstände und aktive Finanzinstruments - kurzfristiges Finanzvermögen";;;;;;;
+;;;;"220";"Empfangene Schecks und geldgleiche Wertgegenstände";;;;1151;
+;;;;223;"Bis zur Endfälligkeit gehaltene aktive Finanzinstrumente - kurzfristig";;3550;3650;1160;"50/60"
+;;;;224;"Zur Veräußerung verfügbare aktive Finanzinstrumente - kurzfristig";;3550;3650;1160;"50/60"
+;;"23";"Forderungen aus Lieferungen und Leistungen sowie aus Abgaben";;;;;;;
+;;;;"230";"Kurzfristige Forderungen aus Lieferungen und Leistungen";;;;1131;
+;;;;"231";"Langfristige  Forderungen aus Lieferungen und Leistungen";;;;1061;
+;;;;"233";"Forderungen aus Abgaben";;;;1132;
+;;"24";"Darlehen (langfristig)";;;;;;;
+;;;;"240";"Darlehen an Bund, Bundesfonds und Bundeskammern";;3321;3421;1062;"52/62"
+;;;;"241";"Darlehen an Länder, Landesfonds und Landeskammern";;3321;3421;1062;"52/62"
+;;;;"242";"Darlehen an Gemeinden, Gemeindeverbände (ohne marktbestimmte Tätigkeit) und Gemeindefonds";;3321;3421;1062;"52/62"
+;;;;"243";"Darlehen an Sozialversicherungsträger";;3321;3421;1062;"52/62"
+;;;;"244";"Darlehen an sonstige Träger öffentlichen Rechts";;3321;3421;1062;"52/62"
+;;;;"245";"Darlehen an Unternehmen (ohne Finanzunternehmen)";;3323;3423;1062;"53/63"
+;;;;"246";"Darlehen an private Haushalte";;3323;3423;1062;"53/63"
+;;;;"247";"Darlehen an private Organisationen ohne Erwerbszweck und andere";;3323;3423;1062;"53/63"
+;;;;"248";"Darlehen an Beteiligungen";;3322;3422;1062;"53/63"
+;;;;"249";"Darlehen an Finanzunternehmen";;3323;3423;1062;"53/63"
+;;"27";"Vorsteuer, Vorschüsse und Kautionen";;;;;;;
+;;;;"270";"Finanzamt Vorsteuerbeträge (nicht voranschlagswirksame Gebarung)";;4110;4210;1134;
+;;;;271;"Umsatzsteuer Verrechnungskonto - Gutschrift (nicht voranschlagswirksame Gebarung)";;4110;4210;1134;
+;;;;"272";"Kautionen (nicht voranschlagswirksame Gebarung)";;4110;4210;1134;
+;;;;273;"Bezugsvorschüsse an private Haushalte";;3325;3425;1063;"53/63"
+;;;;279;"Sonstige für Dritte geleistete Vorschüsse (nicht voranschlagswirksame Gebarung)";;4110;4210;1134;
+;;"28";"Geleistete Anzahlungen und sonstige Forderungen";;;;;;;
+;;;;"280";"Geleistete Anzahlungen für Anlagen";;3325;3425;1028;
+;;;;"281";"Geleistete Anzahlungen für Vorräte";;3325;3425;1142;
+;;;;282;"Geleistete Anzahlungen für Lieferungen und Leistungen";;3325;3425;1133;
+;;;;283;"Sonstige kurzfristige Forderungen";;;;1133;
+;;;;284;"Sonstige langfristige Forderungen";;;;1063;
+;;;;"287";"Sonstige kurzfristige Forderungen (nicht voranschlagswirksame Gebarung)";;4110;4210;1134;
+;;"29";"ARAP, Zahlungsmittelreserven und Wertberichtigungen zu Forderungen";;;;;;;
+;;;;"290";"Aktive Rechnungsabgrenzung";;4110;4210;1170;
+;;;;291;"Wertberichtigungen zu langfristigen Forderungen aus Lieferungen und Leistungen";;;;1061;
+;;;;292;"Wertberichtigungen zu langfristigen Forderungen aus gewährten Darlehen";;;;1062;
+;;;;293;"Zahlungsmittelreserven für endfällige Darlehen";;;;1152;"51/61"
+;;;;294;"Zahlungsmittelreserven für zweckgebundene Haushaltsrücklagen";;;;1152;"51/61"
+;;;;295;"Zahlungsmittelreserven für allgemeine Haushaltsrücklagen";;;;1152;"51/61"
+;;;;296;"Wertberichtigungen zu sonstigen langfristigen Forderungen";;;;1063;
+;;;;297;"Wertberichtigungen zu kurzfristigen Forderungen aus Lieferungen und Leistungen";;;;1131;
+;;;;298;"Wertberichtigungen zu kurzfristigen Forderungen aus Abgaben";;;;1132;
+;;;;"299";"Wertberichtigungen zu sonstigen kurzfristigen Forderungen";;;;1133;
+"3";"Fremdmittel, Kapitaltransfers";;;;;;;;;
+;;30;"Kapitaltransfers";;;;;;;
+;;;;300;"Kapitaltransfers von Bund, Bundesfonds und Bundeskammern";;3331;;1311;33
+;;;;301;"Kapitaltransfers von Ländern, Landesfonds und Landeskammern";;3331;;1311;33
+;;;;302;"Kapitaltransfers von Gemeinden, Gemeindeverbänden (ohne marktbestimmte Tätigkeit) und Gemeindefonds ";;3331;;1311;33
+;;;;303;"Kapitaltransfers von sonstigen Trägern des öffentlichen Rechts und Sozialversicherungsträgern";;3331;;1311;33
+;;;;304;"Kapitaltransfers von Beteiligungen";;3332;;1312;34
+;;;;305;"Kapitaltransfers von Unternehmen (ohne Finanzunternehmen)";;3333;;1313;"34"
+;;;;306;"Kapitaltransfers von Finanzunternehmen";;3333;;1313;34
+;;;;307;"Kapitaltransfers von privaten Haushalten und privaten Organisationen ohne Erwerbszweck und andere";;3334;;1313;"34"
+;;;;308;"Kapitaltransfers vom Ausland";;3335;;1313;"34"
+;;;;309;"Kapitaltransfers von der Europäischen Union";;3335;;1313;"33"
+;;"31";"Leasing";;;;;;;
+;;;;"310";" Verbindlichkeiten aus Finanzierungsleasing";;;3615;1422;
+;;;;311;"Forderungskauf (Schuldeinlösung)";;;3614;1411;
+;;"32";"Derivative Finanzinstrumente";;;;;;;
+;;;;320;"Kurzfristige Forderungen aus derivativen FI in fremder Währung mit Grundgeschäft (-)";;3530;3630;1512;"55/65"
+;;;;"321";"Kurzfristige  Verbindlichkeiten aus derivativen Finanzinstrumenten in Euro mit Grundgeschäft";;3530;3630;1513;"55/65"
+;;;;"322";"Kurzfristige Forderungen aus derivativen Finanzinstrumenten in Euro mit Grundgeschäft (-)";;3530;3630;1512;"55/65"
+;;;;323;"Kurzfristige  Verbindlichkeiten aus derivativen Finanzinstrumenten in fremder Währung mit Grundgeschäft";;3530;3630;1513;"55/65"
+;;;;"324";"Langfristige Forderungen aus derivativen Finanzinstrumenten in fremder Währung mit Grundgeschäft (-)";;3530;3630;1412;"55/65"
+;;;;325;"Langfristige Verbindlichkeiten aus derivativen FI in Euro mit Grundgeschäft ";;3530;3630;1413;"55/65"
+;;;;326;"Langfristige Forderungen aus derivativen FI in Euro mit Grundgeschäft (-)";;3530;3630;1412;"55/65"
+;;;;327;"Langfristige Verbindlichkeiten aus derivativen FI in fremder Währung mit Grundgeschäft";;3530;3630;1413;"55/65"
+;;;;328;"Langfristige Verbindlichkeiten aus derivativen FI ohne Grundgeschäft";;;;1423;
+;;"33";"Verbindlichkeiten aus Lieferungen und Leistungen, Abgaben und sonstige Verbindlichkeiten";;;;;;;
+;;;;"331";"Kurzfristige Verbindlichkeiten aus Lieferungen und Leistungen";;;;1521;
+;;;;"332";"Langfristige Verbindlichkeiten aus Lieferungen und Leistungen";;;;1421;
+;;;;333;"Kurzfristige Verbindlichkeiten aus Abgaben";;;;1522;
+;;;;334;"Sonstige kurzfristige Verbindlichkeiten";;;;1523;
+;;;;335;"Sonstige langfristige Verbindlichkeiten";;;;1423;
+;;"34";"Investitionsdarlehen ";;;;;;;
+;;;;"340";"Investitionsdarlehen von Bund, Bundesfonds und Bundeskammern";;3511;3611;1411;"54/64"
+;;;;"341";"Investitionsdarlehen von Ländern, Landesfonds und Landeskammern";;3511;3611;1411;"54/64"
+;;;;"342";"Investitionsdarlehen von Gemeinden,  Gemeindeverbänden (ohne marktbestimmte Tätigkeit) und Gemeindefonds";;3511;3611;1411;"54/64"
+;;;;"343";"Investitionsdarlehen von  Sozialversicherungsträgern";;3511;3611;1411;"54/64"
+;;;;"344";"Investitionsdarlehen von sonstigen  Trägern des öffentlichen Rechts";;3511;3611;1411;"54/64"
+;;;;"345";"Investitionsdarlehen von Beteiligungen";;3512;3612;1411;"55/65"
+;;;;"346";"Investitionsdarlehen von Finanzunternehmen";;3514;3614;1411;"55/65"
+;;;;"347";"Investitionsdarlehen von Unternehmen (ohne Finanzunternehmen) und anderen";;3513;3613;1411;"55/65"
+;;;;"348";"Auslandsanleihen für Investitionszwecke";;3513;3613;1411;"55/65"
+;;;;"349";"Inlandsanleihen für Investitionszwecke ";;3513;3613;1411;"55/65"
+;;"35";"Aufnahme langfristiger und kurzfristiger Finanzschulden";;;;;;;
+;;;;"350";" Finanzschulden in Euro gegenüber Bund, Bundesfonds und Bundeskammern";;3511;3611;1411;"54/64"
+;;;;"351";" Finanzschulden in Euro gegenüber Ländern,  Landesfonds und Landeskammern";;3511;3611;1411;"54/64"
+;;;;"352";"Finanzschulden in Euro gegenüber Gemeinden,  Gemeindeverbänden (ohne marktbestimmte Tätigkeit) und Gemeindefonds";;3511;3611;1411;"54/64"
+;;;;"353";" Finanzschulden in Euro gegenüber Sozialversicherungsträgern ";;3511;3611;1411;"54/64"
+;;;;"354";" Finanzschulden in Euro gegenüber sonstigen Trägern des öffentlichen Rechts";;3511;3611;1411;"54/64"
+;;;;"355";" Finanzschulden in Euro gegenüber Beteiligungen";;3512;3612;1411;"55/65"
+;;;;"356";" Finanzschulden in Euro gegenüber Finanzunternehmen";;3514;3614;1411;"55/66"
+;;;;"357";" Finanzschulden in Euro gegenüber Unternehmen (ohne Finanzunternehmen) und anderen";;3513;3613;1411;"55/65"
+;;;;358;"Kurzfristige Finanzschulden aus Barvorlagen";;;;1511;"55/65"
+;;;;"359";" Sonstige kurzfristige Finanzschulden";;3513;3613;1511;"55/65"
+;;"36";"Erläge (nicht voranschlagswirksame Gebarung)";;;;;;;
+;;;;"360";"Umsatzsteuer (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;"361";"Erläge von/für Dienststellen der Gebietskörperschaften (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;"362";"Gehaltsabzugsgebarungen (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;363;"Einbehaltungen und Überzahlungen von Dritten (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;364;"Einbehaltungen und Überzahlungen von Stiftungen und Fonds (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;368;"Barvorlagen (nicht voranschlagswirksame Gebarung)";;4130;4230;1524;
+;;;;369;"Sonstige Erläge (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;"37";"Erhaltene Anzahlungen und so Verb. (nicht voranschlagswirksame Gebarung)";;;;;;;
+;;;;"370";"Erhaltene Anzahlungen (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;371;"Umsatzsteuer Verrechnungskonto - Zahllast (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;;;"379";"Sonstige Verbindlichkeiten (nicht voranschlagswirksame Gebarung)";;4120;4220;1524;
+;;"38";"Rückstellungen";;;;;;;
+;;;;"380";"Rückstellungen für Prozesskosten";;;;1531;
+;;;;"381";"Rückstellungen für nicht konsumierte Urlaube";;;;1533;
+;;;;"382";"Rückstellungen für ausstehende Rechnungen";;;;1532;
+;;;;"383";"Rückstellungen für Abfertigungen";;;;1431;
+;;;;"384";"Rückstellungen für Jubiläumszuwendungen";;;;1432;
+;;;;"385";"Rückstellungen für Haftungen";;;;1433;
+;;;;"386";"Rückstellungen für Sanierung von Altlasten";;;;1434;
+;;;;"387";"Rückstellungen für Pensionen (Säule I)";;;;1435;
+;;;;"388";"Rückstellungen für Betriebspensionen (Säule II)";;;;1435;
+;;"39";"Passive Rechnungsabgrenzung und sonstige Rückstellungen";;;;;;;
+;;;;"390";"Passive Rechnungsabgrenzung";;4120;4220;1540;
+;;;;391;"Sonstige kurzfristige Rückstellungen";;;;1534;
+;;;;392;"Sonstige langfristige Rückstellungen";;;;1436;
+"4";"Gebrauchs- und Verbrauchsgüter sowie Handelswaren";;;;;;;;;
+;;"40";"Gebrauchsgüter";;;;;;;
+;;;;"400";"Geringwertige Wirtschaftsgüter (GWG)";2221;;3221;;"23"
+;;;;"402";"Verbrauchsgüter für innerbetriebliche Leistungen";2221;;3221;;"23"
+;;;;"409";"Ersatzteile";2221;;3221;;"23"
+;;41;"Handelswaren (Verbrauch)";;;;;;;
+;;;;413;"Handelswaren";2221;;3221;;23
+;;;;;;;;;;
+;;"42";"Roh-,Hilfs- und Baustoffe";;;;;;;
+;;;;420;"Roh-, Hilfs- und Baustoffe";2221;;3221;;"23"
+;;43;"Lebens- und Futtermittel";;;;;;;
+;;;;430;"Lebensmittel";2221;;3221;;"23"
+;;;;431;"Futtermittel";2221;;3221;;"23"
+;;"45";"Betriebsstoffe und sonstige Verbrauchsgüter";;;;;;;
+;;;;"451";"Brennstoffe";2221;;3221;;"23"
+;;;;"452";"Treibstoffe ";2221;;3221;;"23"
+;;;;"453";"Schmier- und Schleifmittel";2221;;3221;;"23"
+;;;;"454";"Reinigungsmittel ";2221;;3221;;"23"
+;;;;"455";"Chemische und sonstige artverwandte Mittel";2221;;3221;;"23"
+;;;;"456";"Schreib-, Zeichen- und sonstige Büromittel";2221;;3221;;"23"
+;;;;"457";"Druckwerke";2221;;3221;;"23"
+;;;;"458";"Mittel zur ärztlichen Betreuung und Gesundheitsvorsorge";2221;;3221;;"23"
+;;;;"459";"Sonstige Verbrauchsgüter";2221;;3221;;"23"
+;;"48";"Fremdbearbeitung (Lohnarbeit)";;;;;;;
+;;;;"480";"Fremdbearbeitung (Lohnarbeit)";2221;;3221;;"23"
+"5";"Leistungen für Personal";;;;;;;;;
+;;"50";"Geldbezüge der Beamten";;;;;;;
+;;;;"500";"Geldbezüge der Beamten der Verwaltung";2211;;3211;;"20"
+;;;;"501";"Geldbezüge der Beamten in handwerklicher Verwendung";2211;;3211;;"20"
+;;"51";"Geldbezüge der Vertragsbediensteten";;;;;;;
+;;;;"510";"Geldbezüge der Vertragsbediensteten der Verwaltung";2211;;3211;;"20"
+;;;;"511";"Geldbezüge der Vertragsbediensteten in handwerklicher Verwendung ";2211;;3211;;"20"
+;;"52";"Geldbezüge der sonstigen Bediensteten";;;;;;;
+;;;;"520";"Geldbezüge der ganzjährig beschäftigten Angestellten";2211;;3211;;"20"
+;;;;"521";"Geldbezüge der ganzjährig beschäftigten Arbeiter";2211;;3211;;"20"
+;;;;"522";"Geldbezüge der nicht ganzjährig beschäftigten Angestellten";2211;;3211;;"20"
+;;;;"523";"Geldbezüge der nicht ganzjährig beschäftigten Arbeiter";2211;;3211;;"20"
+;;"53";"Sachbezüge der Beamten ";;;;;;;
+;;;;"530";"Sachbezüge der Beamten der Verwaltung";2213;;3213;;
+;;;;"531";"Sachbezüge der Beamten in handwerklicher Verwendung";2213;;3213;;
+;;"54";"Sachbezüge der Vertragsbediensteten";;;;;;;
+;;;;"540";"Sachbezüge der Vertragsbediensteten der Verwaltung";2213;;3213;;
+;;;;"541";"Sachbezüge der Vertragsbediensteten in handwerklicher Verwendung";2213;;3213;;
+;;"55";"Sachbezüge der sonstigen Bediensteten";;;;;;;
+;;;;"550";"Sachbezüge der ganzjährig beschäftigten Angestellten";2213;;3213;;
+;;;;"551";"Sachbezüge der ganzjährig beschäftigten Arbeiter";2213;;3213;;
+;;;;"552";"Sachbezüge der nicht ganzjährig beschäftigten Angestellten";2213;;3213;;
+;;;;"553";"Sachbezüge der nicht ganzjährig beschäftigten Arbeiter";2213;;3213;;
+;;"56";"Nebengebühren, Mehrleistungsvergütungen und Zuwendungen";;;;;;;
+;;;;"563";"Sonstige Aufwandsentschädigungen";2213;;3213;;"20"
+;;;;"564";"Vergütungen für Nebentätigkeit";2211;;3211;;"20"
+;;;;"565";"Mehrleistungsvergütungen";2211;;3211;;"20"
+;;;;"566";"Zuwendungen aus Anlass von Dienstjubiläen";2212;;3212;;"20"
+;;;;"567";"Belohnungen, Geldaushilfen und Leistungsprämien";2213;;3213;;"20"
+;;;;"569";"Sonstige Nebengebühren";2211;;3211;;"20"
+;;"58";"Dienstgeberbeiträge";;;;;;;
+;;;;"580";"Dienstgeberbeiträge zum Ausgleichsfonds für Familienbeihilfen";2212;;3212;;"20"
+;;;;"581";"Dienstgeberbeiträge zur Alterssicherung";2212;;3212;;"20"
+;;;;"582";"Sonstige Dienstgeberbeiträge zur sozialen Sicherheit";2212;;3212;;"20"
+;;;;588;"Kommunalsteuer";2212;;3212;;20
+;;"59";"Freiwillige Sozialleistungen (nur Barleistungen) und Rückstellungen für Personal";;;;;;;
+;;;;"590";"Freiwillige Sozialleistungen";2212;;3212;;"20"
+;;;;"591";"Dotierung von Rückstellungen für Abfertigungen";2214;;;;
+;;;;"592";"Dotierung von Rückstellungen für Jubiläumszuwendungen";2214;;;;
+;;;;"593";"Dotierung von Rückstellungen für nicht konsumierte Urlaube";2214;;;;
+;;;;594;"Dotierung von sonstigen Personalrückstellungen";2214;;;;
+"6";"Sonstiger Verwaltungs- und Betriebsaufwand";;;;;;;;;
+;;"60";"Energiebezüge";;;;;;;
+;;;;"600";"Energiebezüge";2222;;3222;;"24"
+;;"61";"Instandhaltung (durch Dritte)";;;;;;;
+;;;;"610";"Instandhaltung von Grund und Boden";2224;;3224;;"24"
+;;;;"611";"Instandhaltung von Straßenbauten";2224;;3224;;"24"
+;;;;"612";"Instandhaltung von Wasser- und Abwasserbauten und -anlagen";2224;;3224;;"24"
+;;;;"613";"Instandhaltung von sonstigen Grundstückseinrichtungen";2224;;3224;;"24"
+;;;;"614";"Instandhaltung von Gebäuden und Bauten";2224;;3224;;"24"
+;;;;615;"Instandhaltung von Kulturgütern";2224;;3224;;24
+;;;;"616";"Instandhaltung von Maschinen und maschinellen Anlagen";2224;;3224;;"24"
+;;;;"617";"Instandhaltung von Fahrzeugen";2224;;3224;;"24"
+;;;;"618";"Instandhaltung von sonstigen Anlagen";2224;;3224;;"24"
+;;;;"619";"Instandhaltung von Sonderanlagen";2224;;3224;;"24"
+;;"62";"Personen- und Gütertransporte";;;;;;;
+;;;;"620";"Transporte durch die Bahn";2222;;3222;;"24"
+;;;;"621";"Sonstige Transporte";2222;;3222;;"24"
+;;"63";"Post- und Telekommunikationsdienste";;;;;;;
+;;;;"630";"Postdienste";2222;;3222;;"24"
+;;;;"631";"Telekommunikationsdienste";2222;;3222;;"24"
+;;"64";"Rechts- und Beratungsaufwand";;;;;;;
+;;;;"640";"Rechts- und Beratungsaufwand";2222;;3222;;"24"
+;;"65";"Zinsen und Geldverkehrsspesen";;;;;;;
+;;;;"650";"Zinsen für Finanzschulden in Euro";2241;;3241;;"25"
+;;;;651;"Zinsaufwand für Finanzierungsleasing";2241;;3241;;"25"
+;;;;"652";"Zinsen und sonstige Aufwendungen aus derivativen Finanzinstrumenten mit Grundgeschäft in Euro";2241;;3241;;"68"
+;;;;"653";"Zinsen für Finanzschulden in fremder Währung";2241;;3241;;"25"
+;;;;"654";"Zinsen und sonstige Aufwendungen aus derivativen Finanzinstrumenten ohne Grundgeschäft in fremder Währung";2242;;3242;;"68"
+;;;;"655";"Zinsen und sonstige Aufwendungen aus derivativen Finanzinstrumenten mit Grundgeschäft in fremder Währung";2241;;3241;;"68"
+;;;;"656";"Skontoaufwand";2225;;3225;;"24"
+;;;;"657";"Disagien ";2244;;3244;;25
+;;;;"658";"Zinsen und sonstige Aufwendungen aus derivativen Finanzinstrumenten ohne Grundgeschäft in Euro";2242;;3242;;"68"
+;;;;"659";"Geldverkehrs- und Bankspesen";2244;;3244;;"24"
+;;"67";"Versicherungen";;;;;;;
+;;;;"670";"Versicherungen";2222;;3222;;"24"
+;;"68";"Abschreibungen und Dotierung von Rückstellungen";;;;;;;
+;;;;"680";"Planmäßige Abschreibung";2226;;;;
+;;;;"681";"Außerplanmäßige Abschreibung";2226;;;;
+;;;;"682";"Wertberichtigungen zu Finanzinstrumenten";2245;;;;
+;;;;"683";"Verluste aus dem Abgang von Sachanlagen und immateriellen Vermögenswerten";2226;;;;
+;;;;"685";"Dotierung von Rückstellungen für Prozesskosten";2226;;;;
+;;;;"686";"Dotierung von Rückstellungen für Haftungen";2226;;;;
+;;;;"687";"Dotierung von Rückstellungen für Sanierungen von Altlasten";2226;;;;
+;;;;"688";"Dotierung von Rückstellungen für ausstehende Rechnungen";2226;;;;"24"
+;;;;"689";"Dotierung von sonstigen Rückstellungen";2226;;;;
+;;"69";"Schadensfälle, Wertberichtigungen und Kursverluste";;;;;;;
+;;;;"690";"Abschreibung von Forderungen (Schadensfälle)";2225;;;;
+;;;;691;"Schadensvergütungen";2225;;3225;;24
+;;;;"694";"Aufwendungen aus der Bewertung von Beteiligungen";2245;;;;
+;;;;"695";"Wertberichtigungen zu Forderungen";2226;;;;
+;;;;696;"Wertberichtigungen zu Forderungen aus gewährten Darlehen";2237;;;;
+;;;;"697";"Kursverluste";2244;;3244;;
+;;;;"698";"Sonstige Wertberichtigungen / Bestandsminderungen am kurzfristigen und langfristigen Vermögen";2226;;;;
+;;;;"699";"Verluste aus dem Abgang von Beteiligungen und aktiven Finanzinstrumenten";2245;;;;
+"7";"Sonstiger Verwaltungs- und Betriebsaufwand";;;;;;;;;
+;;"70";"Miet- und Pachtaufwand, Leasing, Public Private Partnerships (PPP)";;;;;;;
+;;;;"700";"Miet- und Pachtaufwand";2223;;3223;;"24"
+;;;;"705";"Operating Leasing";2223;;3223;;"24"
+;;;;"707";"Nutzungsentgelte an Public Private Partnerships (PPP)";2223;;3223;;"24"
+;;"71";"Öffentliche Abgaben ";;;;;;;
+;;;;"710";"Öffentliche Abgaben, ohne Gebühren gemäß FAG";2225;;3225;;"24"
+;;;;"711";"Gebühren für die Benützung von Gemeindeeinrichtungen und Anlagen gemäß FAG";2225;;3225;;"24"
+;;"72";"Verschiedene Aufwendungen";;;;;;;
+;;;;"720";"Kostenbeiträge (Kostenersätze) für Leistungen";2225;;3225;;"24"
+;;;;"721";"Bezüge der gewählten Organe ";2225;;3225;;"22"
+;;;;"722";"Rückersätze von Erträgen";2225;;3225;;"24"
+;;;;"723";"Amtspauschalien und Repräsentationsaufwendungen";2225;;3225;;"24"
+;;;;724;"Reisegebühren";2225;;3225;;24
+;;;;"725";"Bibliothekserfordernisse";2225;;3225;;"24"
+;;;;"726";"Mitgliedsbeiträge an Institutionen";2225;;3225;;"24"
+;;;;"728";"Entgelte für sonstige Leistungen";2225;;3225;;"24"
+;;;;"729";"Sonstige Aufwendungen";2225;;3225;;24
+;;"75";"Transferleistungen";;;;;;;
+;;;;"750";"Transfers an Bund, Bundesfonds und Bundeskammern";2231;;3231;;"26"
+;;;;"751";"Transfers an Länder, Landesfonds und Landeskammern";2231;;3231;;"26"
+;;;;"752";"Transfers an Gemeinden, Gemeindeverbände (ohne marktbestimmte Tätigkeit) und Gemeindefonds";2231;;3231;;"26"
+;;;;"753";"Transfers an Sozialversicherungsträger";2231;;3231;;"26"
+;;;;"754";"Transfers an sonstige Träger des öffentlichen Rechts";2231;;3231;;"26"
+;;;;"755";"Transfers an Unternehmen (ohne Finanzunternehmen) und andere";2233;;3233;;"27"
+;;;;"756";"Transfers an Finanzunternehmen";2233;;3233;;"27"
+;;;;"757";"Transfers an private Organisationen ohne Erwerbszweck ";2234;;3234;;"27"
+;;;;"759";"Transfers an Unternehmungen, (Eigenbetriebe) ohne Rechtspersönlichkeit";2233;;3233;;"27"
+;;"76";"Transferleistungen";;;;;;;
+;;;;"760";"Pensionen und sonstige Ruhebezüge (einschließlich Dienstgeberbeiträge)";2234;;3234;;"21"
+;;;;"761";"Dotierung von Pensionsrückstellungen (Säule I)";2237;;;;
+;;;;"762";"Dotierung von Rückstellungen für Betriebspensionen (Säule II)";2237;;;;"21"
+;;;;"764";"Entschädigungen ";2234;;3234;;"27"
+;;;;"768";"Sonstige Transfers an private Haushalte";2234;;3234;;"27"
+;;;;"769";"Gewinnentnahmen von Unternehmungen und marktbestimmten Betrieben der Gemeinde (innerhalb der Gemeinde) Abschnitte 85-89";2243;;3243;;"28"
+;;"77";"Kapitaltransfers";;;;;;;
+;;;;"770";"Kapitaltransfers an Bund, Bundesfonds und Bundeskammern";2231;;3431;;"43"
+;;;;"771";"Kapitaltransfers an Länder, Landesfonds und Landeskammern";2231;;3431;;"43"
+;;;;"772";"Kapitaltransfers an Gemeinden, Gemeindeverbände (ohne marktbestimmte Tätigkeit) und Gemeindefonds";2231;;3431;;"43"
+;;;;"773";"Kapitaltransfers an Sozialversicherungsträger";2231;;3431;;"43"
+;;;;"774";"Kapitaltransfers an sonstige Träger des öffentlichen Rechts";2231;;3431;;"43"
+;;;;"775";"Kapitaltransfers an  Unternehmen (ohne Finanzunternehmen) und andere";2233;;3433;;"44"
+;;;;"776";"Kapitaltransfers an Finanzunternehmen";2233;;3433;;"44"
+;;;;"777";"Kapitaltransfers an private Organisationen ohne Erwerbszweck";2234;;3434;;"44"
+;;;;"778";"Kapitaltransfers an private Haushalte";2234;;3434;;"44"
+;;;;"779";" Investitions- und Tilgungszuschüsse zwischen Unternehmungen und marktbestimmten Betrieben der Gemeinde (innerhalb der Gemeinde)";2236;;3236;;"44"
+;;"78";"(Kapital-)Transfers an Beteiligungen und das Ausland";;;;;;;
+;;;;"780";"Transfers an das Ausland";2235;;3235;;"27"
+;;;;"781";"Transfers an Beteiligungen der Gemeinde/des Gemeindeverbandes";2232;;3232;;"27"
+;;;;"785";"Kapitaltransfers an das Ausland";2235;;3435;;"44"
+;;;;"786";"Kapitaltransfers an Beteiligungen der Gemeinde/des Gemeindeverbandes";2232;;3432;;"44"
+;;79;"Inanspruchnahme von Haftungen, Zuweisung an Haushaltsrücklagen";;;;;;;
+;;;;790;"Inanspruchnahme von Haftungen";2225;;3226;;24
+;;;;793;"Zuweisung an Zahlungsmittelreserve endfällige Darlehen";2401;;;;
+"8";"Erträge";;;794;"Zuweisung an zweckgebundene Haushaltsrücklagen";2401;;;;
+;;;;795;"Zuweisung an allgemeine Haushaltsrücklagen";2401;;;;
+;;"80";"Erträge aus Veräußerungen";;;;;;;
+;;;;"800";"Veräußerungen von immateriellen Vermögenswerten";2116;3311;;;32
+;;;;801;"Veräußerungen von Grundstücken und Grundstückseinrichtungen";2116;3312;;;30
+;;;;802;"Veräußerungen von Gebäuden und Bauten";2116;3313;;;30
+;;;;803;"Veräußerungen von technischen Anlagen, Fahrzeugen und Maschinen";2116;3314;;;31
+;;;;804;"Veräußerungen von Amts-, Betriebs- und Geschäftsausstattung";2116;3315;;;31
+;;;;805;"Veräußerungen von Kulturgütern";2116;3316;;;"30/31"
+;;;;806;"Veräußerungen von Beteiligungen";2116;3317;;;50
+;;;;807;"Veräußerungen von aktiven Finanzinstrumenten";2116;3550;;;50
+;;;;808;"Veräußerungen von Waren";2116;3116;;;"16"
+;;;;"809";"Gegenwerte von Sachbezugsleistungen";2116;3116;;;
+;;"81";"Erträge aus Leistungen und sonstige nicht finanzierungswirksame Erträge";;;;;;;
+;;;;"810";"Erträge aus Leistungen";2114;3114;;;"13"
+;;;;"811";"Miete- und Pachtertrag";2115;3115;;;"14"
+;;;;"812";"Gebühren für sonstige Leistungen";2114;3114;;;"13"
+;;;;"813";"Erträge aus der Auflösung von Investitionszuschüssen (Kapitaltransfers)";2127;;;;
+;;;;"814";"Erträge aus der Berichtigung von Lieferungen und Leistungen";2116;3116;;;18
+;;;;"815";"Erträge aus der Auflösung von Rückstellungen für ausstehende Rechnungen/Betriebspensionen";2117;;;;18
+;;;;"816";"Kostenbeiträge (Kostenersätze) für sonstige Leistungen";2114;3114;;;"13"
+;;;;"817";"Erträge aus der Auflösung von sonstigen Rückstellungen";2117;;;;
+;;;;"818";"Erträge aus der Bewertung von Beteiligungen und aktiven Finanzinstrumenten";2136;;;;
+;;;;"819";"Übrige nicht finanzierungswirksame Erträge";2117;;;;
+;;"82";"Sonstige Erträge aus wirtschaftlicher Tätigkeit";;;;;;;
+;;;;"820";"Zinserträge aus Darlehen und aktiven Finanzinstrumenten";2131;3131;;;"14"
+;;;;"821";"Zinserträge aus Finanzderivaten mit Grundgeschäft";2131;3131;;;"58"
+;;;;"822";"Dividenden und Gewinnabfuhren von Beteiligungen";2135;3135;;;"14"
+;;;;"823";"sonstige Zinserträge";2131;3131;;;"14"
+;;;;"824";"Agien";2134;3134;;;"18"
+;;;;"825";"Kursgewinne";2134;3134;;;
+;;;;"826";"Zinserträge aus Finanzderivaten ohne Grundgeschäft";2132;3131;;;"58"
+;;;;"827";"Kostenersätze für die Überlassung von Bediensteten an Dritte";2116;3116;;;"18"
+;;;;"828";"Rückersätze von Aufwendungen";2116;3116;;;"18"
+;;;;"829";"Sonstige Erträge";2116;3116;;;"18"
+;;"83";"Eigene Abgaben";;;;;;;
+;;;;"830";"Grundsteuer von den land- und forstwirtschaftlichen Betrieben";2111;3111;;;"10"
+;;;;"831";"Grundsteuer von den Grundstücken";2111;3111;;;"10"
+;;;;832;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;"833";"Kommunalsteuer";2111;3111;;;"10"
+;;;;"834";"Fremdenverkehrsabgaben";2111;3111;;;"10"
+;;;;"835";"Parkometerabgaben";2111;3111;;;"10"
+;;;;"837";"Lustbarkeitsabgaben (Vergnügungssteuern) ohne Zweckwidmung des Ertrages";2111;3111;;;"10"
+;;;;"838";"Abgaben für das Halten von Tieren";2111;3111;;;"10"
+;;;;"839";"Abgaben von freiwilligen Feilbietungen";2111;3111;;;"10"
+;;"84";"Eigene Abgaben (Fortsetzung)";;;;;;;
+;;;;"840";"Abgaben von Ankündigungen";2111;3111;;;"10"
+;;;;"841";"Abgaben für den Gebrauch von öffentlichen Grund in den Gemeinden und des Luftraumes";2111;3111;;;"10"
+;;;;"842";"Zweitwohnsitzabgaben";2111;3111;;;"10"
+;;;;843;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;844;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;845;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;846;"WB-Förderungsbeitrag";2111;3111;;;10
+;;;;847;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;848;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;"849";"Nebenansprüche";2111;3111;;;"10"
+;;"85";"Eigene Abgaben, Ertragsanteile";;;;;;;
+;;;;"850";"Interessentenbeiträge von Grundstückseigentümern und Anrainern (einmalig)";2111;3111;;;"10"
+;;;;851;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;"852";"Gebühren für die Benützung von Gemeindeeinrichtungen und -anlagen";2113;3113;;;"12"
+;;;;"853";"Jagd- und Fischereiabgaben (Gemeindeanteile)";2111;3111;;;"10"
+;;;;"854";"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;"10"
+;;;;855;"Ausschließliche Landes(Gemeinde)abgaben";2111;3111;;;10
+;;;;"856";"Verwaltungsabgaben";2111;3111;;;"10"
+;;;;"857";"Kommissionsgebühren";2111;3111;;;"10"
+;;;;"858";"Ertragsanteile an der Spielbankabgabe";2112;3112;;;"11"
+;;;;"859";"Ertragsanteile ohne Spielbankabgabe";2112;3112;;;"11"
+;;"86";"Transferleistungen";;;;;;;
+;;;;"860";"Transfers von Bund, Bundesfonds und Bundeskammern";2121;3121;;;"15"
+;;;;"861";"Transfers von Ländern, Landesfonds und Landeskammern";2121;3121;;;"15"
+;;;;"862";"Transfers von Gemeinden, Gemeindeverbände (ohne marktbestimmte Tätigkeit) und Gemeindefonds";2121;3121;;;"15"
+;;;;"863";"Transfers von sonstigen Trägern öffentlichen Rechts und Sozialversicherungsträgern";2121;3121;;;"15"
+;;;;"864";"Transfers von Unternehmen (ohne Finanzunternehmen) und andere";2123;3123;;;"16"
+;;;;"865";"Transfers von Beteiligungen";2122;3122;;;"16"
+;;;;"866";"Transfers von Finanzunternehmen";2123;3123;;;"16"
+;;;;"867";"Transfers von privaten Organisationen ohne Erwerbszweck";2124;3124;;;"16"
+;;;;"868";"Transfers von privaten Haushalten";2124;3124;;;"16"
+;;;;"869";"Gewinnentnahmen von Unternehmungen und marktbestimmte Betrieben der Gemeinde (innerhalb der Gemeinde) Abschnitte 85-89";2133;3133;;;"17"
+;;"87";"Kapitaltransfers, Investitions- und Tilgungszuschüsse";;;;;;;
+;;;;"871";"Kapitaltransfers aus Gemeinde-Bedarfszuweisungsmittel";2121;3121;;;"33"
+;;;;"879";" Investitions- und Tilgungszuschüsse zwischen Unternehmungen und marktbestimmten Betrieben der Gemeinde (innerhalb der Gemeinde)";2126;3126;;;"17"
+;;"88";"Transfers vom Ausland";;;;;;;
+;;;;"880";"Transfers vom Ausland";2125;3125;;;"16"
+;;;;"888";"Transfers von der Europäischen Union";2125;3125;;;"15"
+;;"89";"Aktivierte Eigenleistungen, Bestandsveränderungen";;;;;;;
+;;;;"890";"Aktivierte Eigenleistungen";2117;;;;
+;;;;"891";"Sonstige Wertaufholungen / Bestandsvermehrungen am kurzfristigen und langfristigen Vermögen";2117;;;;
+;;;;"892";"Bestandsveränderungen von fertigen und unfertigen Erzeugnissen";2117;;;;
+;;;;893;"Entnahmen von Zahlungsmittelreserven für endfällige Darlehen";2301;;;;
+;;;;"894";"Entnahmen von zweckgebundenen Haushaltsrücklagen";2301;;;;
+;;;;895;"Entnahmen von allgemeinen Haushaltsrücklagen";2301;;;;
+"9";"Kapital- und Abschlusskonten";;;;;;;;;
+;;"90";"Verrechnungskonten";;;;;;;
+;;;;"901";"Kassenbestandsveränderungen";;;;1151;
+;;;;"906";"Verrechnungskonto für sonstige Kontengebarung und Umbuchungen";;;;1151;
+;;"91";"Verrechnung zwischen operativer Gebarung und Projekten";;;;;;;
+;;;;"910";"Verrechnung zwischen operativer Gebarung und Projekten";;;;1220;
+;;"93";"Kapitalkonto und Haushaltsrücklagen";;;;;;;
+;;;;"930";"Saldo der erstmaligen Eröffnungsbilanz";;;;1210;
+;;;;931;"Kapitalausgleichskonto";;;;1220;
+;;;;934;"Zweckgebundene Haushaltsrücklagen";;;;1230;
+;;;;935;"Allgemeine Haushaltsrücklagen";;;;1230;
+;;;;936;"Innere Anleihen/Darlehen";;;;1230;
+;;"94";"Sonstige Rücklagen";;;;;;;
+;;;;"940";"Neubewertungsrücklagen";;;;1240;
+;;;;"941";"Fremdwährungsumrechnungsrücklagen";;;;1250;
+;;"96";"Vermögensänderungskonten";;;;;;;
+;;;;"960";"Gewinn- und Verlustkonto/Jahresabschlussbuchungen";;;;1220;
+;;"97";"Eröffnungsbilanzkonto";;;;;;;
+;;;;"970";"Eröffnungsbilanzkonto/Jahresabschlussbuchungen";;;;1220;
+;;"98";"Abschlussbilanzkonto";;;;;;;
+;;;;"980";"Abschlussbilanzkonto/Jahresabschlussbuchungen";;;;1220;
+;;"99";"Berichtigungen zu Kapital";;;;;;;
+;;;;"990";"Berichtigungen der erstmaligen Eröffnungsbilanz";;;;1210;
+;;;;991;"Nacherfassung von Vermögenswerten";;;;1210;

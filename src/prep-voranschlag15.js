@@ -1,9 +1,5 @@
 /*
-Datenquelle:
-https://www.bmf.gv.at/themen/budget/finanzbeziehungen-laender-gemeinden/vrv-2015.html
-Kopfzeile:
-//"A";"U";"Bezeichnung";dummy
-"A";"U";"Bezeichnung"
+ * Voranschlag einspielen
 */
 
 const fs = require('fs')
@@ -14,8 +10,8 @@ const knexfile = require(__dirname + '/../config/knexfile')
 const db = knex(knexfile)
 
 // config ****************************************++
-const hhIdFields = [ 'gegenstand', 'gkz', 'finanzjahr', 'quartal' ]
-const hhGegenstand = 'VA'
+const hhIdFields = [ 'va_ra', 'gkz', 'finanzjahr', 'quartal' ]
+const hhVaRa = 'VA'
 
 // ****************************************************+++
 const hhIdWhere = {}
@@ -74,7 +70,7 @@ async function readXml() {
 
   const xmlContent = fs.readFileSync(inputFile ).toString()
   const hhObj = await xParser.parseStringPromise(xmlContent)
-  hhObj.kennsatz.gegenstand = hhGegenstand
+  hhObj.kennsatz.va_ra = hhVaRa
   //console.log(hhObj); process.exit()
 
   copyProps(hhObj.kennsatz, hhIdFields, hhIdWhere)
@@ -101,7 +97,7 @@ async function readXml() {
 // write kennsatz to db
 async function xmlKennsatz2db(hhObj) {
 
-  const kennsatz = copyProps(hhObj.kennsatz, [ 'gegenstand', 'gkz', 'gemeinde', 'finanzjahr', 'quartal', 'periode',
+  const kennsatz = copyProps(hhObj.kennsatz, [ 'va_ra', 'gkz', 'gemeinde', 'finanzjahr', 'quartal', 'periode',
     'verantwortlich', 'sachbearbeiter', 'telefon', 'email', 'version', 'edv', 'erstellt', 'beschlossen_fj0' ])
   Object.assign(kennsatz, hhObj.kennsatz.sonstige_daten)
 
