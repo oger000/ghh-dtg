@@ -229,7 +229,7 @@ CREATE TABLE `vermoegenshaushalt` (
   `sektor` char(4) NOT NULL DEFAULT '',
   `land` char(2) NOT NULL DEFAULT '',
 
-  `mav_vhh` char(4) NOT NULL DEFAULT '',
+  `mvag_vhh` char(4) NOT NULL DEFAULT '',
   `ansatz_text` varchar(250) NOT NULL DEFAULT '',
   `konto_text` varchar(250) NOT NULL DEFAULT '',
   `endstand_vj` decimal(20,2) NOT NULL DEFAULT '0.00',
@@ -451,6 +451,8 @@ CREATE TABLE `personal` (
   `ansatz_ugl` char(3) NOT NULL DEFAULT '',
   `meldegruppe` char(1) NOT NULL DEFAULT '',
   `personenkreis` char(1) NOT NULL DEFAULT '',
+  `vzae` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `koepfe` decimal(10,2) NOT NULL DEFAULT '0.00',
   `vzae_fj0` decimal(10,2) NOT NULL DEFAULT '0.00',
   `koepfe_fj0` decimal(10,2) NOT NULL DEFAULT '0.00',
   `vzae_fj1` decimal(10,2) NOT NULL DEFAULT '0.00',
@@ -499,7 +501,7 @@ CREATE TABLE `oestp` (
   `quartal` char(1) NOT NULL DEFAULT '',
   `gkz` char(5) NOT NULL DEFAULT '',
 
-  `fj_nr` int NOT NULL DEFAULT '0',
+  `id_oestp` char(3) NOT NULL DEFAULT '',
   `vzae` decimal(10,2) NOT NULL DEFAULT '0.00',
   `koepfe` decimal(10,2) NOT NULL DEFAULT '0.00',
   `penshoehe` decimal(10,2) NOT NULL DEFAULT '0.00',
@@ -524,6 +526,7 @@ CREATE TABLE `kultur` (
   `quartal` char(1) NOT NULL DEFAULT '',
   `gkz` char(5) NOT NULL DEFAULT '',
 
+  `id_kultur` char(3) NOT NULL DEFAULT '',
   `ansatz_uab` char(3) NOT NULL DEFAULT '',
   `ansatz_ugl` char(3) NOT NULL DEFAULT '',
   `konto_grp` char(3) NOT NULL DEFAULT '',
