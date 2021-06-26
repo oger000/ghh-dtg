@@ -24,8 +24,8 @@ async function fake_main() {
     configNum++
     console.log(`Verarbeite Konfigurationseintrag ${configNum}.`)
 
-    if (!configRec.handle) {
-      config.log('Verarbeitung ist deaktiviert. Datensatz wird übersprungen.')
+    if (!configRec.handle || configRec.handle == '0') {
+      console.log('Verarbeitung ist deaktiviert. Datensatz wird übersprungen.')
       continue
     }
 
