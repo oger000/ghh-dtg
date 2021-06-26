@@ -41,8 +41,6 @@ async function handleXml(config, data) {
 // put xml data structure (vrv 2015 ghd xml 3.7) to database
 async function handleXml2015(config, data) {
 
-  console.log('handleXml2015')
-
   ghdWhereKeys.va_ra = config.va_ra
   ghdWhereKeys.gkz = data.kennsatz.gkz,
   ghdWhereKeys.finanzjahr = data.kennsatz.finanzjahr,

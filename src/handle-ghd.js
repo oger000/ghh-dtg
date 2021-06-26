@@ -12,6 +12,7 @@ const { handleXml } = require(__dirname + '/lib/handle-ghd')
 async function fake_main() {
 
   const configGdt = __dirname + '/config-ghd.csv'
+  console.log('\n*******************')
   console.log(`Verwende Konfigurationsdatei ${configGdt}.`)
   if(!fs.existsSync(configGdt)) {
     console.log(`Konfigurationsdatei nicht gefunden.`)
@@ -25,7 +26,7 @@ async function fake_main() {
     console.log(`Verarbeite Konfigurationseintrag ${configNum}.`)
 
     if (!configRec.handle || configRec.handle == '0') {
-      console.log('Verarbeitung ist deaktiviert. Datensatz wird übersprungen.')
+      console.log(`   Verarbeitung ist deaktiviert. Datensatz wird übersprungen. (${configRec.file_name})`)
       continue
     }
 
