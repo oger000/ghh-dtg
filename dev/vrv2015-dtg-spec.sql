@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS `kennsatz`;
 CREATE TABLE `kennsatz` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -49,17 +50,9 @@ CREATE TABLE `kennsatz` (
   `beschlossen_fj0_nva` date NOT NULL DEFAULT '0000-00-00',
   `beschlossen_fj1_nva` date NOT NULL DEFAULT '0000-00-00',
   `beschlossen_mefp_nva` date NOT NULL DEFAULT '0000-00-00',
-
-  `hebesatz1` int NOT NULL DEFAULT '0',
-  `hebesatz2` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`iid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
-
-
-
 
 
 
@@ -73,7 +66,8 @@ DROP TABLE IF EXISTS `ergebnishaushalt`;
 CREATE TABLE `ergebnishaushalt` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -111,7 +105,8 @@ DROP TABLE IF EXISTS `er_sektor`;
 CREATE TABLE `er_sektor` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -145,7 +140,8 @@ DROP TABLE IF EXISTS `finanzierungshaushalt`;
 CREATE TABLE `finanzierungshaushalt` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -181,7 +177,8 @@ DROP TABLE IF EXISTS `fr_sektor`;
 CREATE TABLE `fr_sektor` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -213,7 +210,8 @@ DROP TABLE IF EXISTS `vermoegenshaushalt`;
 CREATE TABLE `vermoegenshaushalt` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -280,7 +278,8 @@ DROP TABLE IF EXISTS `operating_leasing`;
 CREATE TABLE `operating_leasing` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -317,7 +316,8 @@ DROP TABLE IF EXISTS `beteiligungen`;
 CREATE TABLE `beteiligungen` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -366,7 +366,8 @@ DROP TABLE IF EXISTS `haftungen`;
 CREATE TABLE `haftungen` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -404,7 +405,8 @@ DROP TABLE IF EXISTS `ppp_projekt`;
 CREATE TABLE `ppp_projekt` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -441,7 +443,8 @@ DROP TABLE IF EXISTS `personal`;
 CREATE TABLE `personal` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -470,7 +473,8 @@ DROP TABLE IF EXISTS `pension`;
 CREATE TABLE `pension` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -495,7 +499,8 @@ DROP TABLE IF EXISTS `oestp`;
 CREATE TABLE `oestp` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -520,7 +525,8 @@ DROP TABLE IF EXISTS `kultur`;
 CREATE TABLE `kultur` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -542,13 +548,6 @@ CREATE TABLE `kultur` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-
-
-
-
-
-
-
 -- Table structure for table `vorhaben`
 --
 
@@ -558,7 +557,8 @@ DROP TABLE IF EXISTS `vorhaben`;
 CREATE TABLE `vorhaben` (
   `iid` int NOT NULL AUTO_INCREMENT,
   `va_ra` char(2) NOT NULL DEFAULT '',
-  `nachtrag_num` int NOT NULL DEFAULT '0',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
@@ -572,6 +572,29 @@ CREATE TABLE `vorhaben` (
   PRIMARY KEY (`iid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+DROP TABLE IF EXISTS `sonstige_daten`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sonstige_daten` (
+  `iid` int NOT NULL AUTO_INCREMENT,
+  `va_ra` char(2) NOT NULL DEFAULT '',
+  `nva` int NOT NULL DEFAULT '0',
+  `vrv` char(4) NOT NULL DEFAULT '',
+
+  `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
+  `quartal` char(1) NOT NULL DEFAULT '',
+  `gkz` char(5) NOT NULL DEFAULT '',
+
+  `hebesatz1` int NOT NULL DEFAULT '0',
+  `hebesatz2` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iid`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
+
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -16,8 +16,8 @@ const xmlParts2015 = [
   'pension',
   'oestp',
   'kultur',
-  'vorhaben'
-  // 'sonstige_daten'  // moved to kennsatz
+  'vorhaben',
+  'sonstige_daten'  // moved to kennsatz
 ]
 
 const ghdWhereKeys = {}
@@ -26,6 +26,14 @@ const ghdWhereKeys = {}
 
 // import xml data and prepare for database
 async function importXml(config, data) {
+
+  ghdWhereKeys.va_ra = config.va_ra
+  ghdWhereKeys.nva = config.nva
+  ghdWhereKeys.vrv = config.vrv
+  ghdWhereKeys.gkz = data.kennsatz.gkz
+  ghdWhereKeys.finanzjahr = data.kennsatz.finanzjahr
+  ghdWhereKeys.quartal = data.kennsatz.quartal
+
   if (config.vrv == 2015) {
     await importXml2015(config, data)
   }
@@ -38,34 +46,20 @@ async function importXml(config, data) {
 }  // eo import xml
 
 
-// put xml data structure (vrv 2015 ghd xml 3.7) to database
+// put xml data structure (vrv 2015 ghd xml 5.5) to database
 async function importXml2015(config, data) {
 
-  ghdWhereKeys.va_ra = config.va_ra
-  ghdWhereKeys.gkz = data.kennsatz.gkz,
-  ghdWhereKeys.finanzjahr = data.kennsatz.finanzjahr,
-  ghdWhereKeys.quartal = data.kennsatz.quartal
-  // ghdWhereKeys.nachtrag_num = data.kennsatz.nachtrag_num
-
-
   // prepare kennsatz und gesamt-ghd
-  delete data.kennsatz.$  // specific to xml library
+  delete data.kennsatz.$  // specific to used xml library
   const kennsatz = Object.assign({}, data.kennsatz)
   for (const part of xmlParts2015) {
     delete kennsatz[part]
   }
 
-  // move hebesatz from sonstige_daten to kennsatz for simplicity
-  // because hebesatz1 and hebesatz2 are the only properties of sonstige_daten for now
-  kennsatz.hebesatz1 = data.kennsatz.sonstige_daten.hebesatz1
-  kennsatz.hebesatz2 = data.kennsatz.sonstige_daten.hebesatz2
-  delete kennsatz.sonstige_daten
-
-  // cleanup global ghd object
+  // cleanup global ghd object from kennsatz properties
   for (const prop in kennsatz) {
     delete data.kennsatz[prop]
   }
-  delete data.kennsatz.sonstige_daten
 
 
   let tableName = 'kennsatz'
@@ -102,7 +96,6 @@ async function importXml2015(config, data) {
       records.push(rec)
     }  // eo single rec
 
-    Object.assign(partData, ghdWhereKeys)
     await db(tableName).insert(records)
     console.log(`   ${records.length} Datensätze geschrieben.`)
   }  // eo part loop
@@ -113,7 +106,133 @@ async function importXml2015(config, data) {
 }  // eo import xml 2015
 
 
+
+// import txt data and prepare for database
+async function importTxt(config, data) {
+
+  if (config.vrv == 1997) {
+    await importTxt1997(config, data)
+  }
+  else if (config.vrv == 2015) {
+    console.log('Datenstruktur 2015 (TXT) noch nicht implementiert.')
+  }
+  else {
+    console.log(`Datenstruktur ${config.vrv} nicht vorgesehen.`)
+  }
+}  // eo import xml
+
+
+// put txt data structure (vrv 1997 ghd xml 3.7) to database
+async function importTxt1997(config, data) {
+
+  ghdWhereKeys.va_ra = config.va_ra
+  ghdWhereKeys.nva = config.nva
+  ghdWhereKeys.vrv = config.vrv
+  // ghdWhereKeys.gkz = data.kennsatz.gkz,
+  // ghdWhereKeys.finanzjahr = data.kennsatz.finanzjahr,
+  // ghdWhereKeys.quartal = data.kennsatz.quartal
+
+  // unify eol
+  lines = data.replace('\r', '\n').replace('\n\n', '\n').split('\n')
+  console.log(`${lines.length} Zeilen eingelesen.`)
+
+  const records = {}
+  let lineNum = 0
+  let memSatzart = ''
+  for (line of lines) {
+
+    lineNum++
+    let tableName = ''
+    let rec = {}
+
+    if (line.trim() === '') {
+      continue
+    }
+
+    rec.finanzjahr = line.substr(0, 4)
+    rec.quartal = line.substr(4, 1)
+    if (rec.quartal === '0') {
+      rec.periode = 'j'
+    }
+    else if ('1234'.indexOf(rec.quartal) > -1) {
+      rec.periode = 'q'
+    }
+    else {
+      console.log(`*** ABBRUCH *** Fehlerhafte Quartalsangabe '${rec.quartal}' in Zeile ${lineNum}.`)
+      process.exit(1)
+    }
+
+    let monat = line.substr(5, 2)
+    if (monat !== '00') {
+      console.log(`*** ABBRUCH *** Datenträger enthält Monatsdaten in Zeile ${lineNum}. Diese können nicht verarbeitet werden.`)
+      process.exit(1)
+    }
+    let id_art = line.substr(7, 3)
+    rec.gkz = line.substr(10, 11).trim()
+
+    let satzart = line.substr(21, 2)
+    if (satzart !== memSatzart) {
+      console.log(`Lese Satzart ${satzart}.`)
+      memSatzart = satzart
+    }
+    switch (satzart) {
+    case '01':
+      tableName = 'kennsatz'
+      ghdWhereKeys.gkz = rec.gkz
+      ghdWhereKeys.finanzjahr = rec.finanzjahr
+      ghdWhereKeys.quartal = rec.quartal
+
+      rec.gemeinde = line.substr(23, 80).trim()
+      rec.verantwortlich = line.substr(103, 40).trim()
+      rec.sachbearbeiter = line.substr(143, 40).trim()
+      rec.telefon = line.substr(183, 20).trim()
+      rec.email = line.substr(203, 80).trim()
+      rec.version = line.substr(303, 8).trim()
+      rec.edv = line.substr(283, 20).trim()
+      rec.erstellt = line.substr(311, 8)
+      rec.beschlossen = line.substr(319, 8)
+      rec.beschlossen_fj0 = line.substr(327, 8)
+      rec.beschlossen_fj1 = line.substr(335, 8)
+      rec.beschlossen_mefp = line.substr(343, 8)
+      // rec.beschlossen_fj0_nva = line.substr().trim()
+      // rec.beschlossen_fj1_nva = line.substr().trim()
+      // rec.beschlossen_mefp_nva = line.substr().trim()
+      break
+    case '02':
+    case '03':
+    case '04':
+    case '05':
+    case '06':
+    case '07':
+    case '08':
+    case '09':
+    case '91':
+      tableName = 'dummy'
+      break
+    default:
+      console.log(`Unbekannte Satzart ${satzart}.`)
+      continue
+    }  // eo satzart
+
+    Object.assign(rec, ghdWhereKeys)
+    if (!records[tableName]) {
+      records[tableName] = []
+    }
+    records[tableName].push(rec)
+  }  // eo text line loop
+
+  // write to db
+  for (tableName of Object.keys(records)) {
+    await db(tableName).where(ghdWhereKeys).del()
+    await db(tableName).insert(records[tableName])
+    console.log(`${tableName}: ${records[tableName].length} Datensätze geschrieben.`)
+  }  // eo write part loop
+
+}  // eo import txt 1997
+
+
 // do the exports
 module.exports = {
-  importXml
+  importXml,
+  importTxt
 }

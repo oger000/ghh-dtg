@@ -5,7 +5,7 @@ const fs = require('fs')
 const csv = require(__dirname + '/lib/csvtojson')
 const xmlParser = require(__dirname + '/lib/xml2js')
 
-const { importXml } = require(__dirname + '/lib/handle-ghd')
+const { importXml, importTxt } = require(__dirname + '/lib/handle-ghd')
 
 
 // separated because of await/async
@@ -52,8 +52,8 @@ async function fake_main() {
       await importXml(configRec, ghdObj)
     }
     else if (fileType == 'TXT') {
-      console.log('Dateistruktur TXT noch nicht implementiert.')
-      importCsv(configRec)
+      const txtContent = fs.readFileSync(configRec.file_name, { encoding: 'latin1' }).toString()
+      await importTxt(configRec, txtContent)
     } else {
       console.log(`Unbekannter Dateityp: ${fileType}`)
     }
