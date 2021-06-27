@@ -165,6 +165,7 @@ async function importTxt1997(config, data) {
       console.log(`Lese Satzart ${satzart}.`)
       memSatzart = satzart
     }
+
     switch (satzart) {
     case '01':
       tableName = 'kennsatz'
@@ -201,7 +202,7 @@ async function importTxt1997(config, data) {
       break
 
     case '02':
-      tableName = 'finanzierungshaushalt'
+      tableName = 'finanzierungshaushalt'  // und ev ergebnishaushalt
       rec.hinweis = line.substr(23, 1)
       rec.ansatz_uab = line.substr(24, 3)
       rec.ansatz_ugl = line.substr(27, 3)
@@ -214,7 +215,17 @@ async function importTxt1997(config, data) {
 
       rec.ansatz_text = line.substr(110, 80)
       rec.konto_text = line.substr(190, 80)
-      rec.wert = parseInt(line.substr(82, 14)) / 100
+      if (config.va_ra === 'VA') {
+        // voranschlagswerte sind auch im RA enthalten, werden dort aber ignoriert
+        // ansonsten müsste man einen zusätzlichen VA (NVA 99 ???)mit diesen werten erstellen
+        rec.wert = parseInt(line.substr(82, 14)) / 100  // Gesamt-Voranschlag Rechnungsjahr
+      }
+      else if (config.va_ra === 'RA') {
+        rec.wert = parseInt(line.substr(68, 14)) / 100  // FIN-HH Ist Rechnungsjahr (-quartal/-monat)
+        // jahres-soll wird ignoriert, weil wir den ergebnishaushalt für vrv1997 nicht verwenden
+        // rec.wert = parseInt(line.substr(54, 14)) / 100  // ERG-HH soll Rechnungsjahr (-quartal/-monat)
+      }
+
       // rec.wert_fj0 = line.substr()
       // rec.wert_fj1 = line.substr()
       // rec.wert_fj2 = line.substr()
@@ -223,7 +234,59 @@ async function importTxt1997(config, data) {
       // rec.wert_fj5 = line.substr()
       break
 
-    case '03':
+    case '03':   // schulden
+      tableName = 'vermoegenshaushalt'
+      rec.ansatz_uab= line.substr()
+      rec.ansatz_ugl= line.substr()
+      rec.konto_grp= line.substr()
+      rec.konto_ugl= line.substr()
+      rec.sonst_ugl= line.substr()
+      rec.vorhabencode= line.substr()
+      rec.id_vhh= line.substr()
+      rec.sektor= line.substr()
+      rec.land= line.substr(47, 2)
+
+      rec.mvag_vhh= line.substr()
+      rec.ansatz_text= line.substr()
+      rec.konto_text= line.substr()
+      rec.endstand_vj= parseInt(line.substr(66, 14)) / 100
+      rec.zugang= parseInt(line.substr(80, 14)) / 100
+      rec.abgang= parseInt(line.substr(94, 14)) / 100
+      rec.aenderung= parseInt(line.substr(108, 14)) / 100
+
+      rec.endstand_rj= parseInt(line.substr(122, 14)) / 100
+      rec.abschreibung= line.substr()
+      rec.umbuchung= line.substr()
+      rec.hoehe= line.substr()
+      rec.ersaetze= parseInt(line.substr(150, 14)) / 100
+      rec.zinsen= parseInt(line.substr(136, 14)) / 100
+      rec.verzinsungsart= line.substr()
+      rec.waehrung= line.substr(51, 3)
+      rec.laufzeit_von= line.substr(178, 6)
+      rec.laufzeit_bis= line.substr(184, 6)
+      rec.fbn= line.substr()
+      rec.isin= line.substr()
+      rec.notleidend= line.substr()
+      rec.minleasing= line.substr()
+      rec.nachweis= line.substr()
+      rec.wechselkurs_zug= line.substr()
+      rec.wechselkurs_vj= line.substr()
+      rec.wechselkurs_rj= line.substr()
+      rec.zinsanpassungstermin= line.substr()
+
+      rec.bonitaet= line.substr()
+      rec.ausfallrisiko= line.substr()
+      rec.zinssatz= parseInt(line.substr(190, 5)) / 1000
+      rec.refzinssatz= line.substr(195, 20)
+      rec.minzinssatz= line.substr()
+      rec.endstand_fj0= parseInt(line.substr(296, 14)) / 100
+      rec.endstand_fj1= parseInt(line.substr(310, 14)) / 100
+      rec.endstand_fj2= parseInt(line.substr(324, 14)) / 100
+      rec.endstand_fj3= parseInt(line.substr(338, 14)) / 100
+      rec.endstand_fj4= parseInt(line.substr(352, 14)) / 100
+      // rec.endstand_fj5= parseInt(line.substr(, 14)) / 100
+      break
+
     case '04':
     case '05':
     case '06':
