@@ -24,10 +24,10 @@ const ghdWhereKeys = {}
 
 
 
-// handle xml data and prepare for database
-async function handleXml(config, data) {
+// import xml data and prepare for database
+async function importXml(config, data) {
   if (config.vrv == 2015) {
-    await handleXml2015(config, data)
+    await importXml2015(config, data)
   }
   else if (config.vrv == 1997) {
     console.log('Datenstruktur 1997 (XML) noch nicht implementiert.')
@@ -35,11 +35,11 @@ async function handleXml(config, data) {
   else {
     console.log(`Datenstruktur ${config.vrv} nicht vorgesehen.`)
   }
-}  // eo handle xml
+}  // eo import xml
 
 
 // put xml data structure (vrv 2015 ghd xml 3.7) to database
-async function handleXml2015(config, data) {
+async function importXml2015(config, data) {
 
   ghdWhereKeys.va_ra = config.va_ra
   ghdWhereKeys.gkz = data.kennsatz.gkz,
@@ -110,10 +110,10 @@ async function handleXml2015(config, data) {
   console.log('\n***Unbehandelte Daten:')
   console.log(JSON.stringify(data))
 
-}  // eo handle xml 2015
+}  // eo import xml 2015
 
 
 // do the exports
 module.exports = {
-  handleXml
+  importXml
 }
