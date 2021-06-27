@@ -151,16 +151,6 @@ async function importTxt1997(config, data) {
 
     rec.finanzjahr = line.substr(0, 4)
     rec.quartal = line.substr(4, 1)
-    if (rec.quartal === '0') {
-      rec.periode = 'j'
-    }
-    else if ('1234'.indexOf(rec.quartal) > -1) {
-      rec.periode = 'q'
-    }
-    else {
-      console.log(`*** ABBRUCH *** Fehlerhafte Quartalsangabe '${rec.quartal}' in Zeile ${lineNum}.`)
-      process.exit(1)
-    }
 
     let monat = line.substr(5, 2)
     if (monat !== '00') {
@@ -182,6 +172,17 @@ async function importTxt1997(config, data) {
       ghdWhereKeys.finanzjahr = rec.finanzjahr
       ghdWhereKeys.quartal = rec.quartal
 
+      if (rec.quartal === '0') {
+        rec.periode = 'j'
+      }
+      else if ('1234'.indexOf(rec.quartal) > -1) {
+        rec.periode = 'q'
+      }
+      else {
+        console.log(`*** ABBRUCH *** Fehlerhafte Quartalsangabe '${rec.quartal}' in Zeile ${lineNum}.`)
+        process.exit(1)
+      }
+
       rec.gemeinde = line.substr(23, 80).trim()
       rec.verantwortlich = line.substr(103, 40).trim()
       rec.sachbearbeiter = line.substr(143, 40).trim()
@@ -198,7 +199,30 @@ async function importTxt1997(config, data) {
       // rec.beschlossen_fj1_nva = line.substr().trim()
       // rec.beschlossen_mefp_nva = line.substr().trim()
       break
+
     case '02':
+      tableName = 'finanzierungshaushalt'
+      rec.hinweis = line.substr(23, 1)
+      rec.ansatz_uab = line.substr(24, 3)
+      rec.ansatz_ugl = line.substr(27, 3)
+      rec.konto_grp = line.substr(30, 3)
+      rec.konto_ugl = line.substr(33, 3)
+      rec.sonst_ugl = line.substr(36, 3)
+      rec.verguetung = line.substr(39, 1)
+      // rec.vorhabencode = line.substr()
+      // rec.mvag_fhh = line.substr()
+
+      rec.ansatz_text = line.substr(110, 80)
+      rec.konto_text = line.substr(190, 80)
+      rec.wert = parseInt(line.substr(82, 14)) / 100
+      // rec.wert_fj0 = line.substr()
+      // rec.wert_fj1 = line.substr()
+      // rec.wert_fj2 = line.substr()
+      // rec.wert_fj3 = line.substr()
+      // rec.wert_fj4 = line.substr()
+      // rec.wert_fj5 = line.substr()
+      break
+
     case '03':
     case '04':
     case '05':
@@ -223,6 +247,9 @@ async function importTxt1997(config, data) {
 
   // write to db
   for (tableName of Object.keys(records)) {
+    if (tableName === 'dummy') {
+      continue
+    }
     await db(tableName).where(ghdWhereKeys).del()
     await db(tableName).insert(records[tableName])
     console.log(`${tableName}: ${records[tableName].length} Datensätze geschrieben.`)

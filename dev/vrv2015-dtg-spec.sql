@@ -147,6 +147,7 @@ CREATE TABLE `finanzierungshaushalt` (
   `quartal` char(1) NOT NULL DEFAULT '',
   `gkz` char(5) NOT NULL DEFAULT '',
 
+  `hinweis` char(1) NOT NULL DEFAULT '',
   `ansatz_uab` char(3) NOT NULL DEFAULT '',
   `ansatz_ugl` char(3) NOT NULL DEFAULT '',
   `konto_grp` char(3) NOT NULL DEFAULT '',
