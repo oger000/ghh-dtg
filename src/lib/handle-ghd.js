@@ -409,12 +409,12 @@ async function importTxt1997(config, data) {
 
     case '07':
       tableName = 'sonstige_daten'
-      let positionsnummer = line.substr(23, 3)
+      let positionsnummer07 = line.substr(23, 3)
       let wert = parseInt(line.substr(26, 14)) / 100
-      if (positionsnummer === '001') {
+      if (positionsnummer07 === '001') {
         rec.hebesatz1 = wert
       }
-      else if (positionsnummer === '002') {
+      else if (positionsnummer07 === '002') {
         rec.hebesatz2 = wert
       }
       else {
@@ -478,7 +478,7 @@ async function importTxt1997(config, data) {
 
     case '91':
       tableName = 'pension'
-      let positionsnummer =  = line.substr(23, 3)
+      let positionsnummer91 = line.substr(23, 3)
       // rec.fj_nr = line.substr()
       // rec.aufwendungen = line.substr()
       // rec.koepfe_r = line.substr()
