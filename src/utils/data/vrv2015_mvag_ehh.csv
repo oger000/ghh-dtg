@@ -1,0 +1,59 @@
+"Ebene";"name";"Code"
+1;"Erträge aus der operativen Verwaltungstätigkeit ";211
+2;"Erträge aus eigenen Abgaben";2111
+2;"Erträge aus Ertragsanteilen";2112
+2;"Erträge aus Gebühren";2113
+2;"Erträge aus Leistungen";2114
+2;"Erträge aus Besitz und wirtschaftlicher Tätigkeit";2115
+2;"Erträge aus Veräußerung und sonstige Erträge";2116
+2;"Nicht finanzierungswirksame operative Erträge";2117
+1;"Erträge aus Transfers";212
+2;"Transferertrag von Trägern des öffentlichen Rechts";2121
+2;"Transferertrag von Beteiligungen";2122
+2;"Transferertrag von Unternehmen (mit Finanzunternehmen)";2123
+2;"Transferertrag von Haushalten und Organisationen ohne Erwerbscharakter";2124
+2;"Transferertrag vom Ausland";2125
+2;"Investitions- und Tilgungszuschüsse zwischen Unternehmungen und Betrieben der Gebietskörperschaft und der Gebietskörperschaft";2126
+2;"Nicht finanzierungswirksamer Transferertrag ";2127
+1;"Finanzerträge";213
+2;"Erträge aus Zinsen";2131
+2;"Erträge aus Zinsen aus derivativen Finanzinstrumenten ohne Grundgeschäft";2132
+2;"Erträge aus Gewinnentnahmen von marktbestimmten Betrieben ";2133
+2;"Sonstige Finanzerträge";2134
+2;"Erträge aus Dividenden/Gewinnausschüttungen";2135
+2;"Sonstige nicht finanzierungswirksame Finanzerträge ";2136
+"SU";"Summe Erträge";" 21"
+1;"Personalaufwand";221
+2;"Personalaufwand (Bezüge, Nebengeb., Mehrleistungen)";2211
+2;"Gesetzlicher und freiwilliger Sozialaufwand";2212
+2;"Sonstiger Personalaufwand";2213
+2;"Nicht finanzierungswirksamer Personalaufwand";2214
+1;"Sachaufwand (ohne Transferaufwand)";222
+2;"Gebrauchs- und Verbrauchsgüter, Handelswaren";2221
+2;"Verwaltungs- und Betriebsaufwand";2222
+2;"Leasing- und Mietaufwand";2223
+2;"Instandhaltung ";2224
+2;"Sonstiger Sachaufwand";2225
+2;"Nicht finanzierungswirksamer Sachaufwand";2226
+1;"Transferaufwand (laufende Transfers und Kapitaltransfers)";223
+2;"Transferaufwand an Träger des öffentlichen Rechts";2231
+2;"Transferaufwand an Beteiligungen";2232
+2;"Transferaufwand an Unternehmen (mit Finanzunternehmen)";2233
+2;"Transferaufwand an Haushalte und Organisationen ohne Erwerbscharakter";2234
+2;"Transferaufwand an das Ausland";2235
+2;"Investitions- und Tilgungszuschüsse zwischen Unternehmungen und Betrieben der Gebietskörperschaft und der Gebietskörperschaft";2236
+2;"Nicht finanzierungswirksamer Transferaufwand";2237
+1;"Finanzaufwand";224
+2;"Zinsen aus Finanzschulden, Finanzierungsleasing, Forderungskauf und derivativen Finanzinstrumenten mit Grundgeschäft";2241
+2;"Zinsen und sonstige Aufwendungen aus derivativen Finanzinstrumenten ohne Grundgeschäft";2242
+2;"Gewinnentnahmen von Unternehmungen und marktbestimmten Betrieben der Gebietskörperschaft  (innerhalb der Gebietskörperschaft)";2243
+2;"Sonstiger Finanzaufwand";2244
+2;"Nicht finanzierungswirksamer Finanzaufwand";2245
+"SU";"Summe Aufwendungen";22
+"SA0";"(0) Nettoergebnis (21 - 22)";"SA0"
+1;"Entnahmen von Haushaltsrücklagen";230
+2;"Entnahmen von Haushaltsrücklagen";2301
+1;"Zuweisung an Haushaltsrücklagen";240
+2;"Zuweisung an Haushaltsrücklagen";2401
+"SU";"Summe Haushaltsrücklagen";23
+"SA00";"Nettoergebnis nach Zuweisung und Entnahmen von Haushaltsrücklagen (SA 0 +/- SU23)";"SA00"

@@ -19,7 +19,7 @@ const csvIn = csv({
 })
 
 const dataDir = __dirname + '/data/'
-const inputFile = dataDir + 'vrv2015_ansatz.csv'
+const inputFile = dataDir + 'vrv2015_mvag_vhh.csv'
 if(fs.existsSync(inputFile)) {
   console.log('Lese Daten von: ' + inputFile)
 }
@@ -43,27 +43,32 @@ async function fake_main() {
     }
     */
 
-    if (recIn.A === 'A') {
+    if (!recIn.Ebene || '0123456789S'.indexOf(recIn.Ebene.substr(0, 1)) == -1) {
+      console.log('Überspringe ' + JSON.stringify(recIn))
       continue
     }
-    if (recIn.A.startsWith('Gruppe')) {
-      recIn.Bezeichnung = recIn.A.substr(11).replace(/ \(.*$/, '').trim()
-      recIn.A = recIn.A.substr(7,1)
+
+    // positionen A.x und B.x sind aktiva, sonst passiva
+    if ('AB'.indexOf(recIn.Position.substr(0, 1)) > -1) {
+      recIn.aktpas = 'Aktiva'
+    } else {
+      recIn.aktpas = 'Passiva'
     }
 
-    let grpNum = recIn.A || recIn.U
-    let name = recIn.Bezeichnung
     let recOut = {
       vrv: '2015',
-      grpnum: grpNum,
-      name: name
+      mvag: recIn.Code,
+      position: recIn.Position,
+      name: recIn.name,
+      ebene: recIn.Ebene,
+      aktpas: recIn.aktpas
     }
 
     // console.log('' + i + ' ' + recOut.grpnum + '=' + recOut.name)
     recOutAll.push(recOut)
   }
   console.log('Begin: Write ' + recOutAll.length + ' records to db.')
-  const tableName = 'vrv2015_ansatzgruppe'
+  const tableName = 'vrv_vhh'
   await db(tableName).truncate()
   await db.batchInsert(tableName, recOutAll)
   console.log('End: Write to db.')
@@ -76,7 +81,7 @@ async function fake_main() {
     await fake_main();
   } catch (ex) {
     console.log('Fehlerbehandlung nicht implementiert.')
-    console.log(e)
+    console.log(ex)
   }
   process.exit(0)
 })();

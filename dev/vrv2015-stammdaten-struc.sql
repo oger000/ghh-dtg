@@ -21,16 +21,16 @@
 -- Table structure for table `vrv_ansatzgruppe`
 --
 
-DROP TABLE IF EXISTS `vrv_ansatzgruppe`;
+DROP TABLE IF EXISTS `vrv_ansaetze`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vrv_ansatzgruppe` (
+CREATE TABLE `vrv_ansaetze` (
   `iid` int NOT NULL AUTO_INCREMENT,
-  `vrv` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `grpnum` char(3) NOT NULL,
-  `name` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `vrv` char(4)  NOT NULL,
+  `ansatz` char(3) NOT NULL,
+  `name` varchar(512)  NOT NULL,
   PRIMARY KEY (`iid`),
-  UNIQUE KEY `grpnum` (`grpnum`)
+  UNIQUE KEY `ansatz` (`ansatz`)
 ) ENGINE=InnoDB AUTO_INCREMENT=493 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,14 +38,14 @@ CREATE TABLE `vrv_ansatzgruppe` (
 -- Table structure for table `vrv_kontogruppe`
 --
 
-DROP TABLE IF EXISTS `vrv_kontogruppe`;
+DROP TABLE IF EXISTS `vrv_konten`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vrv_kontogruppe` (
+CREATE TABLE `vrv_konten` (
   `iid` int NOT NULL AUTO_INCREMENT,
-  `vrv` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `grpnum` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `name` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `vrv` char(4)  NOT NULL DEFAULT '',
+  `konto` char(3)  NOT NULL DEFAULT '',
+  `name` varchar(512)  NOT NULL DEFAULT '',
   `ehh_e2` varchar(4) NOT NULL DEFAULT '',
   `fhh_ein_e2` varchar(4) NOT NULL DEFAULT '',
   `fhh_aus_e2` varchar(4) NOT NULL DEFAULT '',
@@ -53,10 +53,82 @@ CREATE TABLE `vrv_kontogruppe` (
   `quer_ein` varchar(4) NOT NULL DEFAULT '',
   `quer_aus` varchar(4) NOT NULL DEFAULT '',
   PRIMARY KEY (`iid`),
-  UNIQUE KEY `grpnum` (`grpnum`)
+  UNIQUE KEY `konto` (`konto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+
+
+
+DROP TABLE IF EXISTS `vrv_ehh`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vrv_ehh` (
+  `iid` int NOT NULL AUTO_INCREMENT,
+  `vrv` char(4)  NOT NULL DEFAULT '',
+  `mvag` char(4)  NOT NULL DEFAULT '',
+  `name` varchar(512)  NOT NULL DEFAULT '',
+  `ebene` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`iid`),
+  UNIQUE KEY `mvag` (`mvag`)
+) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+DROP TABLE IF EXISTS `vrv_fhh`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vrv_fhh` (
+  `iid` int NOT NULL AUTO_INCREMENT,
+  `vrv` char(4)  NOT NULL DEFAULT '',
+  `mvag` char(4)  NOT NULL DEFAULT '',
+  `name` varchar(512)  NOT NULL DEFAULT '',
+  `ebene` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`iid`),
+  UNIQUE KEY `mvag` (`mvag`)
+) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+
+DROP TABLE IF EXISTS `vrv_vhh`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vrv_vhh` (
+  `iid` int NOT NULL AUTO_INCREMENT,
+  `vrv` char(4)  NOT NULL DEFAULT '',
+  `mvag` char(4)  NOT NULL DEFAULT '',
+  `position` varchar(80) NOT NULL DEFAULT '',
+  `name` varchar(512)  NOT NULL DEFAULT '',
+  `ebene` varchar(80) NOT NULL DEFAULT '',
+  `aktpas` char(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`iid`),
+  UNIQUE KEY `mvag` (`mvag`)
+) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

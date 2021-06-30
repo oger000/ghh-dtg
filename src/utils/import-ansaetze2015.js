@@ -2,7 +2,8 @@
 Datenquelle:
 https://www.bmf.gv.at/themen/budget/finanzbeziehungen-laender-gemeinden/vrv-2015.html
 Kopfzeile:
-KL;kl_name;UK;uk_name;grp;grp_name;ehh_e2;fhh_ein_e2;fhh_aus_e2;vhh_e2;quer
+//"A";"U";"Bezeichnung";dummy
+"A";"U";"Bezeichnung"
 */
 
 const fs = require('fs')
@@ -18,14 +19,15 @@ const csvIn = csv({
 })
 
 const dataDir = __dirname + '/data/'
-const inputFile = dataDir + 'vrv2015_konten.csv'
+const inputFile = dataDir + 'vrv2015_ansaetze.csv'
 if(fs.existsSync(inputFile)) {
-  console.log('Daten von: ' + inputFile)
+  console.log('Lese Daten von: ' + inputFile)
 }
 else {
   console.log(inputFile + ' nicht gefunden.')
   process.exit()
 }
+
 
 
 // separated because of await/async
@@ -41,30 +43,27 @@ async function fake_main() {
     }
     */
 
-    let grpNum = recIn.KL || recIn.UK || recIn.grp
-    let name = recIn.kl_name + recIn.uk_name + recIn.grp_name
-    let querParts = recIn.quer.split('/')
-    let quer_ein = querParts[0].trim()
-    let quer_aus = (querParts[1] || '').trim()
-    quer_aus = quer_aus || quer_ein
-
-    let recOut = {
-      vrv: '2015',
-      konto: grpNum,
-      name: name,
-      ehh_e2: recIn.ehh_e2,
-      fhh_ein_e2: recIn.fhh_ein_e2,
-      fhh_aus_e2: recIn.fhh_aus_e2,
-      vhh_e2: recIn.vhh_e2,
-      quer_ein: quer_ein,
-      quer_aus: quer_aus
+    if (recIn.A === 'A') {
+      continue
+    }
+    if (recIn.A.startsWith('Gruppe')) {
+      recIn.Bezeichnung = recIn.A.substr(11).replace(/ \(.*$/, '').trim()
+      recIn.A = recIn.A.substr(7,1)
     }
 
-    // console.log('' + i + ' ' + recOut.grpnum + ' = ' + recOut.name)
+    let grpNum = recIn.A || recIn.U
+    let name = recIn.Bezeichnung
+    let recOut = {
+      vrv: '2015',
+      ansatz: grpNum,
+      name: name
+    }
+
+    // console.log('' + i + ' ' + recOut.grpnum + '=' + recOut.name)
     recOutAll.push(recOut)
   }
   console.log('Begin: Write ' + recOutAll.length + ' records to db.')
-  const tableName = 'vrv_konten'
+  const tableName = 'vrv_ansaetze'
   await db(tableName).truncate()
   await db.batchInsert(tableName, recOutAll)
   console.log('End: Write to db.')

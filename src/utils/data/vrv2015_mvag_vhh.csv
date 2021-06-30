@@ -1,0 +1,97 @@
+"Ebene";"Position";"name";"Code"
+0;"A ";"Langfristiges Vermögen ";10
+1;"A.I ";"Immaterielle Vermögenswerte ";101
+2;"A.I.1";"Immaterielle Vermögenswerte ";1010
+1;"A.II ";"Sachanlagen";102
+2;"A.II.1 ";"Grundstücke, Grundstückseinrichtungen und Infrastruktur";1021
+2;"A.II.2 ";"Gebäude und Bauten";1022
+2;"A.II.3";"Wasser- und Abwasserbauten und -anlagen";1023
+2;"A.II.4";"Sonderanlagen";1024
+2;"A.II.5 ";"Technische Anlagen, Fahrzeuge und Maschinen";1025
+2;"A.II.6";"Amts-, Betriebs- und Geschäftsausstattung ";1026
+2;"A.II.7";"Kulturgüter ";1027
+2;"A.II.8";"Geleistete Anzahlungen für Anlagen und Anlagen in Bau";1028
+1;"A.III ";"Aktive Finanzinstrumente/Langfristiges Finanzvermögen";103
+2;"A.III.1 ";"Bis zur Endfälligkeit gehaltene Finanzinstrumente ";1031
+2;"A.III.2 ";"Zur Veräußerung verfügbare Finanzinstrumente";1032
+2;"A.III.3";"Partizipations- und Hybridkapital ";1033
+2;"A.III.4";"Derivative Finanzinstrumente ohne Grundgeschäft";1034
+1;"A.IV ";"Beteiligungen ";104
+2;"A.IV.1 ";"Beteiligungen an verbundenen Unternehmen";1041
+2;"A.IV.2 ";"Beteiligungen an assoziierten Unternehmen";1042
+2;"A.IV.3 ";"Sonstige Beteiligungen ";1043
+2;"A.IV.4";"Verwaltete Einrichtungen, die der Kontrolle unterliegen";1044
+1;"A.V ";"Langfristige Forderungen ";106
+2;"A.V.1";"Langfristige Forderungen aus Lieferungen und Leistungen";1061
+2;"A.V.2";"Langfristige Forderungen aus gewährten Darlehen";1062
+2;"A.V.3";"Sonstige langfristige Forderungen ";1063
+0;"B ";"Kurzfristiges Vermögen ";11
+1;"B.I ";"Kurzfristige Forderungen ";113
+2;"B.I.1";"Kurzfristige Forderungen aus Lieferungen und Leistungen ";1131
+2;"B.I.2";"Kurzfristige Forderungen aus Abgaben";1132
+2;"B.I.3";"Sonstige kurzfristige Forderungen ";1133
+2;"B.I.4";"Sonstige kurzfristige Forderungen (nicht voranschlagswirksame Gebarung)";1134
+1;"B.II ";"Vorräte ";114
+2;"B.II.1 ";"Vorräte ";1141
+2;"B.II.2 ";"Gegebene Anzahlungen auf Vorräte ";1142
+1;"B.III ";"Liquide Mittel ";115
+2;"B.III.1 ";"Kassa, Bankguthaben, Schecks";1151
+2;"B.III.2";"Zahlungsmittelreserven";1152
+1;"B.IV.";"Aktive Finanzinstrumente/Kurzfristiges Finanzvermögen";116
+2;"B.IV.1";"Aktive Finanzinstrumente/Kurzfristiges Finanzvermögen";1160
+1;"B.V.";"Aktive Rechnungsabgrenzung";117
+2;"B.V.1";"Aktive Rechnungsabgrenzung";1170
+"SU";A;"Summe Aktiva (10 + 11)";"SU-A"
+;;;
+"(1)";"(2)";"(3)";"(4)"
+"Ebene";"Position";"PASSIVA";"Code"
+0;"C ";"Nettovermögen (Ausgleichsposten) ";12
+1;"C.I ";"Saldo der Eröffnungsbilanz ";121
+2;"C.I ";"Saldo der Eröffnungsbilanz ";1210
+1;"C.II ";"Kumuliertes Nettoergebnis ";122
+2;"C.II ";"Kumuliertes Nettoergebnis ";1220
+1;"C.III";"Haushaltsrücklagen";123
+2;"C.III.1";"Haushaltsrücklagen";1230
+1;"C.IV";"Neubewertungsrücklagen (Umbewertungskonto)";124
+2;"C.IV.1";"Neubewertungsrücklagen (Umbewertungskonto)";1240
+1;"C.V";"Fremdwährungsumrechnungsrücklagen";125
+2;"C.V.1";"Fremdwährungsumrechnungsrücklagen";1250
+0;"D";"Sonderposten Investitionszuschüsse (Kapitaltransfers)";13
+1;"D.I";"Investitionszuschüsse ";131
+2;"D.I.1";"Investitionszuschüsse von Trägern öffentlichen Rechts";1311
+2;"D.I.2";"Investitionszuschüsse von Beteiligungen";1312
+2;"D.I.3";"Investitionszuschüsse von übrigen";1313
+0;"E";"Langfristige Fremdmittel ";14
+1;"E.I ";"Langfristige Finanzschulden, netto";141
+2;"E.I.1 ";"Langfristige Finanzschulden";1411
+2;"E.I.2";"Langfristige Forderungen aus derivativen Finanzinstrumenten mit Grundgeschäft (-)";1412
+2;"E.I.3";"Langfristige Verbindlichkeiten aus derivativen Finanzinstrumenten mit Grundgeschäft ";1413
+1;"E.II";"Langfristige Verbindlichkeiten";142
+2;"E.II.1";"Langfristige Verbindlichkeiten aus Lieferungen und Leistungen";1421
+2;"E.II.2";"Leasingverbindlichkeiten";1422
+2;"E.II.3";"Sonstige langfristige Verbindlichkeiten";1423
+1;"E.III ";"Langfristige Rückstellungen ";143
+2;"E.III.1";"Rückstellungen für Abfertigungen ";1431
+2;"E.III.2";"Rückstellungen für Jubiläumszuwendungen ";1432
+2;"E.III.3";"Rückstellungen für Haftungen ";1433
+2;"E.III.4";"Rückstellungen für Sanierungen von Altlasten";1434
+2;"E.III.5";"Rückstellungen für Pensionen";1435
+2;"E.III.6";"Sonstige langfristige Rückstellungen";1436
+0;" F";"Kurzfristige Fremdmittel";15
+1;"F.I ";"Kurzfristige Finanzschulden, netto";151
+2;"F.I.1 ";"Kurzfristige Finanzschulden";1511
+2;"F.I.2 ";"Kurzfristige Forderungen aus derivativen Finanzinstrumenten mit Grundgeschäft (-)";1512
+2;"F.I.3 ";"Kurzfristige Verbindlichkeiten aus derivativen Finanzinstrumenten mit Grundgeschäft";1513
+1;"F.II";"Kurzfristige Verbindlichkeiten";152
+2;"F.II.1";"Kurzfristige Verbindlichkeiten aus Lieferungen und Leistungen";1521
+2;"F.II.2";"Kurzfristige Verbindlichkeiten aus Abgaben";1522
+2;"F.II.3";"Sonstige kurzfristige Verbindlichkeiten ";1523
+2;"F.II.4";"Sonstige kurzfristige Verbindlichkeiten (nicht voranschlagswirksame Gebarung)";1524
+1;"F.III";"Kurzfristige Rückstellungen ";153
+2;"F.III.1 ";"Rückstellungen für Prozesskosten ";1531
+2;"F.III.2";"Rückstellungen für ausstehende Rechnungen";1532
+2;"F.III.3";"Rückstellungen für nicht konsumierte Urlaube";1533
+2;"F.III.4";"Sonstige kurzfristige Rückstellungen ";1534
+1;"F.IV.";"Passive Rechnungsabgrenzung";154
+2;"F.IV.1";"Passive Rechnungsabgrenzung";1540
+"SU";P;"Summe Passiva (12 + 13 + 14 + 15)";"SU-P"

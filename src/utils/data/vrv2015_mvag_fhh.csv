@@ -1,0 +1,140 @@
+"Ebene";"name";"Code"
+1;"Einzahlungen aus der operativen Verwaltungstätigkeit";311
+2;"Einzahlungen aus eigenen Abgaben";3111
+2;"Einzahlungen aus Ertragsanteilen";3112
+2;"Einzahlungen aus Gebühren ";3113
+2;"Einzahlungen aus Leistungen";3114
+2;"Einzahlungen aus Besitz und wirtschaftlicher Tätigkeit";3115
+2;"Einzahlungen aus Veräußerung von geringwertigen Wirtschaftsgütern (GWG) und sonstige Einzahlungen";3116
+1;"Einzahlungen aus Transfers (ohne Kapitaltransfers)";312
+2;"Transferzahlungen von Trägern des öffentlichen Rechts";3121
+2;"Transferzahlungen von Beteiligungen";3122
+2;"Transferzahlungen von Unternehmen (inkl. Finanzunternehmen)";3123
+2;"Transferzahlungen von Haushalte und Organisationen ohne Erwerbscharakter";3124
+2;"Transferzahlungen vom Ausland";3125
+2;"Investitions- und Tilgungszuschüsse zwischen Unternehmungen und Betrieben der Gebietskörperschaft und der Gebietskörperschaft";3126
+1;"Einzahlungen aus Finanzerträgen";313
+"2 ";"Einzahlungen aus Zinserträgen ";3131
+2;"Einzahlungen aus Gewinnentnahmen von marktbestimmten Betrieben ";3133
+2;"Sonstige Einzahlungen aus Finanzerträgen";3134
+2;"Einzahlungen aus Dividenden/Gewinnausschüttungen";3135
+"SU";"Summe Einzahlungen operative Gebarung";31
+1;"Auszahlungen aus Personalaufwand ";321
+2;"Auszahlungen für Personalaufwand Bezüge, Nebengebühren, und Mehrleistungsvergütungen)";3211
+2;"Auszahlungen für gesetzliche und freiwillige Sozialaufwendungen ";3212
+2;"Auszahlungen aus sonstigem Personalaufwand ";3213
+1;"Auszahlungen aus Sachaufwand (ohne Transferaufwand)";322
+2;"Auszahlungen für Gebrauchs- und Verbrauchsgüter, Handelswaren";3221
+2;"Auszahlungen für Verwaltungs- und Betriebsaufwand";3222
+2;"Auszahlungen für Leasing- und Mietaufwand";3223
+2;"Auszahlungen für Instandhaltung";3224
+2;"Sonstige Auszahlungen aus Sachaufwand ";3225
+2;"Auszahlungen aus der Inanspruchnahme von Haftungen";3226
+1;"Auszahlungen aus Transfers (ohne Kapitaltransfers)";323
+2;"Transferzahlungen an Träger des öffentlichen Rechts";3231
+2;"Transferzahlungen an Beteiligungen";3232
+2;"Transferzahlungen an Unternehmen (inkl. Finanzunternehmen)";3233
+2;"Transferzahlungen an Haushalte und Organisationen ohne Erwerbscharakter";3234
+2;"Transferzahlungen an das Ausland";3235
+2;"Investitions- und Tilgungszuschüsse zwischen Unternehmungen und Betrieben der Gebietskörperschaft und der Gebietskörperschaft";3236
+1;"Auszahlungen aus Finanzaufwand";324
+2;"Auszahlungen für Zinsaufwand, für Finanzierungsleasing, für Forderungskauf, für Finanzschulden und derivative Finanzinstrumente mit Grundgeschäft";3241
+2;"Auszahlungen für Zinsen aus derivativen Finanzinstrumenten ohne Grundgeschäft";3242
+2;"Auszahlung aus Gewinnentnahmen von marktbestimmten Betrieben ";3243
+2;"Sonstige Auszahlungen aus Finanzaufwendungen";3244
+"SU";"Summe Auszahlungen operative Gebarung ";32
+"SA1";"Saldo (1) Geldfluss aus der Operativen Gebarung (31 – 32)";"SA1"
+;;
+"(1)";"(2)";"(3)"
+"MVAG-Ebene";"Mittelverwendungs- und -aufbringungsgruppen (1. und 2. Ebene)";"MVAG-Code"
+1;"Einzahlungen aus der Investitionstätigkeit ";331
+2;"Einzahlungen aus der Veräußerung von immateriellem Vermögen";3311
+2;"Einzahlungen aus der Veräußerung von Grundstücken und Grundstückeinrichtungen";3312
+2;"Einzahlungen aus der Veräußerung von Gebäuden und Bauten";3313
+2;"Einzahlungen aus der Veräußerung von technischen Anlagen, Fahrzeuge und Maschinen";3314
+2;"Einzahlungen aus der Veräußerung von Amts-, Betriebs- und Geschäftsausstattung";3315
+2;"Einzahlungen aus der Veräußerung von Kulturgütern ";3316
+2;"Einzahlungen aus der Veräußerung von Beteiligungen";3317
+1;"Einzahlungen aus der Rückzahlung von Darlehen sowie gewährten Vorschüssen ";332
+2;"Einzahlungen aus Darlehen an Träger des öffentlichen Rechts";3321
+2;"Einzahlungen aus Darlehen an Beteiligungen";3322
+2;"Einzahlungen aus Darlehen an Unternehmen und Haushalte";3323
+2;"Einzahlungen aus Vorschüssen und Anzahlungen";3325
+1;"Einzahlungen aus Kapitaltransfers";333
+2;"Kapitaltransferzahlungen von Trägern des öffentlichen Rechts";3331
+2;"Kapitaltransferzahlungen von Beteiligungen";3332
+2;"Kapitaltransferzahlungen von Unternehmen ";3333
+2;"Kapitaltransferzahlungen von Haushalten und Organisationen ohne Erwerbscharakter";3334
+2;"Kapitaltransferzahlungen vom Ausland";3335
+"SU";"Summe Einzahlungen investive Gebarung";33
+1;"Auszahlungen aus der Investitionstätigkeit ";341
+2;"Auszahlungen für den Erwerb von immateriellem Vermögen";3411
+2;"Auszahlungen für den Erwerb von Grundstücken und Grundstückseinrichtungen";3412
+2;"Auszahlungen für den Erwerb von Gebäuden und Bauten";3413
+2;"Auszahlungen für den Erwerb von technischen Anlagen, Fahrzeuge und Maschinen";3414
+2;"Auszahlungen für den Erwerb von Amts-, Betriebs- und Geschäftsausstattung";3415
+2;"Auszahlungen für den Erwerb von Kulturgütern";3416
+2;"Auszahlungen für den Erwerb von Beteiligungen ";3417
+1;"Auszahlungen von gewährten Darlehen sowie gewährten Vorschüssen ";342
+2;"Auszahlung von Darlehen an Träger des öffentlichen Rechts";3421
+2;"Auszahlung von Darlehen an Beteiligungen";3422
+2;"Auszahlung von Darlehen an Unternehmen und Haushalte";3423
+2;"Auszahlungen von Vorschüssen und Anzahlungen";3425
+1;"Auszahlungen aus Kapitaltransfers ";343
+2;"Kapitaltransferzahlungen an Träger des öffentlichen Rechts";3431
+2;"Kapitaltransferzahlungen an Beteiligungen";3432
+2;"Kapitaltransferzahlungen an Unternehmen (Finanzunternehmen)";3433
+2;"Kapitaltransferzahlungen an Haushalte und Organisationen ohne Erwerbscharakter";3434
+2;"Kapitaltransferzahlungen an das Ausland";3435
+"SU";"Summe Auszahlungen investive Gebarung";34
+"SA2";"Saldo (2) Geldfluss aus der Investiven Gebarung (33 – 34)";"SA2"
+"SA3";"Saldo (3) Nettofinanzierungssaldo (Saldo 1+ Saldo 2) ";"SA3"
+;;
+"(1)";"(2)";"(3)"
+"MVAG-Ebene";"Mittelverwendungs- und -aufbringungsgruppen (1. und 2. Ebene)";"MVAG-Code"
+1;"Einzahlungen aus der Aufnahme von Finanzschulden";"351 "
+2;"Einzahlungen aus empfangenen Darlehen von öffentlichen Körperschaften und Rechtsträgern";3511
+2;"Einzahlungen aus empfangenen Darlehen von Beteiligungen";3512
+2;"Einzahlungen aus empfangenen Darlehen von Unternehmen und privaten Haushalten";3513
+2;"Einzahlungen aus Finanzschulden (Finanzunternehmen)";3514
+1;"Einzahlungen infolge eines Kapitaltausch bei derivativen Finanzinstrumenten mit Grundgeschäft";353
+2;"Einzahlungen infolge eines Kapitaltausch bei derivativen Finanzinstrumenten mit Grundgeschäft";3530
+1;"Einzahlungen aus dem Abgang von Finanzinstrumenten";355
+2;"Einzahlungen aus dem Abgang von Finanzinstrumenten";3550
+"SU";"Summe Einzahlungen aus der Finanzierungstätigkeit";35
+1;"Auszahlungen aus der Tilgung von Finanzschulden";361
+2;"Auszahlungen aus empfangenen Darlehen von öffentlichen Körperschaften und Rechtsträgern";3611
+2;"Auszahlungen aus empfangenen Darlehen von Beteiligungen";3612
+2;"Auszahlungen aus empfangenen Darlehen von Unternehmen und privaten Haushalten";3613
+2;"Auszahlungen aus Finanzschulden";3614
+2;"Auszahlung aus der Rückzahlung von Leasingverbindlichkeiten ";3615
+1;"Auszahlungen infolge eines Kapitaltausch bei derivativen Finanzinstrumenten mit Grundgeschäft";363
+2;"Auszahlungen infolge eines Kapitaltausch bei derivativen Finanzinstrumenten mit Grundgeschäft";3630
+1;"Auszahlungen für den Erwerb von Finanzinstrumenten";365
+2;"Auszahlungen für den Erwerb von Finanzinstrumenten";3650
+"SU";"Summe Auszahlungen aus der Finanzierungstätigkeit";36
+"SA4";"Saldo (4) Geldfluss aus der Finanzierungstätigkeit (35 – 36)";"SA4"
+"SA5";"Saldo (5) Geldfluss aus der voranschlagswirksamen Gebarung (Saldo 3 + Saldo 4)";"SA5"
+;;
+"(1)";"(2)";"(3)"
+"MVAG-Ebene";"Mittelverwendungs- und -aufbringungsgruppen (1. und 2. Ebene)";"MVAG-Code"
+1;"Einzahlungen aus nicht voranschlagswirksamen Forderungen";411
+2;"Einzahlungen aus nicht voranschlagswirksamen Forderungen";4110
+1;"Einzahlungen aus nicht voranschlagswirksamen Verbindlichkeiten";412
+2;"Einzahlungen aus nicht voranschlagswirksamen Verbindlichkeiten";4120
+1;"Einzahlungen aus der Aufnahme von zur Kassenstärkung eingegangenen Geldverbindlichkeiten (Barvorlagen)";"413*"
+2;"Einzahlungen aus der Aufnahme von zur Kassenstärkung eingegangenen Geldverbindlichkeiten (Barvorlagen)";"4130*"
+"SU";"Summe Einzahlungen aus der nicht voranschlagswirksamen Gebarung ";41
+1;"Auszahlungen aus nicht voranschlagswirksamen Forderungen";421
+2;"Auszahlungen aus nicht voranschlagswirksamen Forderungen";4210
+1;"Auszahlungen aus nicht voranschlagswirksamen Verbindlichkeiten";422
+2;"Auszahlungen aus nicht voranschlagswirksamen Verbindlichkeiten";4220
+1;"Auszahlungen zur Tilgung von zur Kassenstärkung eingegangenen Geldverbindlichkeiten (Barvorlagen)";"423*"
+2;"Auszahlungen zur Tilgung von zur Kassenstärkung eingegangenen Geldverbindlichkeiten (Barvorlagen)";"4230*"
+"SU";"Summe Auszahlungen aus der nicht voranschlagswirksamen Gebarung";42
+"SA6";"Geldfluss aus der nicht voranschlagswirksamen Gebarung";"SA61"
+;;
+"SA7";"Veränderung an Liquiden Mitteln (Saldo 5 + Saldo 6)";"SA71"
+1;"Anfangsbestand liquide Mittel (115 zum 31.12.20xx (t-1))";"X711"
+1;"Endbestand liquide Mittel (115 zum 31.12.20xx (t))";"X712"
+1;"davon Zahlungsmittelreserven (1152 zum 31.12.20xx (t))";"X713"
