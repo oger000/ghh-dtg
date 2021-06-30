@@ -236,8 +236,8 @@ async function importTxt1997(config, data) {
 
     case '03':   // schulden
       tableName = 'vermoegenshaushalt'
-      rec.ansatz_uab= line.substr(43, 3)
-      rec.ansatz_ugl= line.substr(46, 3)
+      rec.ansatz_uab= line.substr(38, 3)
+      rec.ansatz_ugl= line.substr(41, 3)
       // rec.konto_grp= line.substr()
       // rec.konto_ugl= line.substr()
       // rec.sonst_ugl= line.substr()
