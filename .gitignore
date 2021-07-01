@@ -1,3 +1,4 @@
 *localonly*
 node_modules
 *knexfile*
+.~*#

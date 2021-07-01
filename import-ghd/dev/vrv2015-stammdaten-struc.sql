@@ -116,6 +116,19 @@ CREATE TABLE `vrv_vhh` (
 
 
 
+DROP TABLE IF EXISTS `vrv_bestandteile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vrv_bestandteile` (
+  `iid` int NOT NULL AUTO_INCREMENT,
+  `vrv` char(4)  NOT NULL DEFAULT '',
+  `name` varchar(512)  NOT NULL DEFAULT '',
+  `reihung` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iid`)
+) ENGINE=InnoDB AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 
 
 
