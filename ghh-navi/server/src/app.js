@@ -7,17 +7,14 @@ const helmet = require('helmet')
 const cors = require('cors')
 const errorHandler = require('errorhandler')
 const logger = require('./lib/logger')
-const session = require('express-session')
-// const sequelize = require('./lib/sequelize')
-// const SequelizeSessionConnector = require('connect-session-sequelize')(session.Store)
 const knex = require('./lib/knex')
-const KnexSessionConnector = require('connect-session-knex')(session)
+// const KnexSessionConnector = require('connect-session-knex')(session)
 const oger = require('./lib/ogerlib')
 
 // read config
 // process.env['NODE_CONFIG_DIR'] = path.join(__dirname, '../config/')
 const config = require('config')
-const configVars = config.get('ogertimes')  // return value is immutable !!!
+const configVars = config.get('ghh_navi')  // return value is immutable !!!
 
 // create express app and use middleware
 const app = express()
@@ -41,13 +38,16 @@ app.use(express.urlencoded({ extended: true }))
 //   tableName: 'sessions_sequelize'
 // })
 // sessionStoreSequelize.sync()
+/*
 const sessionStoreKnex = new KnexSessionConnector({
   knex,
   tablename: 'sessions_knex',
   createtable: true,
   clearInterval: (60 * 60 * 1000)
 })
+*/
 app.set('trust proxy', 1) // trust first proxy (even without https)
+/*
 app.use(session({
   secret: 'ogersecret',
   resave: false, // per express-session docs this should be set to false because of race conditions on parallel requests
@@ -58,6 +58,7 @@ app.use(session({
   store: sessionStoreKnex
 
 }))
+*/
 
 // log incomming urls in debug mode
 app.use((req, resp, next) => {

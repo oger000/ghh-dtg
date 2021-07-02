@@ -2,7 +2,7 @@ const logger = require('./logger')
 const knex = require('knex')
 
 const config = require('config')
-const configVars = config.get('ogertimes')
+const configVars = config.get('ghh_navi')
 const opts = config.util.cloneDeep(configVars.knex)  // make opts mutable
 const knexClientName = configVars.knex.client  // used for post process respone below
 

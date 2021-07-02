@@ -4,57 +4,15 @@ const router = express.Router()
 const knex = require('../lib/knex')
 const oger = require('../lib/ogerlib')
 const UserFailure = oger.UserFailure
-const { ogerSelectModify } = require('../lib/ogerKnex')
+const { ogerWhere, ogerSelectModify } = require('../lib/ogerKnex')
 const HttpStatus = require('http-status-codes')
-const validate = require('../lib/validate.js')
-const { requireSessionPerm } = require('./sessionPerm')
-
-const tableName = 'usergroup'
-const validRule = require(`../validate/${tableName}.validate.js`)
 
 
-// check perm for all routes
-router.all('*', async (req, resp, next) => {
-  try {
-    requireSessionPerm(req, 'admin')
-  } catch(err) {
-    return oger.sendError(resp, err)
-  }
-  next()
-})
-
-
-// get list of data rows
-//router.get('/', async (req, resp) => {
-router.post('/get-list', async (req, resp) => {
+// get list of gemeinden
+router.post('/gemeinden', async (req, resp) => {
   try {
     const vals = req.body
-
-    const where = knex.queryBuilder()
-    vals.filter = vals.filter || {}
-    if (vals.filter.searchName) {
-      where.andWhere('name', 'like', `%${vals.filter.searchName}%`)
-    }
-    let query = where.clone()
-
-    for (const sort of vals.sort || []) {
-      query = query.orderBy(sort[0], sort[1])
-    }
-
-    const rows = await query
-      .select(['id', 'name', 'adminperm', 'masterperm', 'timeperm'])
-      .from(tableName)
-      .modify(qb => {
-        ogerSelectModify(qb, {
-          limit: vals.limit,
-          offset: vals.offset
-        })
-      })
-
-      const count = await where
-        .count('* AS total')
-        .from(tableName)
-        .then(rows => rows[0].total)
+    const rows = await knex.raw('SELECT * FROM kennsatz GROUP BY gkz ORDER BY name')
 
     return resp.send({ rows: rows, count: count })
   } catch(err) {
@@ -66,12 +24,18 @@ router.post('/get-list', async (req, resp) => {
 // get single record
 router.get('/:id', async (req, resp) => {
   try {
-    const row = await knex
+    const person = await knex
       .select('*')
       .from(tableName)
       .where({ id: req.params.id })
       .then(rows => rows[0])
-    return resp.send(row)
+
+    person.user = await knex
+      .select(['id', 'name', 'loginperm', 'begindate', 'enddate'])
+      .from('user')
+      .where('id', '=', person.id)
+
+    return resp.send(person)
   } catch(err) {
     return oger.sendError(resp, err)
   }
@@ -116,6 +80,7 @@ router.post('/:id', async (req, resp) => {
 
 
 // delete record
+// TODO remove defaultpersonid from user if set there
 router.delete('/:id', async (req, resp) => {
   try {
     const id = req.params.id
@@ -133,5 +98,5 @@ router.delete('/:id', async (req, resp) => {
 })  // eo delete record
 
 
-// init service
+// export
 module.exports = router
