@@ -72,11 +72,21 @@ module.exports = configure(function (ctx) {
       }
     },
 
-    // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
+    // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#introduction
     devServer: {
       https: false,
-      port: 8080,
-      open: true // opens browser window automatically
+      port: 8082,
+      open: true, // opens browser window automatically
+      proxy: {
+        // proxy all requests starting with /api to jsonplaceholder
+        '/api': {
+          target: 'http://localhost:30032',
+          changeOrigin: true,
+          pathRewrite: {
+            // '^/api': ''
+          }
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -94,7 +104,9 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Dialog'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

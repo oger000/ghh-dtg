@@ -9,7 +9,7 @@ const HttpStatus = require('http-status-codes')
 
 
 // get list of gemeinden
-router.post('/gemeinden', async (req, resp) => {
+router.all('/gemeinden', async (req, resp) => {
   try {
     const vals = req.body
     const rows = await knex.raw('SELECT * FROM kennsatz GROUP BY gkz ORDER BY name')

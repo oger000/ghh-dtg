@@ -1,7 +1,7 @@
 {
   ghh_navi: {
     host: "localhost",
-    port: 30031,
+    port: 30032,
     public: "./public",
     knex: {
       client: "mysql2",
