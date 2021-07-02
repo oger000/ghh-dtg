@@ -1,16 +1,16 @@
-"name";"reihung"
-"ergebnishaushalt";110
-"er_sektor";120
-"finanzierungshaushalt";130
-"fr_sektor";140
-"vermoegenshaushalt";150
-"operating_leasing";160
-"beteiligungen";170
-"haftungen";180
-"ppp_projekt";190
-"personal";200
-"pension";210
-"oestp";220
-"kultur";230
-"vorhaben";240
-"sonstige_daten";250
+"name";"dispname";"reihung"
+"ergebnishaushalt";"Ergebnishaushalt";110
+"er_sektor";"ER Sektor";120
+"finanzierungshaushalt";"Finanzierungshaushalt";130
+"fr_sektor";"FR Sektor";140
+"vermoegenshaushalt";"Vermoegenshaushalt";150
+"operating_leasing";"Leasing";160
+"beteiligungen";"Beteiligungen";170
+"haftungen";"Haftungen";180
+"ppp_projekt";"PrivatePublicPartnership";190
+"personal";"Personal";200
+"pension";"Pensionen";210
+"oestp";"OESTP";220
+"kultur";"Kulturgüter";230
+"vorhaben";"Vorhaben";240
+"sonstige_daten";"Sonstige Daten";250

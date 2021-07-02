@@ -9,93 +9,88 @@ const HttpStatus = require('http-status-codes')
 
 
 // get list of gemeinden
-router.all('/gemeinden', async (req, resp) => {
+router.post('/gemeinden', async (req, resp) => {
   try {
     const vals = req.body
-    const rows = await knex.raw('SELECT * FROM kennsatz GROUP BY gkz ORDER BY name')
-
-    return resp.send({ rows: rows, count: count })
+    const rows = await knex.raw('SELECT iid, gemeinde, gkz FROM kennsatz GROUP BY gkz ORDER BY gemeinde')
+    return resp.send({ rows: rows })
   } catch(err) {
     return oger.sendError(resp, err)
   }
 })  // eo list of data rows
 
 
-// get single record
-router.get('/:id', async (req, resp) => {
-  try {
-    const person = await knex
-      .select('*')
-      .from(tableName)
-      .where({ id: req.params.id })
-      .then(rows => rows[0])
-
-    person.user = await knex
-      .select(['id', 'name', 'loginperm', 'begindate', 'enddate'])
-      .from('user')
-      .where('id', '=', person.id)
-
-    return resp.send(person)
-  } catch(err) {
-    return oger.sendError(resp, err)
-  }
-})  // eo get single record
-
-
-// insert new record
-router.post('/', async (req, resp) => {
+// get list of kennsätze for gemeinde
+router.post('/gemeinde_jahre', async (req, resp) => {
   try {
     const vals = req.body
-    delete vals.id  // remove serial (autoinc)
-    const vErr = validate(vals, validRule.upsert)
-    if (vErr) {
-      throw new oger.ValidateFailure(vErr)
-    }
-    const ids = await knex.insert(vals).into(tableName).returning('id')
-    return resp.send({ id: ids[0] })
+    const rows = await knex
+      .select(knex.raw('iid, finanzjahr, quartal, va_ra, nva, vrv, gkz'))
+      .from('kennsatz')
+      .where(vals)
+      .orderByRaw('finanzjahr, va_ra desc, nva, vrv' )
+
+    return resp.send({ rows: rows })
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo insert new record
+})  // eo list of data rows
 
 
-// update redord
-router.post('/:id', async (req, resp) => {
+// get list of bestandzeile for vrv
+router.post('/vrv_bestandteile', async (req, resp) => {
   try {
     const vals = req.body
-    delete vals.id
-    const vErr = validate(vals, validRule.upsert)
-    if (vErr) {
-      throw new oger.ValidateFailure(vErr)
-    }
-    await knex(tableName)
-      .update(vals)
-      .where({ id: req.params.id })
+    const rows = await knex
+      .select(knex.raw('iid, name, dispname'))
+      .from('vrv_bestandteile')
+      .where(vals)
+      .orderByRaw('reihung' )
 
-    return resp.sendStatus(HttpStatus.OK)
+    return resp.send({ rows: rows })
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo update record
+})  // eo list of data rows
 
 
-// delete record
-// TODO remove defaultpersonid from user if set there
-router.delete('/:id', async (req, resp) => {
+// get gliederung of bestandteil
+router.post('/bestandteil_gliederung', async (req, resp) => {
   try {
-    const id = req.params.id
-    if (!+id) {  // paranoid check
-      throw new UserFailure('Die ID des zu löschenden Eintrags fehlt.')
+    const vals = req.body
+    const bestandteil = vals.bestandteil
+    let tableName = bestandteil
+
+    switch (bestandteil) {
+      case 'ergebnishaushalt':
+        tableName = 'vrv_ehh'
+        break
+
+      case 'finanzierungshaushalt':
+        tableName = 'vrv_fhh'
+        break
+
+      case 'vermoegenshaushalt':
+        tableName = 'vrv_vhh'
+        break
+
+      default:
+        const msg = `Unbekannter Bestandteil ${bestandteil}.`
+        console.log(msg)
+        return oger.sendError(resp, msg)
     }
-    const deleteCount = await knex
-      .del()
+
+    const rows = await knex
+      .select()
       .from(tableName)
-      .where({ id: id })
-    throw new UserFailure(`Es wurde ${JSON.stringify(deleteCount)} Eintrag gelöscht.`)
+      .where({ vrv: vals.vrv })
+      .orderByRaw('iid' )
+
+    return resp.send({ rows: rows })
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo delete record
+})  // eo list of data rows
 
 
 // export

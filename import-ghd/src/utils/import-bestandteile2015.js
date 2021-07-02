@@ -41,6 +41,7 @@ async function fake_main() {
     let recOut = {
       vrv: '2015',
       name: recIn.name,
+      dispname: recIn.dispname,
       reihung: recIn.reihung
     }
 
