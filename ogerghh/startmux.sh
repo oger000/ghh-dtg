@@ -2,7 +2,8 @@
 
 
 SESSIONNAME="ghh-navi"
-STARTDIR="/home/gerhard/oger-syncbox/grüne+gemeinde/ghh-dtg/repo/ghh-navi"
+#STARTDIR="/home/gerhard/oger-syncbox/grüne+gemeinde/ghh-dtg/repo/ogerghh"
+STARTDIR=`pwd`
 STARTDIR_CLIENT="$STARTDIR/client"
 STARTDIR_SERVER="$STARTDIR/server"
 

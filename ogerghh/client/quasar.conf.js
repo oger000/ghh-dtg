@@ -150,8 +150,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: 'ghh-navi',
-        short_name: 'ghh-navi',
+        name: 'ogerghh',
+        short_name: 'ogerghh',
         description: 'navigate gemeindehaushaltsdatenträger',
         display: 'standalone',
         orientation: 'portrait',
@@ -217,7 +217,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'ghh-navi'
+        appId: 'ogerghh'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
