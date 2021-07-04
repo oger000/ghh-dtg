@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Gemeindehaushalt Navi
+          Gemeindehaushalt
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -31,7 +31,7 @@
         <q-list>
 
           <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+            <q-item clickable v-ripple :to="menuItem.link">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -60,22 +60,26 @@ const menuList = [
   {
     icon: 'dashboard',
     label: 'Übersicht',
-    separator: true
+    separator: true,
+    link: '/'
   },
   {
     icon: 'navigation',
     label: 'Navigation',
-    separator: false
+    separator: false,
+    link: '/navi'
   },
   {
     icon: 'filter',
     label: 'Filter',
-    separator: false
+    separator: false,
+    link: '/'
   },
   {
     icon: 'export',
     label: 'Export',
-    separator: true
+    separator: true,
+    link: '/'
   }
 ]
 

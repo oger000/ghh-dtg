@@ -15,7 +15,7 @@
 <script>
 import { ref } from 'vue'
 import { Dialog } from 'quasar'
-import { axiosError } from '../../lib/ogerlib.js'
+import { axiosError } from '../lib/ogerlib.js'
 
 const nodes = [
   {
