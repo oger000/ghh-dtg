@@ -73,13 +73,13 @@ const menuList = [
     icon: 'filter',
     label: 'Filter',
     separator: false,
-    link: '/'
+    link: '/filter'
   },
   {
     icon: 'export',
     label: 'Export',
     separator: true,
-    link: '/'
+    link: '/export'
   }
 ]
 

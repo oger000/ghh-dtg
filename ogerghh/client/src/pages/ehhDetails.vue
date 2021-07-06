@@ -1,5 +1,18 @@
 <template>
   <q-page>
+
+    <q-toolbar  class="bg-primary text-white">
+      <q-btn flat dense round fab
+        icon="back"
+        @click="$router.back()"
+      />
+
+      <q-toolbar-title class="text-center">
+        {{ toolbarTitle }} ERGEBNISHAUSHALT
+      </q-toolbar-title>
+
+    </q-toolbar>
+
     <div class="q-pa-md q-gutter-sm">
       <q-tree
         :nodes="nodes"
@@ -18,11 +31,10 @@ import { ref } from 'vue'
 import { Dialog } from 'quasar'
 import api from '../lib/axios'
 import { axiosError } from '../lib/ogerlib'
-import { useRouter } from 'vue-router'
 
 const nodes = [
   {
-    name: 'Gemeinden',
+    name: 'DETAILS',
     key: 'R1',
     lazy: true,
     rec: {},
@@ -42,8 +54,6 @@ export default {
 
   // compose component
   setup () {
-    const router = useRouter()
-
     return {
       nodes: ref(nodes),
 
@@ -56,9 +66,7 @@ export default {
           case 'gemeinden':
             reqOpts = {}
             afterNextLevel = 'gemeinde_jahre'
-            router.push('/ehhDetails')
-            return
-            // break
+            break
           case 'gemeinde_jahre':
             reqOpts = {
               gkz: node.rec.gkz
