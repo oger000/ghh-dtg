@@ -3,12 +3,12 @@
 
     <q-toolbar  class="bg-primary text-white">
       <q-btn flat dense round fab
-        icon="back"
+        icon="arrow_back"
         @click="$router.back()"
       />
 
       <q-toolbar-title class="text-center">
-        {{ toolbarTitle }} ERGEBNISHAUSHALT
+        ERGEBNISHAUSHALT
       </q-toolbar-title>
 
     </q-toolbar>
