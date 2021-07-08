@@ -7,7 +7,6 @@
         node-key="key"
         label-key="name"
         @lazy-load="onLazyLoad"
-        tick-strategy="strict"
       />
     </div>
   </q-page>
@@ -26,8 +25,7 @@ const nodes = [
     key: 'R1',
     lazy: true,
     rec: {},
-    nextLevel: 'gemeinden',
-    noTick: true
+    nextLevel: 'gemeinden'
   }
 ]
 
@@ -56,9 +54,7 @@ export default {
           case 'gemeinden':
             reqOpts = {}
             afterNextLevel = 'gemeinde_jahre'
-            router.push('/ehhDetails')
-            return
-            // break
+            break
           case 'gemeinde_jahre':
             reqOpts = {
               gkz: node.rec.gkz
@@ -72,40 +68,22 @@ export default {
             afterNextLevel = 'bestandteil_details'
             break
           case 'bestandteil_details': {
-            reqOpts = {
-              vrv: node.rec.vrv,
-              bestandteil: node.rec.bestandteil
-            }
-            /*
-            let children
-            if (!node.rec.bestandteil_metagliederung) {
-              switch (node.rec.bestandteil) {
-                case 'ergebnishaushalt':
-                  children = [
-                    {
-                      name: 'nach Gliederung',
-                      key: `${node.key}_ANS`,
-                      lazy: true,
-                      rec: Object.assign({}, node.rec, { bestandteil_metagliederung: 'ANSATZ' }),
-                      nextLevel: 'bestandteil_details'
-                    },
-                    {
-                      name: 'nach Ansatz',
-                      key: `${node.key}_ANS`,
-                      lazy: true,
-                      rec: Object.assign({}, node.rec, { bestandteil_metagliederung: 'ANSATZ' }),
-                      nextLevel: 'bestandteil_details'
-                    }
-                  ]
-              }
-              if (children) {
-                done(children)
+            node.rec.bestandteil_name = node.name
+            switch (node.rec.bestandteil) {
+              case 'ergebnishaushalt':
+                router.push({ name: 'ehhDetails', params: node.rec })
+                fail()
+                return
+              default: {
+                Dialog.create({
+                  title: 'Fehler',
+                  message: `Details für unbekannten Bestanteil '${node.nextLevel}' angefordert.`,
+                  ok: true
+                })
+                fail()
                 return
               }
-            }
-            */
-            afterNextLevel = 'bestandteil_details'
-            break
+            } // eo case
           }
           default: {
             Dialog.create({
@@ -114,6 +92,7 @@ export default {
               ok: true
             })
             fail()
+            return
           }
         } // eo case
 

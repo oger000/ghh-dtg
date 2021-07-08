@@ -13,7 +13,12 @@ const routes = [
     path: '/',
     component: () => import('layouts/EmptyLayout.vue'),
     children: [
-      { path: 'ehhDetails', component: () => import('pages/ehhDetails.vue') }
+      {
+        path: 'ehhDetails',
+        name: 'ehhDetails',
+        props: true,
+        component: () => import('pages/ehhDetails.vue')
+      }
     ]
   },
 

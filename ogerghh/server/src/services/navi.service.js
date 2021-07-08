@@ -29,13 +29,24 @@ router.post('/gemeinde_jahre', async (req, resp) => {
   try {
     const vals = req.body
     const rows = await knex
-      .select(knex.raw('iid, finanzjahr, quartal, periode, va_ra, nva, vrv, gkz'))
+      .select(knex.raw('iid, va_ra, finanzjahr, quartal, periode, va_ra, nva, vrv, gkz'))
       .from('kennsatz')
       .where(vals)
       .orderByRaw('finanzjahr, va_ra desc, nva, vrv' )
 
     for (row of rows) {
-      let name = row.finanzjahr
+      let vaRa = ''
+      switch (row.va_ra) {
+        case 'VA':
+          vaRa = 'Voranschlag'
+          break
+        case 'RA':
+          vaRa = 'Rechnungsabschluss'
+          break
+        default:
+          vaRa = `Unbekannt VA/RA='${row.va_ra}'.`
+      }
+      let name = `${vaRa} ${row.finanzjahr}`
       if (row.periode !== 'j') {
         name += '/' + row.periode.toUpperCase() + row.quartal
       }
@@ -56,7 +67,7 @@ router.post('/vrv_bestandteile', async (req, resp) => {
   try {
     const vals = req.body
     const rows = await knex
-      .select(knex.raw('iid, name AS bestandteil, dispname AS name'))
+      .select(knex.raw('iid, name AS bestandteil, dispname AS name',))
       .from('vrv_bestandteile')
       .where(vals)
       .orderByRaw('reihung' )
