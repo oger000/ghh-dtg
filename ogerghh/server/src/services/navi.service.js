@@ -32,7 +32,7 @@ router.post('/gemeinde_berichte', async (req, resp) => {
       .select(knex.raw('iid, va_ra, finanzjahr, quartal, periode, va_ra, nva, vrv, gkz'))
       .from('kennsatz')
       .where(vals)
-      .orderByRaw('finanzjahr, va_ra desc, nva, vrv' )
+      .orderByRaw('finanzjahr, va_ra desc, nva, vrv')
 
     for (row of rows) {
       let vaRa = ''
@@ -70,7 +70,7 @@ router.post('/vrv_bestandteile', async (req, resp) => {
       .select(knex.raw('iid, name AS bestandteil, dispname AS name',))
       .from('vrv_bestandteile')
       .where(vals)
-      .orderByRaw('reihung' )
+      .orderByRaw('reihung')
 
     return resp.send({ rows: rows })
   } catch(err) {
@@ -85,6 +85,9 @@ router.post('/ehh_details', async (req, resp) => {
   const tableName = 'ergebnishaushalt'
 
   const where = knex.queryBuilder()
+  where.where(vals.filter)
+
+  /*
   vals.filter = vals.filter || {}
   const filters = []
   if (vals.filter.searchName) {
@@ -94,6 +97,7 @@ router.post('/ehh_details', async (req, resp) => {
       qb.orWhere('lastname', 'like', searchName)
     })
   }
+  */
   let query = where.clone()
 
   for (const sort of vals.sort || []) {
@@ -101,7 +105,6 @@ router.post('/ehh_details', async (req, resp) => {
   }
 
   try {
-
     const rows = await query
       .select(knex.raw('*'))
       .from(tableName)
@@ -112,10 +115,15 @@ router.post('/ehh_details', async (req, resp) => {
         })
       })
 
-      const total = await where
-        .count('* AS total')
-        .from(tableName)
-        .then(rows => rows[0].total)
+    for (row of rows) {
+      row.ansatz_text = `${row.ansatz_uab}${row.ansatz_ugl} ${row.ansatz_text}`
+      row.konto_text = `${row.konto_grp}${row.konto_ugl} ${row.konto_text}`
+    }
+
+    const total = await where
+      .count('* AS total')
+      .from(tableName)
+      .then(rows => rows[0].total)
 
     return resp.send({ rows: rows, total: total })
   } catch(err) {
@@ -124,23 +132,27 @@ router.post('/ehh_details', async (req, resp) => {
 })  // eo list of data rows
 
 
-// get ergebnishaushalt details
-async function getErgebnishaushaltDetails(req) {
+// get list of gemeinden
+router.post('/select_ansatz', async (req, resp) => {
+  try {
+    const vals = req.body
+    const rows = await knex
+      .select(knex.raw('*',))
+      .from('vrv_ansaetze')
+      // .where(vals)
+      .orderByRaw('iid')
 
-  const vals = req.body
-  const tableName = 'vrv_ehh'
+    const rowsOut = []
+    for (row of rows) {
+      const label = '' + row.ansatz.padEnd(7) + row.name // .replaceAll(' ', '&nbsp;')
+      rowsOut.push({ label: label, value: row.ansatz})
+    }
+    return resp.send({ rows: rowsOut })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of data rows
 
-  //if (vals.)
-
-
-  const rows = await knex
-    .select()
-    .from(tableName)
-    .where({ vrv: vals.vrv })
-    .orderByRaw('iid' )
-
-  return rows
-} // eo get ehh details
 
 // export
 module.exports = router

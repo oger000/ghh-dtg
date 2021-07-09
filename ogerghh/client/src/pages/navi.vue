@@ -70,13 +70,10 @@ export default {
           case 'bestandteil_details': {
             switch (node.rec.bestandteil) {
               case 'ergebnishaushalt':
+                // alert('out: ' + JSON.stringify(node.rec))
                 router.push({
                   name: 'ehhDetails',
-                  params: {
-                    gemeindeName: node.rec.gemeinden_name,
-                    berichtName: node.rec.gemeinde_berichte_name,
-                    bestandteilName: node.rec.vrv_bestandteile_name
-                  }
+                  params: Object.assign({}, node.rec)
                 })
                 fail()
                 return

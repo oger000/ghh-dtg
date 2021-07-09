@@ -11,6 +11,18 @@
       </q-toolbar-title>
     </q-toolbar>
 
+    <div>
+      <q-select
+        outlined
+        v-model="selectAnsatzSelected"
+        label="Ansatz"
+        :options="selectAnsatzOptions"
+        @filter="selectAnsatzFilterFn"
+        style="width: 250px"
+      >
+      </q-select>
+    </div>
+
     <q-table
      :rows="tableData"
      :columns="columns"
@@ -40,16 +52,29 @@ const columns = [
 
 export default {
   props: [
-    'gemeindeName',
-    'berichtName',
-    'bestandteilName'
+    'gemeinde',
+    'gkz',
+    'gemeinden_name',
+    'va_ra',
+    'finanzjahr',
+    'quartal',
+    'periode',
+    'nva',
+    'vrv',
+    'gemeinde_berichte_name',
+    'bestandteil',
+    'vrv_bestandteile_name'
   ],
-
 
   // compose component
   setup (props) {
     // debugger
-    // alert(JSON.stringify(props))
+    // alert('props-in: ' + JSON.stringify(props))
+
+    const mainTitle = ref(`${props.gemeinden_name} / ${props.gemeinde_berichte_name} / ${props.vrv_bestandteile_name}`)
+
+    // ---------------------------------------------------
+    // fetch rows from server
     const tableData = ref([])
     // const filter = ref('')
     const loading = ref(false)
@@ -61,16 +86,21 @@ export default {
       rowsNumber: 1
     })
 
-    const mainTitle = ref(`${props.gemeindeName} / ${props.berichtName} / ${props.bestandteilName}`)
-
-    // fetch rows from server
     async function fetchRowsAndTotal (serverOpts) {
       const { page, rowsPerPage, sortBy, descending } = serverOpts.pagination
       // const filter = props.filter
-      loading.value = true
 
+      loading.value = true
       try {
         const requestParams = prepPagingParams(serverOpts)
+        requestParams.filter = {
+          gkz: props.gkz,
+          va_ra: props.va_ra,
+          finanzjahr: props.finanzjahr,
+          quartal: props.quartal,
+          nva: props.nva,
+          vrv: props.vrv
+        }
         const { data } = await api.post('api/navi/ehh_details', requestParams)
         tableData.value = data.rows
         serverPagination.value.rowsNumber = data.total
@@ -92,6 +122,29 @@ export default {
       })
     })
 
+    // -----------------------------------------------
+    // data for ansatz selection
+    const selectAnsatzSelected = ref(null)
+    const selectAnsatzOptions = ref(null)
+
+    async function selectAnsatzFilterFn (val, update, abort) {
+      // if already loaded
+      if (selectAnsatzOptions.value !== null) {
+        update()
+        return
+      }
+
+      try {
+        const { data } = await api.post('api/navi/select_ansatz')
+        update(() => {
+          selectAnsatzOptions.value = data.rows
+        })
+      } catch (error) {
+        axiosError(error)
+      }
+    } // eo filter ansatz selection
+
+    // return responsive variables
     return {
       mainTitle,
       // filter,
@@ -99,7 +152,10 @@ export default {
       serverPagination,
       columns,
       tableData,
-      fetchRowsAndTotal
+      fetchRowsAndTotal,
+      selectAnsatzSelected,
+      selectAnsatzOptions,
+      selectAnsatzFilterFn
     }
   } // eo setup
 } // eo export default
