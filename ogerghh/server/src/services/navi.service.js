@@ -79,39 +79,45 @@ router.post('/vrv_bestandteile', async (req, resp) => {
 })  // eo list of data rows
 
 
-// get gliederung of bestandteil
-router.post('/bestandteil_details', async (req, resp) => {
+// get details for ergebnishaushalt
+router.post('/ehh_details', async (req, resp) => {
+  const vals = req.body
+  const tableName = 'ergebnishaushalt'
+
+  const where = knex.queryBuilder()
+  vals.filter = vals.filter || {}
+  const filters = []
+  if (vals.filter.searchName) {
+    const searchName = `%${vals.filter.searchName}%`
+    where.andWhere((qb) => {
+      qb.where('firstname', 'like', searchName)
+      qb.orWhere('lastname', 'like', searchName)
+    })
+  }
+  let query = where.clone()
+
+  for (const sort of vals.sort || []) {
+    query = query.orderBy(sort[0], sort[1])
+  }
+
   try {
-    const vals = req.body
-    const bestandteil = vals.bestandteil
-    let tableName = bestandteil
 
-    let rows = []
-    switch (bestandteil) {
-      case 'ergebnishaushalt':
-        rows = await getErgebnishaushaltDetails(req)
-        break
-      case 'finanzierungshaushalt':
-        tableName = 'vrv_fhh'
-        break
-
-      case 'vermoegenshaushalt':
-        tableName = 'vrv_vhh'
-        break
-
-      default:
-        const msg = `Unbekannter Bestandteil ${bestandteil}.`
-        console.log(msg)
-        return oger.sendError(resp, msg)
-    }
-/*
-    const rows = await knex
-      .select()
+    const rows = await query
+      .select(knex.raw('*'))
       .from(tableName)
-      .where({ vrv: vals.vrv })
-      .orderByRaw('iid' )
-*/
-    return resp.send({ rows: rows })
+      .modify(qb => {
+        ogerSelectModify(qb, {
+          limit: vals.limit,
+          offset: vals.offset
+        })
+      })
+
+      const total = await where
+        .count('* AS total')
+        .from(tableName)
+        .then(rows => rows[0].total)
+
+    return resp.send({ rows: rows, total: total })
   } catch(err) {
     return oger.sendError(resp, err)
   }

@@ -34,8 +34,8 @@ import { axiosError, prepPagingParams } from '../lib/ogerlib'
 const columns = [
   { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
   { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
-  { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => val.toLocaleString('de-DE') },
-  { name: 'wert_fj0', label: 'Wert FJ', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => val.toLocaleString('de-DE') }
+  { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+  { name: 'wert_fj0', label: 'Wert FJ', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
 ]
 
 export default {
@@ -49,7 +49,7 @@ export default {
     const tableData = ref([])
     // const filter = ref('')
     const loading = ref(false)
-    const pagination = ref({
+    const serverPagination = ref({
       sortBy: 'iid',
       descending: false,
       page: 1,
@@ -65,31 +65,31 @@ export default {
 
       try {
         const requestParams = prepPagingParams(serverOpts)
-        const { data } = await api.post('api/navi/ehhDetails', requestParams)
+        const { data } = await api.post('api/navi/ehh_details', requestParams)
         tableData.value = data.rows
-        pagination.value.rowsNumber = data.total
+        serverPagination.value.rowsNumber = data.total
       } catch (error) {
         axiosError(error)
       }
       // don't forget to update local pagination object and turn off loading indicator
-      pagination.value.page = page
-      pagination.value.rowsPerPage = rowsPerPage
-      pagination.value.sortBy = sortBy
-      pagination.value.descending = descending
+      serverPagination.value.page = page
+      serverPagination.value.rowsPerPage = rowsPerPage
+      serverPagination.value.sortBy = sortBy
+      serverPagination.value.descending = descending
       loading.value = false
     }
 
     onMounted(() => {
       // get initial data from server (1st page)
       fetchRowsAndTotal({
-        pagination: pagination.value
+        pagination: serverPagination.value
       })
     })
 
     return {
       // filter,
       loading,
-      pagination,
+      serverPagination,
       columns,
       tableData,
       fetchRowsAndTotal
