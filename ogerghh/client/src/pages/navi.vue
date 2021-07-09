@@ -53,9 +53,9 @@ export default {
         switch (node.nextLevel) {
           case 'gemeinden':
             reqOpts = {}
-            afterNextLevel = 'gemeinde_jahre'
+            afterNextLevel = 'gemeinde_berichte'
             break
-          case 'gemeinde_jahre':
+          case 'gemeinde_berichte':
             reqOpts = {
               gkz: node.rec.gkz
             }
@@ -68,10 +68,16 @@ export default {
             afterNextLevel = 'bestandteil_details'
             break
           case 'bestandteil_details': {
-            node.rec.bestandteil_name = node.name
             switch (node.rec.bestandteil) {
               case 'ergebnishaushalt':
-                router.push({ name: 'ehhDetails', params: node.rec })
+                router.push({
+                  name: 'ehhDetails',
+                  params: {
+                    gemeindeName: node.rec.gemeinden_name,
+                    berichtName: node.rec.gemeinde_berichte_name,
+                    bestandteilName: node.rec.vrv_bestandteile_name
+                  }
+                })
                 fail()
                 return
               default: {
@@ -107,6 +113,7 @@ export default {
           return
         }
         for (const rec of resp.data.rows) {
+          rec[node.nextLevel + '_name'] = rec.name
           const child = {
             name: rec.name,
             key: `${node.key}_${rec.iid}`,

@@ -25,7 +25,7 @@ router.post('/gemeinden', async (req, resp) => {
 
 
 // get list of kennsätze for gemeinde
-router.post('/gemeinde_jahre', async (req, resp) => {
+router.post('/gemeinde_berichte', async (req, resp) => {
   try {
     const vals = req.body
     const rows = await knex

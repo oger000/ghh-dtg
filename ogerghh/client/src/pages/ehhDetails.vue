@@ -7,7 +7,7 @@
         @click="$router.back()"
       />
       <q-toolbar-title class="text-center">
-        {{ bestandteil_name }}
+        {{ mainTitle }}
       </q-toolbar-title>
     </q-toolbar>
 
@@ -35,16 +35,20 @@ const columns = [
   { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
   { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
   { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
-  { name: 'wert_fj0', label: 'Wert FJ', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+  { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
 ]
 
 export default {
   props: [
-    'bestandteil_name'
+    'gemeindeName',
+    'berichtName',
+    'bestandteilName'
   ],
+
 
   // compose component
   setup (props) {
+    // debugger
     // alert(JSON.stringify(props))
     const tableData = ref([])
     // const filter = ref('')
@@ -56,6 +60,8 @@ export default {
       rowsPerPage: 30,
       rowsNumber: 1
     })
+
+    const mainTitle = ref(`${props.gemeindeName} / ${props.berichtName} / ${props.bestandteilName}`)
 
     // fetch rows from server
     async function fetchRowsAndTotal (serverOpts) {
@@ -87,6 +93,7 @@ export default {
     })
 
     return {
+      mainTitle,
       // filter,
       loading,
       serverPagination,
