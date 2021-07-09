@@ -74,3 +74,21 @@ export const oeFormatDate = (v, format = 'DD.MM.YYYY') => {
   */
   return formatDate(v, format)
 } // modified date format
+
+
+// prepare paging perams for request
+export const prepPagingParams = (params) => {
+  const paramsOut = {}
+  if (params.pagination.sortBy) {
+    paramsOut.sort = [[params.pagination.sortBy, params.pagination.descending ? 'DESC' : 'ASC']]
+  }
+  const offset = (params.pagination.page - 1) * params.pagination.rowsPerPage
+  Object.assign(
+    paramsOut,
+    params.filter ? { filter: params.filter } : undefined,
+    params.pagination.rowsPerPage ? { limit: params.pagination.rowsPerPage } : undefined,
+    offset ? { offset: offset } : undefined,
+    { _dc: Date.now() }
+  )
+  return paramsOut
+} // eo perep paging params

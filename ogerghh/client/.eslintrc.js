@@ -60,6 +60,8 @@ module.exports = {
     'one-var': 'off',
     'no-void': 'off',
     'multiline-ternary': 'off',
+    // allow multiple empty lines (oger)
+    'no-multiple-empty-lines': 'off',
 
     'import/first': 'off',
     'import/named': 'error',
