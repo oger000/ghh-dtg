@@ -85,19 +85,13 @@ router.post('/ehh_details', async (req, resp) => {
   const tableName = 'ergebnishaushalt'
 
   const where = knex.queryBuilder()
-  where.where(vals.filter)
+  where.where(vals.baseFilter)
 
-  /*
+  // conditional filters
   vals.filter = vals.filter || {}
-  const filters = []
-  if (vals.filter.searchName) {
-    const searchName = `%${vals.filter.searchName}%`
-    where.andWhere((qb) => {
-      qb.where('firstname', 'like', searchName)
-      qb.orWhere('lastname', 'like', searchName)
-    })
+  if (vals.filter.ansatz) {
+    where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
   }
-  */
   let query = where.clone()
 
   for (const sort of vals.sort || []) {
