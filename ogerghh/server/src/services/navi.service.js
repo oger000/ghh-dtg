@@ -59,7 +59,7 @@ router.post('/gemeinde_berichte', async (req, resp) => {
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo list of data rows
+})  // eo list of kennsätze
 
 
 // get list of bestandzeile for vrv
@@ -76,7 +76,7 @@ router.post('/vrv_bestandteile', async (req, resp) => {
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo list of data rows
+})  // eo list of bestandteile
 
 
 // get details for ergebnishaushalt
@@ -126,13 +126,63 @@ router.post('/ehh_details', async (req, resp) => {
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo list of data rows
+})  // eo list of ergebnishauhalt
 
 
 // get details for finanzierungshaushalt
 router.post('/fhh_details', async (req, resp) => {
   const vals = req.body
   const tableName = 'finanzierungshaushalt'
+
+  const where = knex.queryBuilder()
+  where.where(vals.baseFilter)
+
+  // conditional filters
+  vals.filter = vals.filter || {}
+  if (vals.filter.ansatz) {
+    where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
+  }
+  if (vals.filter.konto) {
+    where.andWhere(knex.raw(`CONCAT(konto_grp, ansatz_ugl) LIKE '${vals.filter.konto}%'`))
+  }
+  let query = where.clone()
+
+  for (const sort of vals.sort || []) {
+    query = query.orderBy(sort[0], sort[1])
+  }
+
+  try {
+    const rows = await query
+      .select(knex.raw('*'))
+      .from(tableName)
+      .modify(qb => {
+        ogerSelectModify(qb, {
+          limit: vals.limit,
+          offset: vals.offset
+        })
+      })
+
+    for (row of rows) {
+      row.ansatz_text = `${row.ansatz_uab}${row.ansatz_ugl} ${row.ansatz_text}`
+      row.konto_text = `${row.konto_grp}${row.konto_ugl} ${row.konto_text}`
+    }
+
+    const total = await where
+      .count('* AS total')
+      .from(tableName)
+      .then(rows => rows[0].total)
+
+    return resp.send({ rows: rows, total: total })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of finanzierungshaushalt
+
+
+// get details for vermögenshaushalt
+router.post('/vhh_details', async (req, resp) => {
+  const vals = req.body
+  const tableName = 'vermoegenshaushalt'
 
   const where = knex.queryBuilder()
   where.where(vals.baseFilter)

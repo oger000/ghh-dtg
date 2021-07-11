@@ -83,10 +83,17 @@ export default {
                 })
                 fail()
                 return
+              case 'vermoegenshaushalt':
+                router.push({
+                  name: 'vhhDetails',
+                  params: Object.assign({}, node.rec)
+                })
+                fail()
+                return
               default: {
                 Dialog.create({
                   title: 'Fehler',
-                  message: `Details für unbekannten Bestanteil '${node.nextLevel}' angefordert.`,
+                  message: `Details für unbekannten Bestanteil '${node.rec.bestandteil}' angefordert.`,
                   ok: true
                 })
                 fail()

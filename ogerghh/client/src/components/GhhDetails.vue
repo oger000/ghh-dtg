@@ -91,7 +91,7 @@ export default defineComponent({
   // compose component
   setup (props) {
     // debugger
-    alert('props-in: ' + JSON.stringify(props))
+    // alert('props-in: ' + JSON.stringify(props))
 
     const mainTitle = ref(`${props.gemeinden_name} / ${props.gemeinde_berichte_name} / ${props.vrv_bestandteile_name}`)
 
