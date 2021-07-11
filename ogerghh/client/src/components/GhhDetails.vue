@@ -85,8 +85,7 @@ export default defineComponent({
     bestandteil: String,
     vrv_bestandteile_name: String,
     columns: Array,
-    blabla: String,
-    varxy: String
+    detailUrl: String
   },
 
   // compose component
@@ -132,7 +131,7 @@ export default defineComponent({
 
       try {
         loading.value = true
-        const { data } = await api.post('api/navi/ehh_details', requestParams)
+        const { data } = await api.post(`api/navi/${props.detailUrl}`, requestParams)
         tableData.value = data.rows
         serverPagination.value.rowsNumber = data.total
       } catch (error) {

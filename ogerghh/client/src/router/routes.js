@@ -18,6 +18,12 @@ const routes = [
         name: 'ehhDetails',
         props: true,
         component: () => import('pages/ehhDetails.vue')
+      },
+      {
+        path: 'fhhDetails',
+        name: 'fhhDetails',
+        props: true,
+        component: () => import('pages/fhhDetails.vue')
       }
     ]
   },

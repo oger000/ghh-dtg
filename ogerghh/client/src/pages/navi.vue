@@ -70,9 +70,15 @@ export default {
           case 'bestandteil_details': {
             switch (node.rec.bestandteil) {
               case 'ergebnishaushalt':
-                // alert('out: ' + JSON.stringify(node.rec))
                 router.push({
                   name: 'ehhDetails',
+                  params: Object.assign({}, node.rec)
+                })
+                fail()
+                return
+              case 'finanzierungshaushalt':
+                router.push({
+                  name: 'fhhDetails',
                   params: Object.assign({}, node.rec)
                 })
                 fail()

@@ -1,7 +1,11 @@
 <template>
   <q-page>
 
-    <GhhDetails v-bind="$props" :columns="columns" />
+    <GhhDetails
+      v-bind="$props"
+      :columns="columns"
+      detailUrl="ehh_details"
+    />
 
   </q-page>
 </template>
