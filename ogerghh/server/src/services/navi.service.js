@@ -92,6 +92,9 @@ router.post('/ehh_details', async (req, resp) => {
   if (vals.filter.ansatz) {
     where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
   }
+  if (vals.filter.konto) {
+    where.andWhere(knex.raw(`CONCAT(konto_grp, ansatz_ugl) LIKE '${vals.filter.konto}%'`))
+  }
   let query = where.clone()
 
   for (const sort of vals.sort || []) {
@@ -126,7 +129,7 @@ router.post('/ehh_details', async (req, resp) => {
 })  // eo list of data rows
 
 
-// get list of gemeinden
+// get list of ansätze
 router.post('/select_ansatz', async (req, resp) => {
   try {
     const vals = req.body
@@ -138,7 +141,7 @@ router.post('/select_ansatz', async (req, resp) => {
 
     const rowsOut = []
     for (row of rows) {
-      const label = '' + row.ansatz.padEnd(7) + row.name // .replaceAll(' ', '&nbsp;')
+      const label = `${row.ansatz} ${row.name}` // .replaceAll(' ', '&nbsp;')
       rowsOut.push({ label: label, value: row.ansatz})
     }
     return resp.send({ rows: rowsOut })
@@ -147,6 +150,27 @@ router.post('/select_ansatz', async (req, resp) => {
   }
 })  // eo list of data rows
 
+
+// get list of konten
+router.post('/select_konto', async (req, resp) => {
+  try {
+    const vals = req.body
+    const rows = await knex
+      .select(knex.raw('*',))
+      .from('vrv_konten')
+      // .where(vals)
+      .orderByRaw('iid')
+
+    const rowsOut = []
+    for (row of rows) {
+      const label = `${row.konto} ${row.name}` // .replaceAll(' ', '&nbsp;')
+      rowsOut.push({ label: label, value: row.konto})
+    }
+    return resp.send({ rows: rowsOut })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of data rows
 
 // export
 module.exports = router
