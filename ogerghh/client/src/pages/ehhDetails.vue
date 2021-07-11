@@ -1,7 +1,7 @@
 <template>
   <q-page>
 
-    <ghh-details v-bind="$props" />
+    <GhhDetails v-bind="$props" :columns="columns" />
 
   </q-page>
 </template>
@@ -9,14 +9,14 @@
 <script>
 // import { ref, onMounted } from 'vue'
 import GhhDetails from 'components/GhhDetails.vue'
-/*
-const tableColumns = [
+
+const columns = [
   { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
   { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
   { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
   { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
 ]
-*/
+
 export default {
   components: {
     GhhDetails
@@ -39,8 +39,12 @@ export default {
 
   // compose component
   setup (props) {
+    // alert('ehh: ' + JSON.stringify(columns))
+
     // return responsive variables
-    return {}
+    return {
+      columns
+    }
   } // eo setup
 } // eo export default
 

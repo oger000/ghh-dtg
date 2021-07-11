@@ -1,4 +1,5 @@
 <template>
+  <div>
 
     <q-toolbar  class="bg-primary text-white">
       <q-btn flat dense round fab
@@ -49,6 +50,7 @@
      binary-state-sort
     />
 
+  </div>
 </template>
 
 <script>
@@ -57,36 +59,40 @@ import { ref, onMounted, defineComponent } from 'vue'
 import api from '../lib/axios'
 import { axiosError, prepPagingParams } from '../lib/ogerlib'
 
-
+/*
 const tableColumns = [
   { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
   { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
   { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
   { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
 ]
+*/
 
 export default defineComponent({
   name: 'GhhDetails',
 
-  props: [
-    'gemeinde',
-    'gkz',
-    'gemeinden_name',
-    'va_ra',
-    'finanzjahr',
-    'quartal',
-    'periode',
-    'nva',
-    'vrv',
-    'gemeinde_berichte_name',
-    'bestandteil',
-    'vrv_bestandteile_name'
-  ],
+  props: {
+    gemeinde: String,
+    gkz: String,
+    gemeinden_name: String,
+    va_ra: String,
+    finanzjahr: String,
+    quartal: String,
+    periode: String,
+    nva: String,
+    vrv: String,
+    gemeinde_berichte_name: String,
+    bestandteil: String,
+    vrv_bestandteile_name: String,
+    columns: Array,
+    blabla: String,
+    varxy: String
+  },
 
   // compose component
   setup (props) {
     // debugger
-    // alert('props-in: ' + JSON.stringify(props))
+    alert('props-in: ' + JSON.stringify(props))
 
     const mainTitle = ref(`${props.gemeinden_name} / ${props.gemeinde_berichte_name} / ${props.vrv_bestandteile_name}`)
 
@@ -221,7 +227,7 @@ export default defineComponent({
       // filter,
       loading,
       serverPagination,
-      tableColumns,
+      tableColumns: props.columns,
       tableData,
       fetchRowsAndTotal,
       tableFilter,
