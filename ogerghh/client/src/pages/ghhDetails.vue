@@ -1,0 +1,89 @@
+<template>
+  <q-page>
+
+    <GhhDetails
+      v-bind="$props"
+      :columns="columns"
+      :detailUrl="detailUrl"
+      :mvagUrl="mvagUrl"
+    />
+
+  </q-page>
+</template>
+
+<script>
+// import { ref, onMounted } from 'vue'
+import GhhDetails from 'components/GhhDetails.vue'
+
+
+export default {
+  components: {
+    GhhDetails
+  },
+
+  props: {
+    gemeinde: String,
+    gkz: String,
+    gemeinden_name: String,
+    va_ra: String,
+    finanzjahr: String,
+    quartal: String,
+    periode: String,
+    nva: String,
+    vrv: String,
+    gemeinde_berichte_name: String,
+    bestandteil: String,
+    vrv_bestandteile_name: String
+  },
+
+  // compose component
+  setup (props) {
+    // alert('ehh: ' + JSON.stringify(props))
+
+    let columns = []
+    let detailUrl = ''
+    let mvagUrl = ''
+
+    switch (props.bestandteil) {
+      case 'ergebnishaushalt':
+        columns = [
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
+          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
+          { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+          { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+        ]
+        detailUrl = 'ehh_details'
+        mvagUrl = 'mvag_ehh'
+        break
+      case 'finanzierungshaushalt':
+        columns = [
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
+          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
+          { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+          { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+        ]
+        detailUrl = 'fhh_details'
+        mvagUrl = 'mvag_fhh'
+        break
+      case 'vermoegenshaushalt':
+        columns = [
+          { name: 'mvag', label: 'MVAG', field: 'mvag_text', align: 'left', required: true, sortable: true },
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
+          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
+          { name: 'endstand_vj', label: 'Wert 01.01.', field: 'endstand_vj', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+          { name: 'endstand_rj', label: 'Wert 31.12.', field: 'endstand_rj', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+        ]
+        detailUrl = 'vhh_details'
+        mvagUrl = 'mvag_vhh'
+    }
+
+    // return responsive variables
+    return {
+      columns,
+      detailUrl,
+      mvagUrl
+    }
+  } // eo setup
+} // eo export default
+
+</script>

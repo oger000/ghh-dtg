@@ -12,6 +12,20 @@
     </q-toolbar>
 
     <div class="row q-gutter-md">
+
+      <q-select
+        filled
+        clearable
+        use-input
+        v-model="selectMvagValue"
+        label="MVAG-Filter"
+        :options="selectMvagOptions"
+        @filter="onSelectMvagFilter"
+        @update:model-value="onSelectMvagUpdate"
+        style="width: 250px"
+      >
+      </q-select>
+
       <q-select
         filled
         clearable
@@ -59,14 +73,6 @@ import { ref, onMounted, defineComponent } from 'vue'
 import api from '../lib/axios'
 import { axiosError, prepPagingParams } from '../lib/ogerlib'
 
-/*
-const tableColumns = [
-  { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
-  { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
-  { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
-  { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
-]
-*/
 
 export default defineComponent({
   name: 'GhhDetails',
@@ -85,7 +91,8 @@ export default defineComponent({
     bestandteil: String,
     vrv_bestandteile_name: String,
     columns: Array,
-    detailUrl: String
+    detailUrl: String,
+    mvagUrl: String
   },
 
   // compose component
@@ -125,6 +132,7 @@ export default defineComponent({
       // alert('1: ' + JSON.stringify(selectAnsatzValue))
       // alert('2: ' + JSON.stringify(selectAnsatzValue.value))
       requestParams.filter = {
+        mvag: (selectMvagValue.value ? selectMvagValue.value.value : undefined),
         ansatz: (selectAnsatzValue.value ? selectAnsatzValue.value.value : undefined),
         konto: (selectKontoValue.value ? selectKontoValue.value.value : undefined)
       }
@@ -151,6 +159,42 @@ export default defineComponent({
         pagination: serverPagination.value
       })
     })
+
+
+    // -----------------------------------------------
+    // mvag selection
+    const selectMvagValue = ref(null)
+    const selectMvagOptions = ref(null)
+    let allSelectMvagOptions = null
+
+    async function onSelectMvagFilter (val, update, abort) {
+      // load opts from db
+      if (allSelectMvagOptions === null) {
+        try {
+          const { data } = await api.post(`api/navi/select_${props.mvagUrl}`, { vrv: props.vrv })
+          update(() => {
+            selectMvagOptions.value = data.rows
+            allSelectMvagOptions = [...data.rows]
+          })
+        } catch (error) {
+          abort()
+          axiosError(error)
+        }
+        return
+      } // eo load opts
+
+      update(() => {
+        // alert('val: ' + JSON.stringify(val)
+        const needle = val.toLowerCase()
+        selectMvagOptions.value = allSelectMvagOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+      })
+    } // eo filter mvag selection
+
+    async function onSelectMvagUpdate (val) {
+      // alert('onSelectMvagUpdate: ' + JSON.stringify(val))
+      tableFilter.value = 'mvag: ' + JSON.stringify(val)
+    } // eo mvagfilter selected
+
 
     // -----------------------------------------------
     // ansatz selection
@@ -230,6 +274,10 @@ export default defineComponent({
       tableData,
       fetchRowsAndTotal,
       tableFilter,
+      selectMvagValue,
+      selectMvagOptions,
+      onSelectMvagFilter,
+      onSelectMvagUpdate,
       selectAnsatzValue,
       selectAnsatzOptions,
       onSelectAnsatzFilter,

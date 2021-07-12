@@ -89,6 +89,9 @@ router.post('/ehh_details', async (req, resp) => {
 
   // conditional filters
   vals.filter = vals.filter || {}
+  if (vals.filter.mvag) {
+    where.andWhere(knex.raw(`mvag_ehh LIKE '${vals.filter.mvag}%'`))
+  }
   if (vals.filter.ansatz) {
     where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
   }
@@ -103,7 +106,7 @@ router.post('/ehh_details', async (req, resp) => {
 
   try {
     const rows = await query
-      .select(knex.raw('*'))
+      .select('*')
       .from(tableName)
       .modify(qb => {
         ogerSelectModify(qb, {
@@ -139,6 +142,9 @@ router.post('/fhh_details', async (req, resp) => {
 
   // conditional filters
   vals.filter = vals.filter || {}
+  if (vals.filter.mvag) {
+    where.andWhere(knex.raw(`mvag_fhh LIKE '${vals.filter.mvag}%'`))
+  }
   if (vals.filter.ansatz) {
     where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
   }
@@ -185,10 +191,16 @@ router.post('/vhh_details', async (req, resp) => {
   const tableName = 'vermoegenshaushalt'
 
   const where = knex.queryBuilder()
-  where.where(vals.baseFilter)
+  // where.where(vals.baseFilter)
+  for (const key of Object.keys(vals.baseFilter)) {
+    where.andWhere(`vermoegenshaushalt.${key}`, vals.baseFilter[key])
+  }
 
   // conditional filters
   vals.filter = vals.filter || {}
+  if (vals.filter.mvag) {
+    where.andWhere(knex.raw(`mvag_vhh LIKE '${vals.filter.mvag}%'`))
+  }
   if (vals.filter.ansatz) {
     where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
   }
@@ -203,16 +215,31 @@ router.post('/vhh_details', async (req, resp) => {
 
   try {
     const rows = await query
-      .select(knex.raw('*'))
+      .select(knex.raw('vermoegenshaushalt.*, vrv_vhh.name AS mvag_name'))
       .from(tableName)
+      // .innerJoin('vrv_vhh', 'vermoegenshaushalt.mvag_vhh', 'vrv_vhh.mvag').andOn('vermoegenshaushalt.vrv', '=', 'vrv_vhh.vrv')
+      .joinRaw('INNER JOIN vrv_vhh ON vrv_vhh.mvag=vermoegenshaushalt.mvag_vhh AND vrv_vhh.vrv=vermoegenshaushalt.vrv')
       .modify(qb => {
         ogerSelectModify(qb, {
           limit: vals.limit,
           offset: vals.offset
         })
       })
+    /*
+    const rows = await query
+      .raw('SELECT vermoegenshaushalt.*, vrv_vhh.name AS mvag_name FROM vermoegenshaushalt' +
+        ' INNER JOIN vrv_vhh ON vrv_vhh.mvag=vermoegenshaushalt.mvag_vhh AND vrv_vhh.vrv=vermoegenshaushalt.vrv')
+      .modify(qb => {
+        ogerSelectModify(qb, {
+          limit: vals.limit,
+          offset: vals.offset
+        })
+      })
+      */
 
     for (row of rows) {
+      // row.mvag_text = `${row.mvag_vhh} ${row.mvag_name}`
+      row.mvag_text = row.mvag_vhh
       row.ansatz_text = `${row.ansatz_uab}${row.ansatz_ugl} ${row.ansatz_text}`
       row.konto_text = `${row.konto_grp}${row.konto_ugl} ${row.konto_text}`
     }
@@ -234,7 +261,7 @@ router.post('/select_ansatz', async (req, resp) => {
   try {
     const vals = req.body
     const rows = await knex
-      .select(knex.raw('*',))
+      .select('*')
       .from('vrv_ansaetze')
       // .where(vals)
       .orderByRaw('iid')
@@ -248,7 +275,7 @@ router.post('/select_ansatz', async (req, resp) => {
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo list of data rows
+})  // eo list of ansätze
 
 
 // get list of konten
@@ -256,7 +283,7 @@ router.post('/select_konto', async (req, resp) => {
   try {
     const vals = req.body
     const rows = await knex
-      .select(knex.raw('*',))
+      .select('*')
       .from('vrv_konten')
       // .where(vals)
       .orderByRaw('iid')
@@ -270,7 +297,75 @@ router.post('/select_konto', async (req, resp) => {
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo list of data rows
+})  // eo list of konten
+
+
+// get list of mvag vhh
+router.post('/select_mvag_vhh', async (req, resp) => {
+  try {
+    const vals = req.body
+    const rows = await knex
+      .select('*')
+      .from('vrv_vhh')
+      .where(vals)
+      .orderByRaw('iid')
+
+    const rowsOut = []
+    for (row of rows) {
+      const label = `${row.mvag} ${row.name}` // .replaceAll(' ', '&nbsp;')
+      rowsOut.push({ label: label, value: row.mvag})
+    }
+    return resp.send({ rows: rowsOut })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of mvag vhh
+
+
+// get list of mvag ehh
+router.post('/select_mvag_ehh', async (req, resp) => {
+  try {
+    const vals = req.body
+    const rows = await knex
+      .select('*')
+      .from('vrv_ehh')
+      .where(vals)
+      .orderByRaw('iid')
+
+    const rowsOut = []
+    for (row of rows) {
+      const label = `${row.mvag} ${row.name}` // .replaceAll(' ', '&nbsp;')
+      rowsOut.push({ label: label, value: row.mvag})
+    }
+    return resp.send({ rows: rowsOut })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of mvag ehh
+
+
+// get list of mvag fhh
+router.post('/select_mvag_fhh', async (req, resp) => {
+  try {
+    const vals = req.body
+    const rows = await knex
+      .select('*')
+      .from('vrv_fhh')
+      .where(vals)
+      .orderByRaw('iid')
+
+    const rowsOut = []
+    for (row of rows) {
+      const label = `${row.mvag} ${row.name}` // .replaceAll(' ', '&nbsp;')
+      rowsOut.push({ label: label, value: row.mvag})
+    }
+    return resp.send({ rows: rowsOut })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of mvag fhh
+
+
 
 // export
 module.exports = router

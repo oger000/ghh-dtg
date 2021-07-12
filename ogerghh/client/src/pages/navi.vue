@@ -70,22 +70,10 @@ export default {
           case 'bestandteil_details': {
             switch (node.rec.bestandteil) {
               case 'ergebnishaushalt':
-                router.push({
-                  name: 'ehhDetails',
-                  params: Object.assign({}, node.rec)
-                })
-                fail()
-                return
               case 'finanzierungshaushalt':
-                router.push({
-                  name: 'fhhDetails',
-                  params: Object.assign({}, node.rec)
-                })
-                fail()
-                return
               case 'vermoegenshaushalt':
                 router.push({
-                  name: 'vhhDetails',
+                  name: 'ghhDetails',
                   params: Object.assign({}, node.rec)
                 })
                 fail()
@@ -93,7 +81,7 @@ export default {
               default: {
                 Dialog.create({
                   title: 'Fehler',
-                  message: `Details für unbekannten Bestanteil '${node.rec.bestandteil}' angefordert.`,
+                  message: `Details für unbekannten Bestanteil '${node.rec.bestandteil}' angefordert, oder Bestandteil noch nicht implementiert.`,
                   ok: true
                 })
                 fail()

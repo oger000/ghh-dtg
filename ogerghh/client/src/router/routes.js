@@ -14,22 +14,10 @@ const routes = [
     component: () => import('layouts/EmptyLayout.vue'),
     children: [
       {
-        path: 'ehhDetails',
-        name: 'ehhDetails',
+        path: 'ghhDetails',
+        name: 'ghhDetails',
         props: true,
-        component: () => import('pages/ehhDetails.vue')
-      },
-      {
-        path: 'fhhDetails',
-        name: 'fhhDetails',
-        props: true,
-        component: () => import('pages/fhhDetails.vue')
-      },
-      {
-        path: 'vhhDetails',
-        name: 'vhhDetails',
-        props: true,
-        component: () => import('pages/vhhDetails.vue')
+        component: () => import('pages/ghhDetails.vue')
       }
     ]
   },
