@@ -521,5 +521,6 @@ async function importTxt1997(config, data) {
 // do the exports
 module.exports = {
   importXml,
-  importTxt
+  importTxt,
+  db
 }
