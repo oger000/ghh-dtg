@@ -69,7 +69,7 @@ async function fake_main() {
   }
   console.log('Begin: Write ' + recOutAll.length + ' records to db.')
   const tableName = 'vrv_vhh'
-  await db(tableName).truncate()
+  await db(tableName).del().where({ vrv: '2015' })
   await db.batchInsert(tableName, recOutAll)
   console.log('End: Write to db.')
 }  // eo main

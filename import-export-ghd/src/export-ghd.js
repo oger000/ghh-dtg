@@ -5,7 +5,7 @@ const fs = require('fs')
 const csv = require(__dirname + '/lib/csvtojson')
 // const xmlParser = require(__dirname + '/lib/xml2js')
 
-const { db, exportCsv } = require(__dirname + '/lib/handle-ghd')
+const { db, exportAllCsv } = require(__dirname + '/lib/handle-ghd')
 
 
 // separated because of await/async
@@ -53,14 +53,9 @@ async function fake_main() {
     }
 
     const ksRow = ksRows[0]
-    let filePrefix = `GHD${ksRow.finanzjahr}_${ksRow.periode}${ksRow.quartal}_${ksRow.va_ra}_${ksRow.gkz}_${ksRow.gemeinde}_vrv${ksRow.vrv}_`
-    filePrefix = filePrefix.replaceAll(/\W+/g, '_')
-    // console.log(filePrefix)
     const fileType = configRec.file_type.toLowerCase()
-    const fileName = `${filePrefix}kennsatz.${fileType}`
     if (fileType === 'csv') {
-      console.log(`Schreibe Kennsatz in Datei ${fileName}.`)
-      // await exportCsv(configRec, filePrefix, fileType)
+      await exportAllCsv(configRec, ksRow)
     } else {
       console.log(`Unbekannter Dateityp: ${configRec.filetype}`)
     }

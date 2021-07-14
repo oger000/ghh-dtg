@@ -1,5 +1,6 @@
-
 const db = require(__dirname + '/knex')
+const csvOut = require(__dirname + '/json2csv')
+
 
 // "globals"
 const xmlParts2015 = [
@@ -518,9 +519,64 @@ async function importTxt1997(config, data) {
 }  // eo import txt 1997
 
 
+// export all bestandteile
+async function exportAllCsv(config, kennsatz) {
+
+  await exportCsv(config, kennsatz, 'kennsatz', kennsatz)
+
+  const bestandteilRecs = await db
+    .select('*')
+    .from('vrv_bestandteile')
+    .where({
+      vrv: kennsatz.vrv
+    })
+
+  for (const bestandteilRec of bestandteilRecs) {
+
+    const dbRows = await db
+      .select('*')
+      .from(bestandteilRec.name)
+      .where({
+        gkz: config.gkz,
+        finanzjahr: config.finanzjahr,
+        // periode: config.periode,
+        quartal: config.quartal,
+        va_ra: config.va_ra,
+        nva: config.nva,
+        vrv: config.vrv
+      })
+      .orderBy('iid')
+
+    if (dbRows.length > 0) {
+      await exportCsv(config, dbRows, bestandteilRec.name, kennsatz)
+    }
+  }
+} // eo write csv
+
+
+// write csv file
+async function exportCsv(config, data, bestandteilName, kennsatz) {
+
+  let filePrefix = `GHD${config.finanzjahr}_${config.periode}${config.quartal}_${config.va_ra}_${config.gkz}_${kennsatz.gemeinde}_vrv${config.vrv}`
+  filePrefix = filePrefix.replaceAll(/\W+/g, '_')
+  const fileName = `${filePrefix}_${bestandteilName}.csv`
+
+  console.log(`Schreibe CSV-Datei ${fileName}.`)
+  try {
+    const csvData = csvOut.parse(data)
+    require("fs").writeFileSync(fileName, csvData)
+  }
+  catch (ex) {
+    console.log(ex)
+  }
+} // eo write csv
+
+
+
 // do the exports
 module.exports = {
   importXml,
   importTxt,
-  db
+  db,
+  exportAllCsv
 }
