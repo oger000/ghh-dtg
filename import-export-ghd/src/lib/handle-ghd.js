@@ -1,5 +1,7 @@
 const db = require(__dirname + '/knex')
-const csvOut = require(__dirname + '/json2csv')
+const json2csv = require('json2csv')
+const path = require('path')
+const XLSX = require('xlsx')
 
 
 // "globals"
@@ -520,9 +522,9 @@ async function importTxt1997(config, data) {
 
 
 // export all bestandteile
-async function exportAllCsv(config, kennsatz) {
+async function exportCsv(config, kennsatz) {
 
-  await exportCsv(config, kennsatz, 'kennsatz', kennsatz)
+  await exportCsvFile(config, kennsatz, 'kennsatz', kennsatz)
 
   const bestandteilRecs = await db
     .select('*')
@@ -548,22 +550,29 @@ async function exportAllCsv(config, kennsatz) {
       .orderBy('iid')
 
     if (dbRows.length > 0) {
-      await exportCsv(config, dbRows, bestandteilRec.name, kennsatz)
+      await exportCsvFile(config, dbRows, bestandteilRec.name, kennsatz)
     }
   }
 } // eo write csv
 
 
 // write csv file
-async function exportCsv(config, data, bestandteilName, kennsatz) {
+async function exportCsvFile(config, data, bestandteilName, kennsatz) {
 
   let filePrefix = `GHD${config.finanzjahr}_${config.periode}${config.quartal}_${config.va_ra}_${config.gkz}_${kennsatz.gemeinde}_vrv${config.vrv}`
   filePrefix = filePrefix.replaceAll(/\W+/g, '_')
-  const fileName = `${filePrefix}_${bestandteilName}.csv`
+  let fileName = `${filePrefix}_${bestandteilName}.csv`
+
+  const json2csvOpts = {
+    // excelStrings: true,
+    // withBOM: true,  // ??? maybe needed for excel
+    delimiter: ';'
+  }
 
   console.log(`Schreibe CSV-Datei ${fileName}.`)
+  fileName = path.join(config.file_path, fileName)
   try {
-    const csvData = csvOut.parse(data)
+    const csvData = json2csv.parse(data, json2csvOpts)
     require("fs").writeFileSync(fileName, csvData)
   }
   catch (ex) {
@@ -572,11 +581,58 @@ async function exportCsv(config, data, bestandteilName, kennsatz) {
 } // eo write csv
 
 
+// export all bestandteile to an ods file
+async function exportOds(config, kennsatz) {
+
+  let filePrefix = `GHD${config.finanzjahr}_${config.periode}${config.quartal}_${config.va_ra}_${config.gkz}_${kennsatz.gemeinde}_vrv${config.vrv}`
+  filePrefix = filePrefix.replaceAll(/\W+/g, '_')
+  let fileName = `${filePrefix}.ods`
+  fileName = path.join(config.file_path, fileName)
+  const wb = XLSX.utils.book_new()
+
+  let ws = XLSX.utils.json_to_sheet([kennsatz])
+  XLSX.utils.book_append_sheet(wb, ws, 'kennsatz')
+
+  const bestandteilRecs = await db
+    .select('*')
+    .from('vrv_bestandteile')
+    .where({
+      vrv: kennsatz.vrv
+    })
+
+  for (const bestandteilRec of bestandteilRecs) {
+
+    const dbRows = await db
+      .select('*')
+      .from(bestandteilRec.name)
+      .where({
+        gkz: config.gkz,
+        finanzjahr: config.finanzjahr,
+        // periode: config.periode,
+        quartal: config.quartal,
+        va_ra: config.va_ra,
+        nva: config.nva,
+        vrv: config.vrv
+      })
+      .orderBy('iid')
+
+    if (dbRows.length > 0) {
+      let ws = XLSX.utils.json_to_sheet(dbRows)
+      XLSX.utils.book_append_sheet(wb, ws, bestandteilRec.name)
+    }
+  }
+
+  // write to file
+  XLSX.writeFile(wb, fileName, { datenNF: 'TT.MM.JJJJ'});
+} // eo write ods
+
+
 
 // do the exports
 module.exports = {
   importXml,
   importTxt,
   db,
-  exportAllCsv
+  exportCsv,
+  exportOds
 }

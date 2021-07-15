@@ -5,7 +5,7 @@ const fs = require('fs')
 const csv = require(__dirname + '/lib/csvtojson')
 // const xmlParser = require(__dirname + '/lib/xml2js')
 
-const { db, exportAllCsv } = require(__dirname + '/lib/handle-ghd')
+const { db, exportCsv, exportOds } = require(__dirname + '/lib/handle-ghd')
 
 
 // separated because of await/async
@@ -54,9 +54,15 @@ async function fake_main() {
 
     const ksRow = ksRows[0]
     const fileType = configRec.file_type.toLowerCase()
-    if (fileType === 'csv') {
-      await exportAllCsv(configRec, ksRow)
-    } else {
+    switch (fileType) {
+      case 'csv':
+        await exportCsv(configRec, ksRow)
+        break
+      case 'ods':
+        // console.log(ksRow); exit
+        await exportOds(configRec, ksRow)
+        break
+    default:
       console.log(`Unbekannter Dateityp: ${configRec.filetype}`)
     }
   }
