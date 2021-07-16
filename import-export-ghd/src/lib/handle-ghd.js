@@ -566,7 +566,17 @@ async function exportCsvFile(config, data, bestandteilName, kennsatz) {
   const json2csvOpts = {
     // excelStrings: true,
     // withBOM: true,  // ??? maybe needed for excel
-    delimiter: ';'
+    delimiter: ';',
+    transforms: (item) => {
+      // console.log(JSON.stringify(item))
+      for (const key of Object.keys(item)) {
+        if (typeof(item[key]) === 'number') {
+            item[key] = item[key].toString().replace('.', ',')
+          // item[key] = item[key].toLocaleString('de-DE')
+        }
+      }
+      return item
+    }
   }
 
   console.log(`Schreibe CSV-Datei ${fileName}.`)
