@@ -581,12 +581,12 @@ async function exportCsvFile(config, data, bestandteilName, kennsatz) {
 } // eo write csv
 
 
-// export all bestandteile to an ods file
-async function exportOds(config, kennsatz) {
+// export all bestandteile to an spread sheet file supported by XLSX
+async function exportSpreadSheet(config, kennsatz, sheetType) {
 
   let filePrefix = `GHD${config.finanzjahr}_${config.periode}${config.quartal}_${config.va_ra}_${config.gkz}_${kennsatz.gemeinde}_vrv${config.vrv}`
   filePrefix = filePrefix.replaceAll(/\W+/g, '_')
-  let fileName = `${filePrefix}.ods`
+  let fileName = `${filePrefix}.${sheetType}`
   fileName = path.join(config.file_path, fileName)
   const wb = XLSX.utils.book_new()
 
@@ -623,7 +623,7 @@ async function exportOds(config, kennsatz) {
   }
 
   // write to file
-  XLSX.writeFile(wb, fileName, { datenNF: 'TT.MM.JJJJ'});
+  XLSX.writeFile(wb, fileName)
 } // eo write ods
 
 
@@ -634,5 +634,5 @@ module.exports = {
   importTxt,
   db,
   exportCsv,
-  exportOds
+  exportSpreadSheet
 }

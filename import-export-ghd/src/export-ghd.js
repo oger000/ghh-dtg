@@ -5,7 +5,7 @@ const fs = require('fs')
 const csv = require(__dirname + '/lib/csvtojson')
 // const xmlParser = require(__dirname + '/lib/xml2js')
 
-const { db, exportCsv, exportOds } = require(__dirname + '/lib/handle-ghd')
+const { db, exportCsv, exportSpreadSheet } = require(__dirname + '/lib/handle-ghd')
 
 
 // separated because of await/async
@@ -59,8 +59,9 @@ async function fake_main() {
         await exportCsv(configRec, ksRow)
         break
       case 'ods':
+      case 'xmlx'
         // console.log(ksRow); exit
-        await exportOds(configRec, ksRow)
+        await exportSpreadSheet(configRec, ksRow, fileType)
         break
     default:
       console.log(`Unbekannter Dateityp: ${configRec.filetype}`)
