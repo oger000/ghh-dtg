@@ -59,7 +59,7 @@ async function fake_main() {
         await exportCsv(configRec, ksRow)
         break
       case 'ods':
-      case 'xmlx'
+      case 'xlsx':
         // console.log(ksRow); exit
         await exportSpreadSheet(configRec, ksRow, fileType)
         break
