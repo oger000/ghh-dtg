@@ -567,6 +567,7 @@ async function exportCsvFile(config, data, bestandteilName, kennsatz) {
     // excelStrings: true,
     // withBOM: true,  // ??? maybe needed for excel
     delimiter: ';',
+    // TODO transform should be replaced by formatter api (numberFormatter) when json2csv 6.x is available
     transforms: (item) => {
       // console.log(JSON.stringify(item))
       for (const key of Object.keys(item)) {
