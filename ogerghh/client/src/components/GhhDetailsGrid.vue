@@ -27,6 +27,7 @@
       </q-select>
 
       <q-select
+        grid
         filled
         clearable
         use-input
@@ -54,15 +55,79 @@
     </div>
 
     <q-table
+      grid
       dense
-      :rows="tableData"
-      :columns="tableColumns"
-      row-key="iid"
-      :filter="tableFilter"
-      v-model:pagination="serverPagination"
-      @request="fetchRowsAndTotal"
-      binary-state-sort
-    />
+     :rows="tableData"
+     :columns="tableColumns"
+     row-key="iid"
+     :filter="tableFilter"
+     v-model:pagination="serverPagination"
+     @request="fetchRowsAndTotal"
+     binary-state-sort
+    >
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-12col-md-12">
+          <!--
+          <q-card>
+            <q-card-section class="text-center">
+              Werte für
+              <br>
+              <strong>{{ props.row.label }}</strong>
+            </q-card-section>
+            <q-separator />
+            <q-card-section class="flex flex-center">
+              <div>{{ props.row.wert_fj0 }} g</div>
+            </q-card-section>
+          </q-card>
+          -->
+          <q-markup-table
+            separator="cell"
+          >
+            <tbody>
+              <tr>
+                <td class="text-left" style="width: 50%;">{{ props.row.ansatz_text }}</td>
+                <td class="text-left" style="width: 50%;">{{ props.row.konto_text }}</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <q-markup-table>
+                    <tbody>
+                      <tr>
+                        <td class="text-left">Finanzjahr</td>
+                        <td class="text-right">{{ props.row.finanzjahr }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 1 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 2 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 3 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 4 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 5 }}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Rechnungsabschluss</td>
+                        <td class="text-right">{{ props.row.finanzjahr }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 1 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 2 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 3 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 4 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 5 }}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">Voranschlag</td>
+                        <td class="text-right">{{ parseFloat(props.row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 1 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 2 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 3 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 4 }}</td>
+                        <td class="text-right">{{ props.row.finanzjahr - 5 }}</td>
+                      </tr>
+                    </tbody>
+                  </q-markup-table>
+                </td>
+              </tr>
+            </tbody>
+          </q-markup-table>
+        </div>
+      </template>
+    </q-table>
 
   </div>
 </template>
@@ -75,7 +140,7 @@ import { axiosError, prepPagingParams } from '../lib/ogerlib'
 
 
 export default defineComponent({
-  name: 'GhhDetails',
+  name: 'GhhDetailsGrid',
 
   props: {
     gemeinde: String,

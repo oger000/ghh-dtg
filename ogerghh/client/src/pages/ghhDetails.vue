@@ -1,7 +1,7 @@
 <template>
   <q-page>
 
-    <GhhDetails
+    <GhhDetailsGrid
       v-bind="$props"
       :columns="columns"
       :detailUrl="detailUrl"
@@ -13,12 +13,12 @@
 
 <script>
 // import { ref, onMounted } from 'vue'
-import GhhDetails from 'components/GhhDetails.vue'
+import GhhDetailsGrid from 'components/GhhDetailsGrid.vue'
 
 
 export default {
   components: {
-    GhhDetails
+    GhhDetailsGrid
   },
 
   props: {
