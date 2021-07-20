@@ -47,8 +47,8 @@ export default {
     switch (props.bestandteil) {
       case 'ergebnishaushalt':
         columns = [
-          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
-          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: true },
+          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: true },
           { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
           { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
         ]

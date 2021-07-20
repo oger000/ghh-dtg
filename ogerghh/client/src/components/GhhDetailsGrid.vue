@@ -92,8 +92,8 @@
                     @click="expanded.indexOf(props.row.iid) === -1 ? expanded.push(props.row.iid) : expanded.splice(expanded.indexOf(props.row.iid), 1)"
                   />
                 </td>
-                <td class="text-left" style="width:30%">{{ props.row.ansatz_text }}</td>
-                <td class="text-left" style="width:30%">{{ props.row.konto_text }}</td>
+                <td class="text-left" style="width:30%">{{ props.row.ansatz_plus_text }}</td>
+                <td class="text-left" style="width:30%">{{ props.row.konto_plus_text }}</td>
                 <td class="text-right" style="width:10%">{{ props.row.iid }}</td>
                 <td class="text-right" style="width:10%">{{ props.row.iid }}</td>
                 <td class="text-right" style="width:10%">{{ props.row.iid }}</td>

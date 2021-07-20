@@ -1,4 +1,4 @@
-orderBy// Initializes the service
+// Initializes the service
 const express = require('express')
 const router = express.Router()
 const knex = require('../lib/knex')
@@ -106,15 +106,14 @@ router.post('/ehh_details', async (req, resp) => {
 
   try {
     const rows = await query
-      .select('*')
+      .select(knex.raw(`
+        iid, wert, wert_fj0, finanzjahr,
+        CONCAT(ansatz_uab, ansatz_ugl, " ", ansatz_text) AS ansatz_plus_text,
+        CONCAT(konto_grp, konto_ugl, " ", konto_text) AS konto_plus_text
+      `))
       .from(tableName)
       .limit(vals.limit)
       .offset(vals.offset)
-
-    for (row of rows) {
-      row.ansatz_text = `${row.ansatz_uab}${row.ansatz_ugl} ${row.ansatz_text}`
-      row.konto_text = `${row.konto_grp}${row.konto_ugl} ${row.konto_text}`
-    }
 
     const total = await where
       .count('* AS total')
