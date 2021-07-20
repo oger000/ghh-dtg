@@ -25,7 +25,7 @@ const ogerWhere = (qb, filters) => {
 
 
 // Add filters, sort, limit and offset to select statement
-const ogerSelectModify = (qb, opts = {}) => {
+const ogerModifyQuery = (qb, opts = {}) => {
 
   if (opts.filters)
     ogerWhere(qb, opts.filters)
@@ -45,5 +45,5 @@ const ogerSelectModify = (qb, opts = {}) => {
 
 module.exports = {
   ogerWhere,
-  ogerSelectModify
+  ogerModifyQuery
 }

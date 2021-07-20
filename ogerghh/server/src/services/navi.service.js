@@ -1,10 +1,10 @@
-// Initializes the service
+orderBy// Initializes the service
 const express = require('express')
 const router = express.Router()
 const knex = require('../lib/knex')
 const oger = require('../lib/ogerlib')
 const UserFailure = oger.UserFailure
-const { ogerWhere, ogerSelectModify } = require('../lib/ogerKnex')
+// const { ogerWhere, ogerSelectModify } = require('../lib/ogerKnex')
 const HttpStatus = require('http-status-codes')
 
 
@@ -70,7 +70,7 @@ router.post('/vrv_bestandteile', async (req, resp) => {
       .select(knex.raw('iid, name AS bestandteil, dispname AS name',))
       .from('vrv_bestandteile')
       .where(vals)
-      .orderByRaw('reihung')
+      .orderBy('reihung')
 
     return resp.send({ rows: rows })
   } catch(err) {
@@ -108,12 +108,8 @@ router.post('/ehh_details', async (req, resp) => {
     const rows = await query
       .select('*')
       .from(tableName)
-      .modify(qb => {
-        ogerSelectModify(qb, {
-          limit: vals.limit,
-          offset: vals.offset
-        })
-      })
+      .limit(vals.limit)
+      .offset(vals.offset)
 
     for (row of rows) {
       row.ansatz_text = `${row.ansatz_uab}${row.ansatz_ugl} ${row.ansatz_text}`
@@ -161,12 +157,8 @@ router.post('/fhh_details', async (req, resp) => {
     const rows = await query
       .select(knex.raw('*'))
       .from(tableName)
-      .modify(qb => {
-        ogerSelectModify(qb, {
-          limit: vals.limit,
-          offset: vals.offset
-        })
-      })
+      .limit(vals.limit)
+      .offset(vals.offset)
 
     for (row of rows) {
       row.ansatz_text = `${row.ansatz_uab}${row.ansatz_ugl} ${row.ansatz_text}`
@@ -219,23 +211,16 @@ router.post('/vhh_details', async (req, resp) => {
       .from(tableName)
       // .innerJoin('vrv_vhh', 'vermoegenshaushalt.mvag_vhh', 'vrv_vhh.mvag').andOn('vermoegenshaushalt.vrv', '=', 'vrv_vhh.vrv')
       .joinRaw('INNER JOIN vrv_vhh ON vrv_vhh.mvag=vermoegenshaushalt.mvag_vhh AND vrv_vhh.vrv=vermoegenshaushalt.vrv')
-      .modify(qb => {
-        ogerSelectModify(qb, {
-          limit: vals.limit,
-          offset: vals.offset
-        })
-      })
+      .limit(vals.limit)
+      .offset(vals.offset)
+
     /*
     const rows = await query
       .raw('SELECT vermoegenshaushalt.*, vrv_vhh.name AS mvag_name FROM vermoegenshaushalt' +
         ' INNER JOIN vrv_vhh ON vrv_vhh.mvag=vermoegenshaushalt.mvag_vhh AND vrv_vhh.vrv=vermoegenshaushalt.vrv')
-      .modify(qb => {
-        ogerSelectModify(qb, {
-          limit: vals.limit,
-          offset: vals.offset
-        })
-      })
-      */
+        .limit(vals.limit)
+        .offset(vals.offset)
+    */
 
     for (row of rows) {
       // row.mvag_text = `${row.mvag_vhh} ${row.mvag_name}`
@@ -264,7 +249,7 @@ router.post('/select_ansatz', async (req, resp) => {
       .select('*')
       .from('vrv_ansaetze')
       // .where(vals)
-      .orderByRaw('iid')
+      .orderBy('iid')
 
     const rowsOut = []
     for (row of rows) {
@@ -286,7 +271,7 @@ router.post('/select_konto', async (req, resp) => {
       .select('*')
       .from('vrv_konten')
       // .where(vals)
-      .orderByRaw('iid')
+      .orderBy('iid')
 
     const rowsOut = []
     for (row of rows) {
@@ -308,7 +293,7 @@ router.post('/select_mvag_vhh', async (req, resp) => {
       .select('*')
       .from('vrv_vhh')
       .where(vals)
-      .orderByRaw('iid')
+      .orderBy('iid')
 
     const rowsOut = []
     for (row of rows) {
@@ -330,7 +315,7 @@ router.post('/select_mvag_ehh', async (req, resp) => {
       .select('*')
       .from('vrv_ehh')
       .where(vals)
-      .orderByRaw('iid')
+      .orderBy('iid')
 
     const rowsOut = []
     for (row of rows) {
@@ -352,7 +337,7 @@ router.post('/select_mvag_fhh', async (req, resp) => {
       .select('*')
       .from('vrv_fhh')
       .where(vals)
-      .orderByRaw('iid')
+      .orderBy('iid')
 
     const rowsOut = []
     for (row of rows) {
