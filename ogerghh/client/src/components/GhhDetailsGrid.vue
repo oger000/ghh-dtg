@@ -85,11 +85,18 @@
           >
             <tbody>
               <tr>
-                <td class="text-left" style="width: 50%;">{{ props.row.ansatz_text }}</td>
-                <td class="text-left" style="width: 50%;">{{ props.row.konto_text }}</td>
+                <td class="text-left" style="width:5%">
+                  <q-btn
+                    round dense
+                    :icon="expanded.indexOf(props.row.iid) === -1 ? 'add' : 'remove'"
+                    @click="expanded.indexOf(props.row.iid) === -1 ? expanded.push(props.row.iid) : expanded.splice(expanded.indexOf(props.row.iid), 1)"
+                  />
+                </td>
+                <td class="text-left" style="width:40%">{{ props.row.ansatz_text }}</td>
+                <td class="text-left" style="width:40%">{{ props.row.konto_text }}</td>
               </tr>
-              <tr>
-                <td colspan="2">
+              <tr :hidden="expanded.indexOf(props.row.iid) === -1">
+                <td colspan="3">
                   <q-markup-table>
                     <tbody>
                       <tr>
@@ -329,6 +336,12 @@ export default defineComponent({
       tableFilter.value = 'konto: ' + JSON.stringify(val)
     } // eo kontofilter selected
 
+    // -----------------------------------------------
+    // expand collapse details
+
+    const expanded = ref([])
+
+
     // return responsive variables
     return {
       mainTitle,
@@ -350,7 +363,8 @@ export default defineComponent({
       selectKontoValue,
       selectKontoOptions,
       onSelectKontoFilter,
-      onSelectKontoUpdate
+      onSelectKontoUpdate,
+      expanded
     }
   } // eo setup
 }) // eo export default
