@@ -218,18 +218,8 @@ async function importTxt1997(config, data) {
 
       rec.ansatz_text = line.substr(110, 80)
       rec.konto_text = line.substr(190, 80)
-      if (config.va_ra === 'VA') {
-        // voranschlagswerte sind auch im RA enthalten, werden dort aber ignoriert
-        // ansonsten müsste man einen zusätzlichen VA (NVA 99 ???)mit diesen werten erstellen
-        rec.wert = parseInt(line.substr(82, 14)) / 100  // Gesamt-Voranschlag Rechnungsjahr
-      }
-      else if (config.va_ra === 'RA') {
-        rec.wert = parseInt(line.substr(68, 14)) / 100  // FIN-HH Ist Rechnungsjahr (-quartal/-monat)
-        // jahres-soll wird ignoriert, weil wir den ergebnishaushalt für vrv1997 nicht verwenden
-        // rec.wert = parseInt(line.substr(54, 14)) / 100  // ERG-HH soll Rechnungsjahr (-quartal/-monat)
-      }
-
-      // rec.wert_fj0 = line.substr()
+      rec.wert = parseInt(line.substr(68, 14)) / 100  // finanzierungshaushalt Ist Rechnungsjahr (-quartal/-monat)
+      rec.wert_fj0 = parseInt(line.substr(82, 14)) / 100  // Gesamt-Voranschlag Rechnungsjahr / voranschlagswerte sind auch im RA enthalten
       // rec.wert_fj1 = line.substr()
       // rec.wert_fj2 = line.substr()
       // rec.wert_fj3 = line.substr()

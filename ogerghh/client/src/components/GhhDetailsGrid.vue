@@ -14,19 +14,6 @@
     <div class="row q-gutter-md">
 
       <q-select
-        filled
-        clearable
-        use-input
-        v-model="selectMvagValue"
-        label="MVAG-Filter"
-        :options="selectMvagOptions"
-        @filter="onSelectMvagFilter"
-        @update:model-value="onSelectMvagUpdate"
-        style="width: 250px"
-      >
-      </q-select>
-
-      <q-select
         grid
         filled
         clearable
@@ -49,6 +36,19 @@
         :options="selectKontoOptions"
         @filter="onSelectKontoFilter"
         @update:model-value="onSelectKontoUpdate"
+        style="width: 250px"
+      >
+      </q-select>
+
+      <q-select
+        filled
+        clearable
+        use-input
+        v-model="selectMvagValue"
+        label="MVAG-Filter"
+        :options="selectMvagOptions"
+        @filter="onSelectMvagFilter"
+        @update:model-value="onSelectMvagUpdate"
         style="width: 250px"
       >
       </q-select>
@@ -88,17 +88,17 @@
                 <td class="text-left" style="width:5%">
                   <q-btn
                     round dense
-                    :icon="expanded.indexOf(props.row.iid) === -1 ? 'add' : 'remove'"
-                    @click="expanded.indexOf(props.row.iid) === -1 ? expanded.push(props.row.iid) : expanded.splice(expanded.indexOf(props.row.iid), 1)"
+                    :icon="expanded1.indexOf(props.row.iid) === -1 ? 'add' : 'remove'"
+                    @click="expanded1.indexOf(props.row.iid) === -1 ? expanded1.push(props.row.iid) : expanded1.splice(expanded1.indexOf(props.row.iid), 1)"
                   />
                 </td>
                 <td class="text-left" style="width:30%">{{ props.row.ansatz_plus_text }}</td>
                 <td class="text-left" style="width:30%">{{ props.row.konto_plus_text }}</td>
-                <td class="text-right" style="width:10%">{{ props.row.iid }}</td>
-                <td class="text-right" style="width:10%">{{ props.row.iid }}</td>
-                <td class="text-right" style="width:10%">{{ props.row.iid }}</td>
+                <td class="text-right" style="width:10%">{{ props.row.wert }}</td>
+                <td class="text-right" style="width:10%">{{ props.row.wert_vj1 }}</td>
+                <td class="text-right" style="width:10%">{{ props.row.wert_vj2 }}</td>
               </tr>
-              <tr :hidden="expanded.indexOf(props.row.iid) === -1">
+              <tr :hidden="expanded1.indexOf(props.row.iid) === -1">
                 <td colspan="6">
                   <q-markup-table>
                     <tbody>
@@ -113,21 +113,44 @@
                       </tr>
                       <tr>
                         <td class="text-left">Rechnungsabschluss</td>
-                        <td class="text-right">{{ props.row.finanzjahr }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 1 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 2 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 3 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 4 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 5 }}</td>
+                        <td class="text-right">{{ props.row.wert_ra_vj0 }}</td>
+                        <td class="text-right">{{ props.row.wert_ra_vj1 }}</td>
+                        <td class="text-right">{{ props.row.wert_ra_vj2 }}</td>
+                        <td class="text-right">{{ props.row.wert_ra_vj3 }}</td>
+                        <td class="text-right">{{ props.row.wert_ra_vj4 }}</td>
+                        <td class="text-right">{{ props.row.wert_ra_vj5 }}</td>
                       </tr>
                       <tr>
                         <td class="text-left">Voranschlag</td>
-                        <td class="text-right">{{ parseFloat(props.row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 1 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 2 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 3 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 4 }}</td>
-                        <td class="text-right">{{ props.row.finanzjahr - 5 }}</td>
+                        <td class="text-right">{{ props.row.wert_va_vj0 }}</td>
+                        <td class="text-right">{{ props.row.wert_va_vj1 }}</td>
+                        <td class="text-right">{{ props.row.wert_va_vj2 }}</td>
+                        <td class="text-right">{{ props.row.wert_va_vj3 }}</td>
+                        <td class="text-right">{{ props.row.wert_va_vj4 }}</td>
+                        <td class="text-right">{{ props.row.wert_va_vj5 }}</td>
+                      </tr>
+                    </tbody>
+                  </q-markup-table>
+                </td>
+              </tr>
+              <tr :hidden="expanded1.indexOf(props.row.iid) === -1">
+                <td colspan="6">
+                  <q-markup-table>
+                    <tbody>
+                      <tr>
+                        <td class="text-left">{{ props.row.ansatz1_plus_text }}</td>
+                        <td class="text-left">{{ props.row.konto1_plus_text }}</td>
+                        <td class="text-left">{{ props.row.mvag1_plus_text }}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">{{ props.row.ansatz2_plus_text }}</td>
+                        <td class="text-left">{{ props.row.konto2_plus_text }}</td>
+                        <td class="text-left">{{ props.row.mvag2_plus_text }}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left">{{ props.row.ansatz3_plus_text }}</td>
+                        <td class="text-left">{{ props.row.konto3_plus_text }}</td>
+                        <td class="text-left">&nbsp;</td>
                       </tr>
                     </tbody>
                   </q-markup-table>
@@ -342,7 +365,8 @@ export default defineComponent({
     // -----------------------------------------------
     // expand collapse details
 
-    const expanded = ref([])
+    const expanded1 = ref([])
+    const expanded2 = ref([])
 
 
     // return responsive variables
@@ -367,7 +391,8 @@ export default defineComponent({
       selectKontoOptions,
       onSelectKontoFilter,
       onSelectKontoUpdate,
-      expanded
+      expanded1,
+      expanded2
     }
   } // eo setup
 }) // eo export default

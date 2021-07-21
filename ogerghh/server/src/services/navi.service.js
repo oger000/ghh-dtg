@@ -83,14 +83,21 @@ router.post('/vrv_bestandteile', async (req, resp) => {
 router.post('/ehh_details', async (req, resp) => {
   const vals = req.body
   const tableName = 'ergebnishaushalt'
+  const mvagTable = 'vrv_ehh'
+  const mvagField = 'mvag_ehh'
 
+  const oriBaseFilter = Object.assign({}, vals.baseFilter)
+  for (const key of Object.keys(vals.baseFilter)) {
+    vals.baseFilter[`hh.${key}`] = vals.baseFilter[key]
+    delete vals.baseFilter[key]
+  }
   const where = knex.queryBuilder()
   where.where(vals.baseFilter)
 
   // conditional filters
   vals.filter = vals.filter || {}
   if (vals.filter.mvag) {
-    where.andWhere(knex.raw(`mvag_ehh LIKE '${vals.filter.mvag}%'`))
+    where.andWhere(knex.raw(`${mvagField} LIKE '${vals.filter.mvag}%'`))
   }
   if (vals.filter.ansatz) {
     where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
@@ -107,18 +114,68 @@ router.post('/ehh_details', async (req, resp) => {
   try {
     const rows = await query
       .select(knex.raw(`
-        iid, wert, wert_fj0, finanzjahr,
-        CONCAT(ansatz_uab, ansatz_ugl, " ", ansatz_text) AS ansatz_plus_text,
-        CONCAT(konto_grp, konto_ugl, " ", konto_text) AS konto_plus_text
+        hh.iid, wert, wert_fj0,
+        CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
+        CONCAT(konto_grp, konto_ugl, ' ', konto_text) AS konto_plus_text,
+
+        CONCAT(ansatz1.ansatz, ' ', ansatz1.name) AS ansatz1_plus_text,
+        CONCAT(ansatz2.ansatz, ' ', ansatz2.name) AS ansatz2_plus_text,
+        CONCAT(ansatz3.ansatz, ' ', ansatz3.name) AS ansatz3_plus_text,
+
+        CONCAT(konto1.konto, ' ', konto1.name) AS konto1_plus_text,
+        CONCAT(konto2.konto, ' ', konto2.name) AS konto2_plus_text,
+        CONCAT(konto3.konto, ' ', konto3.name) AS konto3_plus_text,
+
+        CONCAT(mvag1.mvag, ' ', mvag1.name) AS mvag1_plus_text,
+        CONCAT(mvag2.mvag, ' ', mvag2.name) AS mvag2_plus_text,
+
+        finanzjahr,
+        ansatz_uab, ansatz_ugl, konto_grp, konto_ugl
       `))
-      .from(tableName)
+      .from(`${tableName} AS hh`)
+      .joinRaw(`
+        LEFT OUTER JOIN vrv_ansaetze AS ansatz1 ON SUBSTRING(hh.ansatz_uab, 1, 1) = ansatz1.ansatz AND hh.vrv = ansatz1.vrv
+        LEFT OUTER JOIN vrv_ansaetze AS ansatz2 ON SUBSTRING(hh.ansatz_uab, 1, 2) = ansatz2.ansatz AND hh.vrv = ansatz2.vrv
+        LEFT OUTER JOIN vrv_ansaetze AS ansatz3 ON SUBSTRING(hh.ansatz_uab, 1, 3) = ansatz3.ansatz AND hh.vrv = ansatz3.vrv
+        LEFT OUTER JOIN vrv_konten AS konto1 ON SUBSTRING(hh.konto_grp, 1, 1) = konto1.konto AND hh.vrv = konto1.vrv
+        LEFT OUTER JOIN vrv_konten AS konto2 ON SUBSTRING(hh.konto_grp, 1, 2) = konto2.konto AND hh.vrv = konto2.vrv
+        LEFT OUTER JOIN vrv_konten AS konto3 ON SUBSTRING(hh.konto_grp, 1, 3) = konto3.konto AND hh.vrv = konto3.vrv
+        LEFT OUTER JOIN ${mvagTable} AS mvag1 ON SUBSTRING(hh.${mvagField}, 1, 3) = mvag1.mvag AND hh.vrv = mvag1.vrv
+        LEFT OUTER JOIN ${mvagTable} AS mvag2 ON SUBSTRING(hh.${mvagField}, 1, 4) = mvag2.mvag AND hh.vrv = mvag2.vrv
+      `)
       .limit(vals.limit)
       .offset(vals.offset)
 
     const total = await where
       .count('* AS total')
-      .from(tableName)
+      .from(`${tableName} AS hh`)
       .then(rows => rows[0].total)
+
+    for (const row of rows) {
+      // row.wert = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+      // row.wert_fj0 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+
+      const valueRows = await knex
+        .select('*')
+        .from(tableName)
+        .where({
+          ansatz_uab: row.ansatz_uab,
+          ansatz_ugl: row.ansatz_ugl,
+          konto_grp: row.konto_grp,
+          konto_ugl: row.konto_ugl
+        })
+        .whereRaw('finanzjahr >= :finanzjahr_begin AND finanzjahr <= :finanzjahr_end', {
+          finanzjahr_begin: oriBaseFilter.finanzjahr - 5,
+          finanzjahr_end: oriBaseFilter.finanzjahr
+        })
+
+      for (const vRow of valueRows) {
+        const toField = `${vRow.va_ra}_vj` + (oriBaseFilter.finanzjahr - vRow.finanzjahr)
+        const fromField = vRow.va_ra === 'RA' ? 'wert' : 'wert_fj0'
+        row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+      }
+
+    } // eo post prep hh rows
 
     return resp.send({ rows: rows, total: total })
   } catch(err) {
@@ -129,6 +186,125 @@ router.post('/ehh_details', async (req, resp) => {
 
 // get details for finanzierungshaushalt
 router.post('/fhh_details', async (req, resp) => {
+  const vals = req.body
+  const tableName = 'finanzierungshaushalt'
+  const mvagTable = 'vrv_fhh'
+  const mvagField = 'mvag_fhh'
+
+  const oriBaseFilter = Object.assign({}, vals.baseFilter)
+  for (const key of Object.keys(vals.baseFilter)) {
+    vals.baseFilter[`hh.${key}`] = vals.baseFilter[key]
+    delete vals.baseFilter[key]
+  }
+  const where = knex.queryBuilder()
+  where.where(vals.baseFilter)
+
+  // conditional filters
+  vals.filter = vals.filter || {}
+  if (vals.filter.mvag) {
+    where.andWhere(knex.raw(`${mvagField} LIKE '${vals.filter.mvag}%'`))
+  }
+  if (vals.filter.ansatz) {
+    where.andWhere(knex.raw(`CONCAT(ansatz_uab, ansatz_ugl) LIKE '${vals.filter.ansatz}%'`))
+  }
+  if (vals.filter.konto) {
+    where.andWhere(knex.raw(`CONCAT(konto_grp, ansatz_ugl) LIKE '${vals.filter.konto}%'`))
+  }
+  let query = where.clone()
+
+  for (const sort of vals.sort || []) {
+    query = query.orderBy(sort[0], sort[1])
+  }
+
+  try {
+    const rows = await query
+      .select(knex.raw(`
+        hh.iid, wert, wert_fj0,
+        CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
+        CONCAT(konto_grp, konto_ugl, ' ', konto_text) AS konto_plus_text,
+
+        CONCAT(ansatz1.ansatz, ' ', ansatz1.name) AS ansatz1_plus_text,
+        CONCAT(ansatz2.ansatz, ' ', ansatz2.name) AS ansatz2_plus_text,
+        CONCAT(ansatz3.ansatz, ' ', ansatz3.name) AS ansatz3_plus_text,
+
+        CONCAT(konto1.konto, ' ', konto1.name) AS konto1_plus_text,
+        CONCAT(konto2.konto, ' ', konto2.name) AS konto2_plus_text,
+        CONCAT(konto3.konto, ' ', konto3.name) AS konto3_plus_text,
+
+        CONCAT(mvag1.mvag, ' ', mvag1.name) AS mvag1_plus_text,
+        CONCAT(mvag2.mvag, ' ', mvag2.name) AS mvag2_plus_text,
+
+        finanzjahr,
+        ansatz_uab, ansatz_ugl, konto_grp, konto_ugl
+      `))
+      .from(`${tableName} AS hh`)
+      .joinRaw(`
+        LEFT OUTER JOIN vrv_ansaetze AS ansatz1 ON SUBSTRING(hh.ansatz_uab, 1, 1) = ansatz1.ansatz AND hh.vrv = ansatz1.vrv
+        LEFT OUTER JOIN vrv_ansaetze AS ansatz2 ON SUBSTRING(hh.ansatz_uab, 1, 2) = ansatz2.ansatz AND hh.vrv = ansatz2.vrv
+        LEFT OUTER JOIN vrv_ansaetze AS ansatz3 ON SUBSTRING(hh.ansatz_uab, 1, 3) = ansatz3.ansatz AND hh.vrv = ansatz3.vrv
+        LEFT OUTER JOIN vrv_konten AS konto1 ON SUBSTRING(hh.konto_grp, 1, 1) = konto1.konto AND hh.vrv = konto1.vrv
+        LEFT OUTER JOIN vrv_konten AS konto2 ON SUBSTRING(hh.konto_grp, 1, 2) = konto2.konto AND hh.vrv = konto2.vrv
+        LEFT OUTER JOIN vrv_konten AS konto3 ON SUBSTRING(hh.konto_grp, 1, 3) = konto3.konto AND hh.vrv = konto3.vrv
+        LEFT OUTER JOIN ${mvagTable} AS mvag1 ON SUBSTRING(hh.${mvagField}, 1, 3) = mvag1.mvag AND hh.vrv = mvag1.vrv
+        LEFT OUTER JOIN ${mvagTable} AS mvag2 ON SUBSTRING(hh.${mvagField}, 1, 4) = mvag2.mvag AND hh.vrv = mvag2.vrv
+      `)
+      .limit(vals.limit)
+      .offset(vals.offset)
+
+    const total = await where
+      .count('* AS total')
+      .from(`${tableName} AS hh`)
+      .then(rows => rows[0].total)
+
+    for (const row of rows) {
+      // row.wert = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+      // row.wert_fj0 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+
+      const valueRows = await knex
+        .select('*')
+        .from(tableName)
+        .where({
+          ansatz_uab: row.ansatz_uab,
+          ansatz_ugl: row.ansatz_ugl,
+          konto_grp: row.konto_grp,
+          konto_ugl: row.konto_ugl
+        })
+        .whereRaw('finanzjahr >= :finanzjahr_begin AND finanzjahr <= :finanzjahr_end', {
+          finanzjahr_begin: oriBaseFilter.finanzjahr - 5,
+          finanzjahr_end: oriBaseFilter.finanzjahr
+        })
+
+      for (const vRow of valueRows) {
+        const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (oriBaseFilter.finanzjahr - vRow.finanzjahr)
+        const fromField = vRow.va_ra === 'RA' ? 'wert' : 'wert_fj0'
+        row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+
+        if (vRow.va_ra === 'RA') {
+          row.wert = row.wert_ra_vj0
+          row.wert_vj1 = row.wert_va_vj0
+          row.wert_vj2 = row.wert_ra_vj1
+        }
+        else {
+          row.wert = row.wert_va_vj0
+          row.wert_vj1 = row.wert_va_vj1
+          row.wert_vj2 = row.wert_ra_vj2
+        }
+        //   console.log(JSON.stringify(vRow))
+        //   console.log(`${fromField} -> ${toField} = ${row[toField]}`)
+        //   console.log('----------------------')
+      }
+
+    } // eo post prep hh rows
+
+    return resp.send({ rows: rows, total: total })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of ergebnishauhalt
+
+
+// get details for finanzierungshaushalt
+router.post('/fhh_details_ALT', async (req, resp) => {
   const vals = req.body
   const tableName = 'finanzierungshaushalt'
 

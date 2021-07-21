@@ -364,8 +364,9 @@ KL;kl_name;UK;uk_name;grp;grp_name;ehh_e2;fhh_ein_e2;fhh_aus_e2;vhh_e2;quer
 ;;79;"Inanspruchnahme von Haftungen, Zuweisung an Haushaltsrücklagen";;;;;;;
 ;;;;790;"Inanspruchnahme von Haftungen";2225;;3226;;24
 ;;;;793;"Zuweisung an Zahlungsmittelreserve endfällige Darlehen";2401;;;;
-"8";"Erträge";;;794;"Zuweisung an zweckgebundene Haushaltsrücklagen";2401;;;;
+;;;;794;"Zuweisung an zweckgebundene Haushaltsrücklagen";2401;;;;
 ;;;;795;"Zuweisung an allgemeine Haushaltsrücklagen";2401;;;;
+"8";"Erträge";;;;;;;;;
 ;;"80";"Erträge aus Veräußerungen";;;;;;;
 ;;;;"800";"Veräußerungen von immateriellen Vermögenswerten";2116;3311;;;32
 ;;;;801;"Veräußerungen von Grundstücken und Grundstückseinrichtungen";2116;3312;;;30
