@@ -94,9 +94,9 @@
                 </td>
                 <td class="text-left" style="width:30%">{{ props.row.ansatz_plus_text }}</td>
                 <td class="text-left" style="width:30%">{{ props.row.konto_plus_text }}</td>
-                <td class="text-right" style="width:10%">{{ props.row.wert }}</td>
-                <td class="text-right" style="width:10%">{{ props.row.wert_vj1 }}</td>
-                <td class="text-right" style="width:10%">{{ props.row.wert_vj2 }}</td>
+                <td class="text-right" style="width:10%">{{ props.row.wert1 }}</td>
+                <td class="text-right" style="width:10%">{{ props.row.wert2 }}</td>
+                <td class="text-right" style="width:10%">{{ props.row.wert3 }}</td>
               </tr>
               <tr :hidden="expanded1.indexOf(props.row.iid) === -1">
                 <td colspan="6">
