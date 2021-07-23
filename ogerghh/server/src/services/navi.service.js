@@ -211,7 +211,9 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
       }
 
     } // eo post prep hh rows
-  // }  // eo try
+  // } catch(err) {
+  //   return err
+  // }
   return { rows, total }
 }  // eo list of ergebnishauhalt or finanzierungshaushalt details
 

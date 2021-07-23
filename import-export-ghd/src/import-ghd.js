@@ -23,10 +23,10 @@ async function fake_main() {
   let configNum = 0
   for (configRec of configRecs) {
     configNum++
-    console.log(`Verarbeite Konfigurationseintrag ${configNum}.`)
+    console.log(`Verarbeite Konfigurationseintrag ${configNum} für Datei ${configRec.file_name}.`)
 
-    if (!configRec.handle || configRec.handle == '0') {
-      console.log(`   Verarbeitung ist deaktiviert. Datensatz wird übersprungen. (${configRec.file_name})`)
+    if (!configRec.handle.trim()) {
+      console.log(`   Verarbeitung ist deaktiviert. Datensatz wird übersprungen.`)
       continue
     }
 

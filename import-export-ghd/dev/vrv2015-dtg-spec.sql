@@ -29,12 +29,13 @@ CREATE TABLE `kennsatz` (
   `va_ra` char(2) NOT NULL DEFAULT '',
   `nva` int NOT NULL DEFAULT '0',
   `vrv` char(4) NOT NULL DEFAULT '',
+  `quelle` varchar(250)  NOT NULL DEFAULT '',
 
   `finanzjahr` decimal(4,0) NOT NULL DEFAULT '0',
   `quartal` char(1) NOT NULL DEFAULT '',
   `gkz` char(5) NOT NULL DEFAULT '',
-
   `periode` char(1)  NOT NULL DEFAULT '',
+
   `gemeinde` varchar(250)  NOT NULL DEFAULT '',
   `verantwortlich` varchar(250)  NOT NULL DEFAULT '',
   `sachbearbeiter` varchar(250)  NOT NULL DEFAULT '',

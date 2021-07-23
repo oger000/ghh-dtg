@@ -70,6 +70,7 @@ async function importXml2015(config, data) {
   await db(tableName).where(ghdWhereKeys).del()
 
   Object.assign(kennsatz, ghdWhereKeys)
+  kennsatz.quelle = config.quelle
   await db(tableName).insert(kennsatz)
   console.log('   Kennsatz geschrieben.')
 
@@ -186,7 +187,7 @@ async function importTxt1997(config, data) {
         console.log(`*** ABBRUCH *** Fehlerhafte Quartalsangabe '${rec.quartal}' in Zeile ${lineNum}.`)
         process.exit(1)
       }
-
+      rec.quelle = config.quelle
       rec.gemeinde = line.substr(23, 80).trim()
       rec.verantwortlich = line.substr(103, 40).trim()
       rec.sachbearbeiter = line.substr(143, 40).trim()
@@ -219,6 +220,7 @@ async function importTxt1997(config, data) {
       rec.ansatz_text = line.substr(110, 80)
       rec.konto_text = line.substr(190, 80)
       rec.wert = parseInt(line.substr(68, 14)) / 100  // finanzierungshaushalt Ist Rechnungsjahr (-quartal/-monat)
+      rec.wert_ehh = parseInt(line.substr(54, 14)) / 100  // ergebnishaushalt Soll Rechnungsjahr (-quartal/-monat)
       rec.wert_fj0 = parseInt(line.substr(82, 14)) / 100  // Gesamt-Voranschlag Rechnungsjahr / voranschlagswerte sind auch im RA enthalten
       // rec.wert_fj1 = line.substr()
       // rec.wert_fj2 = line.substr()
@@ -491,6 +493,18 @@ async function importTxt1997(config, data) {
     }
     records[tableName].push(rec)
   }  // eo text line loop
+
+  // fake ergebnishaushalt from finanzierungshaushalt Soll
+  if (records.finanzierungshaushalt && records.finanzierungshaushalt.length > 0) {
+    records.ergebnishaushalt = []
+    for (const rec of records.finanzierungshaushalt) {
+      const wert_ehh = rec.wert_ehh
+      delete rec.wert_ehh
+      const rec_ehh = Object.assign({}, rec)
+      rec_ehh.wert = wert_ehh
+      records.ergebnishaushalt.push(rec_ehh)
+    }
+  }
 
   // prep sonstige_daten
   records.sonstige_daten = [ Object.assign(records.sonstige_daten[0], records.sonstige_daten[1]) ]
