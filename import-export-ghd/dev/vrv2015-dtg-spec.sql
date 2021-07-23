@@ -263,7 +263,6 @@ CREATE TABLE `vermoegenshaushalt` (
   `zinssatz` decimal(15,5) NOT NULL DEFAULT '0.00000',
   `refzinssatz` varchar(250) NOT NULL DEFAULT '',
   `minzinssatz` decimal(15,5) NOT NULL DEFAULT '0.00000',
-  `endstand_fj0` decimal(20,2) NOT NULL DEFAULT '0.00',
   `endstand_fj1` decimal(20,2) NOT NULL DEFAULT '0.00',
   `endstand_fj2` decimal(20,2) NOT NULL DEFAULT '0.00',
   `endstand_fj3` decimal(20,2) NOT NULL DEFAULT '0.00',

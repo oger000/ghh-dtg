@@ -235,7 +235,7 @@ async function importTxt1997(config, data) {
       rec.ansatz_ugl= line.substr(41, 3)
       // rec.konto_grp= line.substr()
       // rec.konto_ugl= line.substr()
-      // rec.sonst_ugl= line.substr()
+      rec.sonst_ugl= 'S' + satzart
       // rec.vorhabencode= line.substr()
       rec.id_vhh= line.substr(23, 15).trim()
       // rec.sektor= line.substr()
@@ -274,11 +274,11 @@ async function importTxt1997(config, data) {
       rec.zinssatz= parseInt(line.substr(190, 5)) / 1000
       rec.refzinssatz= line.substr(195, 20)
       // rec.minzinssatz= line.substr()
-      rec.endstand_fj0= parseInt(line.substr(296, 14)) / 100
-      rec.endstand_fj1= parseInt(line.substr(310, 14)) / 100
-      rec.endstand_fj2= parseInt(line.substr(324, 14)) / 100
-      rec.endstand_fj3= parseInt(line.substr(338, 14)) / 100
-      rec.endstand_fj4= parseInt(line.substr(352, 14)) / 100
+      rec.endstand_fj1= parseInt(line.substr(296, 14)) / 100
+      rec.endstand_fj2= parseInt(line.substr(310, 14)) / 100
+      rec.endstand_fj3= parseInt(line.substr(324, 14)) / 100
+      rec.endstand_fj4= parseInt(line.substr(338, 14)) / 100
+      rec.endstand_fj5= parseInt(line.substr(352, 14)) / 100
       // rec.endstand_fj5= parseInt(line.substr(, 14)) / 100
       break
 
@@ -288,7 +288,7 @@ async function importTxt1997(config, data) {
       rec.ansatz_ugl= line.substr(41, 3)
       // rec.konto_grp= line.substr()
       // rec.konto_ugl= line.substr()
-      // rec.sonst_ugl= line.substr()
+      rec.sonst_ugl= 'S' + satzart
       // rec.vorhabencode= line.substr()
       rec.id_vhh= line.substr(23, 15).trim()
       rec.sektor= line.substr(50, 2)
@@ -341,7 +341,7 @@ async function importTxt1997(config, data) {
       rec.ansatz_ugl= line.substr(41, 3)
       // rec.konto_grp= line.substr()
       // rec.konto_ugl= line.substr()
-      // rec.sonst_ugl= line.substr()
+      rec.sonst_ugl= 'S' + satzart
       // rec.vorhabencode= line.substr()
       rec.id_vhh= line.substr(23, 15).trim()
       // rec.sektor= line.substr(50, 2)

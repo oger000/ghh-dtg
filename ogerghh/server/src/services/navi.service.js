@@ -101,6 +101,17 @@ router.post('/fhh_details', async (req, resp) => {
 })  // eo list of finanzierungshaushalt
 
 
+// get details for vermoegenshaushalt
+router.post('/vhh_details', async (req, resp) => {
+  try {
+    const data = await ehh_fhh_details(req, 'vermoegenshaushalt', 'vrv_vhh', 'mvag_vhh')
+    return resp.send({ rows: data.rows, total: data.total })
+  } catch(err) {
+    return oger.sendError(resp, err)
+  }
+})  // eo list of vermoegenshaushalt
+
+
 // get details for ergebnishauhalt or finanzierungshaushalt
 async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
   const vals = req.body
@@ -136,8 +147,8 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
   // try {
     const rows = await query
       .select(knex.raw(`
-        hh.iid, wert, wert_fj0,
-        CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
+        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, ' : 'wert, wert_fj0,') +
+        `CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
         CONCAT(konto_grp, konto_ugl, ' ', konto_text) AS konto_plus_text,
 
         CONCAT(ansatz1.ansatz, ' ', ansatz1.name) AS ansatz1_plus_text,
@@ -193,9 +204,19 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
 
       for (const vRow of valueRows) {
         const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (oriBaseFilter.finanzjahr - vRow.finanzjahr)
-        const fromField = vRow.va_ra === 'RA' ? 'wert' : 'wert_fj0'
+        let fromField = ''
+        if (tableName === 'vermoegenshaushalt') {
+          fromField = 'endstand_rj'
+        }
+        else if (vRow.va_ra === 'RA') {
+          fromField = 'wert'
+        }
+        else {
+          fromField = 'wert_fj0'
+        }
         row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
       }
+
       if (row.va_ra === 'RA') {
         row.wert1 = row.wert_ra_vj0
         row.wert2 = row.wert_va_vj0
@@ -218,8 +239,8 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
 }  // eo list of ergebnishauhalt or finanzierungshaushalt details
 
 
-// get details for vermögenshaushalt
-router.post('/vhh_details', async (req, resp) => {
+// get details for vermoegenshaushalt
+router.post('/vhh_details_OBSOLETE', async (req, resp) => {
   const vals = req.body
   const tableName = 'vermoegenshaushalt'
 
