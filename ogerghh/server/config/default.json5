@@ -2,7 +2,7 @@
   ghh_navi: {
     host: "localhost",
     port: 30032,
-    public: "./public",
+    public: "./public/spa",
     knex: {
       client: "mysql2",
       connection: {
