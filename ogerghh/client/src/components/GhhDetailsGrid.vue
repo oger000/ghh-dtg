@@ -52,6 +52,16 @@
         style="width: 250px"
       >
       </q-select>
+
+      <q-input bottom-slots v-model="filterText" label="Textfilter" dense @keydown.enter.prevent="onFilterTextApply(filterText)">
+        <template v-slot:append>
+          <q-icon v-if="filterText !== ''" name="close" @click="filterText = ''" class="cursor-pointer" />
+        </template>
+        <template v-slot:after>
+          <q-btn round dense flat icon="send" @click="onFilterTextApply(filterText)" />
+        </template>
+      </q-input>
+
     </div>
 
     <q-table
@@ -227,12 +237,11 @@ export default defineComponent({
         nva: props.nva,
         vrv: props.vrv
       }
-      // alert('1: ' + JSON.stringify(selectAnsatzValue))
-      // alert('2: ' + JSON.stringify(selectAnsatzValue.value))
       requestParams.filter = {
         mvag: (selectMvagValue.value ? selectMvagValue.value.value : undefined),
         ansatz: (selectAnsatzValue.value ? selectAnsatzValue.value.value : undefined),
-        konto: (selectKontoValue.value ? selectKontoValue.value.value : undefined)
+        konto: (selectKontoValue.value ? selectKontoValue.value.value : undefined),
+        filterText: (filterText.value ? filterText.value : undefined)
       }
 
       try {
@@ -282,14 +291,13 @@ export default defineComponent({
       } // eo load opts
 
       update(() => {
-        // alert('val: ' + JSON.stringify(val)
         const needle = val.toLowerCase()
         selectMvagOptions.value = allSelectMvagOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
       })
     } // eo filter mvag selection
 
     async function onSelectMvagUpdate (val) {
-      // alert('onSelectMvagUpdate: ' + JSON.stringify(val))
+      // fake filter change
       tableFilter.value = 'mvag: ' + JSON.stringify(val)
     } // eo mvagfilter selected
 
@@ -317,14 +325,13 @@ export default defineComponent({
       } // eo load opts
 
       update(() => {
-        // alert('val: ' + JSON.stringify(val)
         const needle = val.toLowerCase()
         selectAnsatzOptions.value = allSelectAnsatzOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
       })
     } // eo filter ansatz selection
 
     async function onSelectAnsatzUpdate (val) {
-      // alert('onSelectAnsatzUpdate: ' + JSON.stringify(val))
+      // fake filter change
       tableFilter.value = 'ansatz: ' + JSON.stringify(val)
     } // eo ansatzfilter selected
 
@@ -351,14 +358,13 @@ export default defineComponent({
       } // eo load opts
 
       update(() => {
-        // alert('val: ' + JSON.stringify(val)
         const needle = val.toLowerCase()
         selectKontoOptions.value = allSelectKontoOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
       })
     } // eo filter konto selection
 
     async function onSelectKontoUpdate (val) {
-      // alert('onSelectKontoUpdate: ' + JSON.stringify(val))
+      // fake filter change
       tableFilter.value = 'konto: ' + JSON.stringify(val)
     } // eo kontofilter selected
 
@@ -369,6 +375,19 @@ export default defineComponent({
     const expanded2 = ref([])
 
 
+    // -----------------------------------------------
+    // textfilter
+
+    const filterText = ref('')
+
+    async function onFilterTextApply (val) {
+      // fake filter change
+      tableFilter.value = 'text: ' + JSON.stringify(val)
+    } // eo textfilter apply
+
+
+
+    // -----------------------------------------------
     // return responsive variables
     return {
       mainTitle,
@@ -392,7 +411,9 @@ export default defineComponent({
       onSelectKontoFilter,
       onSelectKontoUpdate,
       expanded1,
-      expanded2
+      expanded2,
+      filterText,
+      onFilterTextApply
     }
   } // eo setup
 }) // eo export default

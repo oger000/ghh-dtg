@@ -124,6 +124,9 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
   if (vals.filter.konto) {
     where.andWhere(knex.raw(`CONCAT(konto_grp, ansatz_ugl) LIKE '${vals.filter.konto}%'`))
   }
+  if (vals.filter.filterText) {
+    where.andWhere(knex.raw(`( ansatz_text LIKE '%${vals.filter.filterText}%' OR konto_text LIKE '%${vals.filter.filterText}%' )`))
+  }
   let query = where.clone()
 
   for (const sort of vals.sort || []) {
@@ -148,7 +151,7 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
         CONCAT(mvag1.mvag, ' ', mvag1.name) AS mvag1_plus_text,
         CONCAT(mvag2.mvag, ' ', mvag2.name) AS mvag2_plus_text,
 
-        finanzjahr,
+        finanzjahr, va_ra,
         ansatz_uab, ansatz_ugl, konto_grp, konto_ugl
       `))
       .from(`${tableName} AS hh`)
@@ -192,17 +195,19 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
         const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (oriBaseFilter.finanzjahr - vRow.finanzjahr)
         const fromField = vRow.va_ra === 'RA' ? 'wert' : 'wert_fj0'
         row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-
-        if (vRow.va_ra === 'RA') {
-          row.wert1 = row.wert_ra_vj0
-          row.wert2 = row.wert_va_vj0
-          row.wert3 = (parseFloat(vRow.wert_fj0) - parseFloat(vRow.wert)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-        }
-        else {
-          row.wert1 = row.wert_va_vj0
-          row.wert2 = row.wert_va_vj1
-          row.wert3 = row.wert_ra_vj2
-        }
+      }
+      if (row.va_ra === 'RA') {
+        row.wert1 = row.wert_ra_vj0
+        row.wert2 = row.wert_va_vj0
+        row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+      }
+      else if (row.va_ra === 'VA') {
+        row.wert1 = row.wert_va_vj0
+        row.wert2 = row.wert_va_vj1
+        row.wert3 = row.wert_ra_vj2
+      }
+      else {
+        throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
       }
 
     } // eo post prep hh rows
