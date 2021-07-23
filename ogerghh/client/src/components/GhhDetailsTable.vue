@@ -75,7 +75,7 @@ import { axiosError, prepPagingParams } from '../lib/ogerlib'
 
 
 export default defineComponent({
-  name: 'GhhDetails',
+  name: 'GhhDetailsTable',
 
   props: {
     gemeinde: String,
