@@ -3,15 +3,6 @@
   <head>
     <title><%= productName %></title>
 
-    <script>
-      // __webpack_public_path__ = process.env.ASSET_PATH
-      const pathParts = window.location.pathname.split('/')
-      if (pathParts[pathParts.length - 1] === 'index.html') {
-        pathParts.pop()
-      }
-      __webpack_public_path__ = pathParts.join('/')
-    </script>
-
     <meta charset="utf-8">
     <meta name="description" content="<%= productDescription %>">
     <meta name="format-detection" content="telephone=no">
