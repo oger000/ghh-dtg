@@ -2,7 +2,7 @@
   "name": "ghh-navi",
   "version": "0.0.1",
   "description": "navigate gemeindehaushaltsdatenträger",
-  "productName": "ghh-navi",
+  "productName": "ogerghh",
   "author": "oger000 <gerhard.oettl@ogersoft.at>",
   "private": true,
   "scripts": {
