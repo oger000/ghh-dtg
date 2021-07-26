@@ -6,6 +6,7 @@ const oger = require('../lib/ogerlib')
 const UserFailure = oger.UserFailure
 // const { ogerWhere, ogerSelectModify } = require('../lib/ogerKnex')
 const HttpStatus = require('http-status-codes')
+const logger = require('../lib/logger')
 
 
 // get list of gemeinden
@@ -240,7 +241,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
           // check for duplicate origins
           if (row[toField + '_origin'] === vRow.va_ra) {
             const msg = `Mehrfache Herkunft für ${toField} in Bericht ${row[toField + '_origin']} : 1) ${row[toField + '_iid']} / 2 ${vRow.iid}) `
-            console.log(msg)
+            logger.error(msg)
           }
           // remember orign and origin iid
           row[toField + '_origin'] = vRow.va_ra
