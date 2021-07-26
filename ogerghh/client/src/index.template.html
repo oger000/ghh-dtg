@@ -3,6 +3,18 @@
   <head>
     <title><%= productName %></title>
 
+    <script>
+      // __webpack_public_path__ = process.env.ASSET_PATH
+      // maybe this script is not processed because of "default-src 'self'"
+      // see https://wiki.selfhtml.org/wiki/Sicherheit/Content_Security_Policy
+      let publicPath = window.location.pathname
+      if (publicPath.endsWith('/index.html')) {
+        publicPath = publicPath.slice(0, -10)
+      }
+      __webpack_public_path__ = publicPath
+      alert('__webpack_public_path__=' + __webpack_public_path__)
+    </script>
+
     <meta charset="utf-8">
     <meta name="description" content="<%= productDescription %>">
     <meta name="format-detection" content="telephone=no">

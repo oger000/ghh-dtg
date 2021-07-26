@@ -82,7 +82,7 @@ router.post('/vrv_bestandteile', async (req, resp) => {
 // get details for ergebnishaushalt
 router.post('/ehh_details', async (req, resp) => {
   try {
-    const data = await ehh_fhh_details(req, 'ergebnishaushalt', 'vrv_ehh', 'mvag_ehh')
+    const data = await xhh_details(req, 'ergebnishaushalt', 'vrv_ehh', 'mvag_ehh')
     return resp.send({ rows: data.rows, total: data.total })
   } catch(err) {
     return oger.sendError(resp, err)
@@ -93,7 +93,7 @@ router.post('/ehh_details', async (req, resp) => {
 // get details for finanzierungshaushalt
 router.post('/fhh_details', async (req, resp) => {
   try {
-    const data = await ehh_fhh_details(req, 'finanzierungshaushalt', 'vrv_fhh', 'mvag_fhh')
+    const data = await xhh_details(req, 'finanzierungshaushalt', 'vrv_fhh', 'mvag_fhh')
     return resp.send({ rows: data.rows, total: data.total })
   } catch(err) {
     return oger.sendError(resp, err)
@@ -104,7 +104,7 @@ router.post('/fhh_details', async (req, resp) => {
 // get details for vermoegenshaushalt
 router.post('/vhh_details', async (req, resp) => {
   try {
-    const data = await ehh_fhh_details(req, 'vermoegenshaushalt', 'vrv_vhh', 'mvag_vhh')
+    const data = await xhh_details(req, 'vermoegenshaushalt', 'vrv_vhh', 'mvag_vhh')
     return resp.send({ rows: data.rows, total: data.total })
   } catch(err) {
     return oger.sendError(resp, err)
@@ -113,7 +113,7 @@ router.post('/vhh_details', async (req, resp) => {
 
 
 // get details for ergebnishauhalt or finanzierungshaushalt
-async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
+async function xhh_details(req, tableName, mvagTable, mvagField) {
   const vals = req.body
 
   const oriBaseFilter = Object.assign({}, vals.baseFilter)
@@ -147,7 +147,7 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
   // try {
     const rows = await query
       .select(knex.raw(`
-        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, ' : 'wert, wert_fj0,') +
+        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, id_vhh, ' : 'wert, wert_fj0,') +
         `CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
         CONCAT(konto_grp, konto_ugl, ' ', konto_text) AS konto_plus_text,
 
@@ -202,35 +202,66 @@ async function ehh_fhh_details(req, tableName, mvagTable, mvagField) {
           finanzjahr_end: oriBaseFilter.finanzjahr
         })
 
+      const berichtArten = ['VA', 'RA']
       for (const vRow of valueRows) {
-        const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (oriBaseFilter.finanzjahr - vRow.finanzjahr)
-        let fromField = ''
-        if (tableName === 'vermoegenshaushalt') {
-          fromField = 'endstand_rj'
+        if (berichtArten.indexOf(vRow.va_ra) === -1) {
+          berichtArten.push(vRow.va_ra)
         }
-        else if (vRow.va_ra === 'RA') {
-          fromField = 'wert'
+      }
+
+      // zuerst VA und dann RA
+      // Voranschlagswerte aus RA überschreiben solche aus VA
+      for (const berichtArt of berichtArten) {
+
+        for (const vRow of valueRows) {
+
+          if (vRow.va_ra != berichtArt) {
+            continue
+          }
+
+          // extracheck for vhh
+          if (tableName == 'vermoegenshaushalt' && vRow.id_vhh !== row.id_vhh) {
+            continue
+          }
+
+          const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
+          let fromField = ''
+          if (tableName === 'vermoegenshaushalt') {
+            fromField = 'endstand_rj'
+          }
+          else if (vRow.va_ra === 'RA') {
+            fromField = 'wert'
+          }
+          else {
+            fromField = 'wert_fj0'
+          }
+          row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+
+          // check for duplicate origins
+          if (row[toField + '_origin'] === vRow.va_ra) {
+            const msg = `Mehrfache Herkunft für ${toField} in Bericht ${row[toField + '_origin']} : 1) ${row[toField + '_iid']} / 2 ${vRow.iid}) `
+            console.log(msg)
+          }
+          // remember orign and origin iid
+          row[toField + '_origin'] = vRow.va_ra
+          row[toField + '_iid'] = vRow.iid
+        } // eo collect values for last years
+
+        if (row.va_ra === 'RA') {
+          row.wert1 = row.wert_ra_vj0
+          row.wert2 = row.wert_va_vj0
+          row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+        }
+        else if (row.va_ra === 'VA') {
+          row.wert1 = row.wert_va_vj0
+          row.wert2 = row.wert_va_vj1
+          row.wert3 = row.wert_ra_vj2
         }
         else {
-          fromField = 'wert_fj0'
+          throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
         }
-        row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-      }
 
-      if (row.va_ra === 'RA') {
-        row.wert1 = row.wert_ra_vj0
-        row.wert2 = row.wert_va_vj0
-        row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-      }
-      else if (row.va_ra === 'VA') {
-        row.wert1 = row.wert_va_vj0
-        row.wert2 = row.wert_va_vj1
-        row.wert3 = row.wert_ra_vj2
-      }
-      else {
-        throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
-      }
-
+      } // eo va/ra loop
     } // eo post prep hh rows
   // } catch(err) {
   //   return err
