@@ -257,29 +257,29 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
           row[toField + '_origin'] = vRow.va_ra
           row[toField + '_iid'] = vRow.iid
         } // eo collect values for last years
+      } // eo va/ra loop
 
-        if (tableName === 'vermoegenshaushalt') {
-          row.wert1 = parseFloat(row.endstand_vj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-          row.wert2 = parseFloat(row.endstand_rj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-          row.wert3 = (parseFloat(row.endstand_rj) - parseFloat(row.endstand_vj)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+      if (tableName === 'vermoegenshaushalt') {
+        row.wert1 = parseFloat(row.endstand_vj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+        row.wert2 = parseFloat(row.endstand_rj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+        row.wert3 = (parseFloat(row.endstand_rj) - parseFloat(row.endstand_vj)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+      }
+      else {
+        if (row.va_ra === 'RA') {
+          row.wert1 = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+          row.wert2 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+          row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+        }
+        else if (row.va_ra === 'VA') {
+          row.wert1 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+          row.wert2 = row.wert_va_vj1
+          row.wert3 = row.wert_ra_vj2
         }
         else {
-          if (row.va_ra === 'RA') {
-            row.wert1 = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-            row.wert2 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-            row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-          }
-          else if (row.va_ra === 'VA') {
-            row.wert1 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-            row.wert2 = row.wert_va_vj1
-            row.wert3 = row.wert_ra_vj2
-          }
-          else {
-            throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
-          }
+          throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
         }
+      }
 
-      } // eo va/ra loop
     } // eo post prep hh rows
   // } catch(err) {
   //   return err
