@@ -71,6 +71,7 @@ router.post('/vrv_bestandteile', async (req, resp) => {
       .select(knex.raw('iid, name AS bestandteil, dispname AS name',))
       .from('vrv_bestandteile')
       .where(vals)
+      .whereRaw('reihung >= 0')
       .orderBy('reihung')
 
     return resp.send({ rows: rows })
@@ -140,15 +141,24 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
     where.andWhere(knex.raw(`( ansatz_text LIKE '%${vals.filter.filterText}%' OR konto_text LIKE '%${vals.filter.filterText}%' )`))
   }
   let query = where.clone()
-
+  /*
   for (const sort of vals.sort || []) {
     query = query.orderBy(sort[0], sort[1])
+  }
+  */
+  if (vals.sort) {
+    if(vals.sort[0][0] === 'ansatz') {
+      query.orderByRaw('ansatz_uab, ansatz_ugl, konto_grp, konto_ugl')
+    }
+    else if (vals.sort[0][0] === 'konto') {
+      query.orderByRaw('konto_grp, konto_ugl, ansatz_uab, ansatz_ugl')
+    }
   }
 
   // try {
     const rows = await query
       .select(knex.raw(`
-        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, id_vhh, ' : 'wert, wert_fj0,') +
+        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, id_vhh AS id_xhh, ' : 'wert, wert_fj0,') +
         `CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
         CONCAT(konto_grp, konto_ugl, ' ', konto_text) AS konto_plus_text,
 
@@ -221,7 +231,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
           }
 
           // extracheck for vhh
-          if (tableName == 'vermoegenshaushalt' && vRow.id_vhh !== row.id_vhh) {
+          if (tableName == 'vermoegenshaushalt' && vRow.id_vhh !== row.id_xhh) {
             continue
           }
 
@@ -240,7 +250,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
 
           // check for duplicate origins
           if (row[toField + '_origin'] === vRow.va_ra) {
-            const msg = `Mehrfache Herkunft für ${toField} in Bericht ${row[toField + '_origin']} : 1) ${row[toField + '_iid']} / 2 ${vRow.iid}) `
+            const msg = `${tableName}: Mehrfache Herkunft für ${toField} in Bericht ${row[toField + '_origin']} : 1) ${row[toField + '_iid']} / 2 ${vRow.iid}) `
             logger.error(msg)
           }
           // remember orign and origin iid
@@ -248,18 +258,25 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
           row[toField + '_iid'] = vRow.iid
         } // eo collect values for last years
 
-        if (row.va_ra === 'RA') {
-          row.wert1 = row.wert_ra_vj0
-          row.wert2 = row.wert_va_vj0
-          row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-        }
-        else if (row.va_ra === 'VA') {
-          row.wert1 = row.wert_va_vj0
-          row.wert2 = row.wert_va_vj1
-          row.wert3 = row.wert_ra_vj2
+        if (tableName === 'vermoegenshaushalt') {
+          row.wert1 = parseFloat(row.endstand_vj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+          row.wert2 = parseFloat(row.endstand_rj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+          row.wert3 = (parseFloat(row.endstand_rj) - parseFloat(row.endstand_vj)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
         }
         else {
-          throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
+          if (row.va_ra === 'RA') {
+            row.wert1 = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+            row.wert2 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+            row.wert3 = (parseFloat(row.wert) - parseFloat(row.wert_fj0)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+          }
+          else if (row.va_ra === 'VA') {
+            row.wert1 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+            row.wert2 = row.wert_va_vj1
+            row.wert3 = row.wert_ra_vj2
+          }
+          else {
+            throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
+          }
         }
 
       } // eo va/ra loop
@@ -348,7 +365,7 @@ router.post('/select_ansatz', async (req, resp) => {
     const rowsOut = []
     for (row of rows) {
       const label = `${row.ansatz} ${row.name}` // .replaceAll(' ', '&nbsp;')
-      rowsOut.push({ label: label, value: row.ansatz})
+      rowsOut.push({ label: label, value: row.ansatz })
     }
     return resp.send({ rows: rowsOut })
   } catch(err) {
@@ -370,7 +387,7 @@ router.post('/select_konto', async (req, resp) => {
     const rowsOut = []
     for (row of rows) {
       const label = `${row.konto} ${row.name}` // .replaceAll(' ', '&nbsp;')
-      rowsOut.push({ label: label, value: row.konto})
+      rowsOut.push({ label: label, value: row.konto })
     }
     return resp.send({ rows: rowsOut })
   } catch(err) {

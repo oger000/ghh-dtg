@@ -47,31 +47,38 @@ export default {
     switch (props.bestandteil) {
       case 'ergebnishaushalt':
         columns = [
-          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: true },
-          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: true },
-          { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
-          { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+          { name: 'dummy1', label: 'x', field: '', align: 'left', required: false, sortable: false },
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false },
+          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false }
         ]
+        if (props.va_ra === 'RA') {
+          columns = columns.concat([
+            { name: 'wert1', label: 'Wert RA', field: 'wert1', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+            { name: 'wert2', label: 'Wert VA', field: 'wert2', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+            { name: 'wert3', label: 'Abweichung', field: 'wert3', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+          ])
+        }
+
         detailUrl = 'ehh_details'
         mvagUrl = 'mvag_ehh'
         break
       case 'finanzierungshaushalt':
         columns = [
-          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
-          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
-          { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
-          { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: false },
+          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: false },
+          { name: 'wert', label: 'Wert', field: 'wert', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+          { name: 'wert_fj0', label: 'Wert Folgejahr', field: 'wert_fj0', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
         ]
         detailUrl = 'fhh_details'
         mvagUrl = 'mvag_fhh'
         break
       case 'vermoegenshaushalt':
         columns = [
-          { name: 'mvag', label: 'MVAG', field: 'mvag_text', align: 'left', required: true, sortable: true },
-          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: true },
-          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: true },
-          { name: 'endstand_vj', label: 'Wert 01.01.', field: 'endstand_vj', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
-          { name: 'endstand_rj', label: 'Wert 31.12.', field: 'endstand_rj', align: 'right', sortable: true, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
+          { name: 'mvag', label: 'MVAG', field: 'mvag_text', align: 'left', required: true, sortable: false },
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_text', align: 'left', required: true, sortable: false },
+          { name: 'konto', label: 'Konto', field: 'konto_text', align: 'left', required: true, sortable: false },
+          { name: 'endstand_vj', label: 'Wert 01.01.', field: 'endstand_vj', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) },
+          { name: 'endstand_rj', label: 'Wert 31.12.', field: 'endstand_rj', align: 'right', sortable: false, format: (val) => parseFloat(val).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true }) }
         ]
         detailUrl = 'vhh_details'
         mvagUrl = 'mvag_vhh'

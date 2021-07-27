@@ -53,7 +53,7 @@
       >
       </q-select>
 
-      <q-input bottom-slots v-model="filterText" label="Textfilter" dense @keydown.enter.prevent="onFilterTextApply(filterText)">
+      <q-input bottom-slots v-model="filterText" label="Textfilter" dense @keydown.enter.prevent="onFilterTextApply(filterText)" filled>
         <template v-slot:append>
           <q-icon v-if="filterText !== ''" name="close" @click="filterText = ''" class="cursor-pointer" />
         </template>
@@ -62,10 +62,29 @@
         </template>
       </q-input>
 
+      <q-select
+        filled
+        v-model="selectSort"
+        map-options
+        label="Sortierung"
+        :options="[
+          {
+            label: 'Ansatz, Konto', value: 'ansatz'
+          },
+          {
+            label: 'Konto, Ansatz', value: 'konto'
+          }
+        ]"
+        @update:model-value="onSelectSort"
+        style="width: 200px"
+      >
+      </q-select>
+
     </div>
 
     <q-table
       grid
+      grid-header
       dense
      :rows="tableData"
      :columns="tableColumns"
@@ -160,6 +179,7 @@
                       <tr>
                         <td class="text-left">{{ props.row.ansatz3_plus_text }}</td>
                         <td class="text-left">{{ props.row.konto3_plus_text }}</td>
+                        <td class="text-left">{{ props.row.id_xhh }}</td>
                         <td class="text-left">&nbsp;</td>
                       </tr>
                     </tbody>
@@ -216,7 +236,7 @@ export default defineComponent({
     const tableFilter = ref('')
     const loading = ref(false)
     const serverPagination = ref({
-      sortBy: 'iid',
+      sortBy: '',
       descending: false,
       page: 1,
       rowsPerPage: 30,
@@ -243,6 +263,7 @@ export default defineComponent({
         konto: (selectKontoValue.value ? selectKontoValue.value.value : undefined),
         filterText: (filterText.value ? filterText.value : undefined)
       }
+      requestParams.sort = [[selectSort.value.value, 'ASC']]
 
       try {
         loading.value = true
@@ -386,6 +407,18 @@ export default defineComponent({
     } // eo textfilter apply
 
 
+    // -----------------------------------------------
+    // sort
+    const selectSort = ref('ansatz')
+
+    async function onSelectSort (val) {
+      // fake sort change via filter change
+      tableFilter.value = 'sort: ' + JSON.stringify(val)
+      // selectSort.value = val
+    } // eo textfilter apply
+
+
+
 
     // -----------------------------------------------
     // return responsive variables
@@ -413,7 +446,9 @@ export default defineComponent({
       expanded1,
       expanded2,
       filterText,
-      onFilterTextApply
+      onFilterTextApply,
+      selectSort,
+      onSelectSort
     }
   } // eo setup
 }) // eo export default
