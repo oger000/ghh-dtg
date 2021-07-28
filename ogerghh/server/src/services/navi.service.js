@@ -118,7 +118,6 @@ router.post('/vhh_details', async (req, resp) => {
 async function xhh_details(req, tableName, mvagTable, mvagField) {
   const vals = req.body
 
-  const oriBaseFilter = Object.assign({}, vals.baseFilter)
   for (const key of Object.keys(vals.baseFilter)) {
     vals.baseFilter[`hh.${key}`] = vals.baseFilter[key]
     delete vals.baseFilter[key]
@@ -199,65 +198,48 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
       // row.wert = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
       // row.wert_fj0 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
 
+      const valuesWhere = {
+        ansatz_uab: row.ansatz_uab,
+        ansatz_ugl: row.ansatz_ugl,
+        konto_grp: row.konto_grp,
+        konto_ugl: row.konto_ugl,
+      }
+      valuesWhere[mvagField] = row[mvagField]
+      if (tableName === 'vermoegenshaushalt') {
+        valuesWhere.id_vhh = row.id_xhh
+      }
+
       const valueRows = await knex
         .select('*')
         .from(tableName)
-        .where({
-          ansatz_uab: row.ansatz_uab,
-          ansatz_ugl: row.ansatz_ugl,
-          konto_grp: row.konto_grp,
-          konto_ugl: row.konto_ugl
-        })
+        .where(valuesWhere)
         .whereRaw('finanzjahr >= :finanzjahr_begin AND finanzjahr <= :finanzjahr_end', {
-          finanzjahr_begin: oriBaseFilter.finanzjahr - 5,
-          finanzjahr_end: oriBaseFilter.finanzjahr
+          finanzjahr_begin: row.finanzjahr - 5,
+          finanzjahr_end: row.finanzjahr
         })
 
-      // heuristic selection ;-)
       const values = {}
       for (const vRow of valueRows) {
         values[vRow.finanzjahr] = values[vRow.finanzjahr] ? values[vRow.finanzjahr] : {}
         values[vRow.finanzjahr][vRow.va_ra] = values[vRow.finanzjahr][vRow.va_ra] ? values[vRow.finanzjahr][vRow.va_ra] : []
         values[vRow.finanzjahr][vRow.va_ra].push(vRow)
       }
+
       for (const finanzjahr in values) {
         for (const va_ra in values[finanzjahr]) {
+
           const vRows = values[finanzjahr][va_ra]
-          let loopCount = 0
-          while (vRows.length > 1) {
-            if (++loopCount > 50) {
-              let msg = `${loopCount} Mehrfacheinträge ${tableName}/${finanzjahr}/${va_ra} zu iid=${row.iid}: `
-              for (const vRow of vRows) {
-                msg += `${vRow.iid}, `
-              }
-              logger.error(msg)
-              values[finanzjahr][va_ra] = [ vRows[0] ]
-              break
+          if (vRows.length > 1) {
+            let msg = `${vRows.length} Mehrfacheinträge ${tableName}/${finanzjahr}/${va_ra} zu iid=${row.iid}: `
+            for (const vRow of vRows) {
+              msg += `${vRow.iid}, `
             }
-            let index = -1
-            for (const vRow in vRows) {
-              index++
-              if (vRow[mvagField] !== row.mvag_xhh) {
-                values[finanzjahr][va_ra].splice(index, 1)
-                break
-              }
-              if (tableName === 'vermoegenshaushalt') {
-                if (vRow.id_vhh !== row.id_xhh) {
-                  values[finanzjahr][va_ra].splice(index, 1)
-                  break
-                }
-              }
-            } //eo finanzjahr/va_ra array
-          } // eo while loop
-        } // eo remove loop / va_ra
-      } // eo remove loop / finanzjahr
+            logger.error(msg)
+            values[finanzjahr][va_ra] = [ vRows[0] ]
+            values[finanzjahr][va_ra][0].valueCount = true
+          }
 
-      for (const finanzjahr in values) {
-        for (const va_ra in values[finanzjahr]) {
-
-          const vRows = values[finanzjahr][va_ra]
           for (const vRow of vRows) {
-
             const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
             let fromField = ''
             if (tableName === 'vermoegenshaushalt') {
@@ -269,8 +251,11 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
             else {
               fromField = 'wert_fj0'
             }
-            row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-
+            if (vRow.valueCount) {
+              row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+            } else {
+              row[toField] = `${valueCount} Einträge`
+            }
           } // eo vRows
         } // loop / va_ra
       } // loop / finanzjahr
