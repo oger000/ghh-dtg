@@ -173,7 +173,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
         CONCAT(mvag1.mvag, ' ', mvag1.name) AS mvag1_plus_text,
         CONCAT(mvag2.mvag, ' ', mvag2.name) AS mvag2_plus_text,
 
-        finanzjahr, va_ra,
+        finanzjahr, va_ra, hh.${mvagField} AS mvag_xhh,
         ansatz_uab, ansatz_ugl, konto_grp, konto_ugl
       `))
       .from(`${tableName} AS hh`)
@@ -213,58 +213,74 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
           finanzjahr_end: oriBaseFilter.finanzjahr
         })
 
-      const berichtArten = ['VA', 'RA']
+      // heuristic selection ;-)
+      const values = {}
       for (const vRow of valueRows) {
-        if (berichtArten.indexOf(vRow.va_ra) === -1) {
-          berichtArten.push(vRow.va_ra)
-        }
+        values[vRow.finanzjahr] = values[vRow.finanzjahr] ? values[vRow.finanzjahr] : {}
+        values[vRow.finanzjahr][vRow.va_ra] = values[vRow.finanzjahr][vRow.va_ra] ? values[vRow.finanzjahr][vRow.va_ra] : []
+        values[vRow.finanzjahr][vRow.va_ra].push(vRow)
       }
+      for (const finanzjahr in values) {
+        for (const va_ra in values[finanzjahr]) {
+          const vRows = values[finanzjahr][va_ra]
+          let loopCount = 0
+          while (vRows.length > 1) {
+            if (++loopCount > 50) {
+              let msg = `${loopCount} Mehrfacheinträge ${tableName}/${finanzjahr}/${va_ra} zu iid=${row.iid}: `
+              for (const vRow of vRows) {
+                msg += `${vRow.iid}, `
+              }
+              logger.error(msg)
+              values[finanzjahr][va_ra] = [ vRows[0] ]
+              break
+            }
+            let index = -1
+            for (const vRow in vRows) {
+              index++
+              if (vRow[mvagField] !== row.mvag_xhh) {
+                values[finanzjahr][va_ra].splice(index, 1)
+                break
+              }
+              if (tableName === 'vermoegenshaushalt') {
+                if (vRow.id_vhh !== row.id_xhh) {
+                  values[finanzjahr][va_ra].splice(index, 1)
+                  break
+                }
+              }
+            } //eo finanzjahr/va_ra array
+          } // eo while loop
+        } // eo remove loop / va_ra
+      } // eo remove loop / finanzjahr
 
-      // zuerst VA und dann RA
-      // Voranschlagswerte aus RA überschreiben solche aus VA
-      for (const berichtArt of berichtArten) {
+      for (const finanzjahr in values) {
+        for (const va_ra in values[finanzjahr]) {
 
-        for (const vRow of valueRows) {
+          const vRows = values[finanzjahr][va_ra]
+          for (const vRow of vRows) {
 
-          if (vRow.va_ra != berichtArt) {
-            continue
-          }
+            const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
+            let fromField = ''
+            if (tableName === 'vermoegenshaushalt') {
+              fromField = 'endstand_rj'
+            }
+            else if (vRow.va_ra === 'RA') {
+              fromField = 'wert'
+            }
+            else {
+              fromField = 'wert_fj0'
+            }
+            row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
 
-          // extracheck for vhh
-          if (tableName == 'vermoegenshaushalt' && vRow.id_vhh !== row.id_xhh) {
-            continue
-          }
-
-          const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
-          let fromField = ''
-          if (tableName === 'vermoegenshaushalt') {
-            fromField = 'endstand_rj'
-          }
-          else if (vRow.va_ra === 'RA') {
-            fromField = 'wert'
-          }
-          else {
-            fromField = 'wert_fj0'
-          }
-          row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
-
-          // check for duplicate origins
-          if (row[toField + '_origin'] === vRow.va_ra) {
-            const msg = `${tableName}: Mehrfache Herkunft für ${toField} in Bericht ${row[toField + '_origin']} : 1) ${row[toField + '_iid']} / 2 ${vRow.iid}) `
-            logger.error(msg)
-          }
-          // remember orign and origin iid
-          row[toField + '_origin'] = vRow.va_ra
-          row[toField + '_iid'] = vRow.iid
-        } // eo collect values for last years
-      } // eo va/ra loop
+          } // eo vRows
+        } // loop / va_ra
+      } // loop / finanzjahr
 
       if (tableName === 'vermoegenshaushalt') {
         row.wert1 = parseFloat(row.endstand_vj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
         row.wert2 = parseFloat(row.endstand_rj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
         row.wert3 = (parseFloat(row.endstand_rj) - parseFloat(row.endstand_vj)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
       }
-      else {
+      else { // ergebnishauhalt und finanzierungshaushalt
         if (row.va_ra === 'RA') {
           row.wert1 = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
           row.wert2 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
