@@ -49,7 +49,7 @@ module.exports = configure(function (ctx) {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // publicPath: '/gemeindehaushalt',
       // publicPath: 'auto',
-      publicPath: '',
+      publicPath: ctx.dev ? '' : '/gemeindehaushalt',
 
       // transpile: false,
 
