@@ -47,7 +47,7 @@ export default {
     switch (props.bestandteil) {
       case 'ergebnishaushalt':
         columns = [
-          { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false, style: 'width:5%' },
+          { name: 'dummy1', label: '[+]', field: '', align: 'left', required: false, sortable: false, style: 'width:5%' },
           { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false, style: 'width:30%' },
           { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false, style: 'width:30%' },
           { name: 'verguetung', label: 'Verg', field: 'verguetung_text', align: 'center', required: true, sortable: false, style: 'width:5%' }
@@ -70,7 +70,7 @@ export default {
         break
       case 'finanzierungshaushalt':
         columns = [
-          { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false },
+          { name: 'dummy1', label: '[+]', field: '', align: 'left', required: false, sortable: false },
           { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false },
           { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false },
           { name: 'verguetung', label: 'Verg', field: 'verguetung_text', align: 'center', required: true, sortable: false }
@@ -93,7 +93,7 @@ export default {
         break
       case 'vermoegenshaushalt':
         columns = [
-          { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false },
+          { name: 'dummy1', label: '[+]', field: '', align: 'left', required: false, sortable: false },
           { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false },
           { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false },
           { name: 'verguetung', label: '', field: 'verguetung_text', align: 'center', required: true, sortable: false },
