@@ -123,6 +123,7 @@
                 </td>
                 <td class="text-left" style="width:30%">{{ props.row.ansatz_plus_text }}</td>
                 <td class="text-left" style="width:30%">{{ props.row.konto_plus_text }}</td>
+                <td class="text-center" style="width:5%">{{ props.row.verguetung_text }}</td>
                 <td class="text-right" style="width:10%">{{ props.row.wert1 }}</td>
                 <td class="text-right" style="width:10%">{{ props.row.wert2 }}</td>
                 <td class="text-right" style="width:10%">{{ props.row.wert3 }}</td>

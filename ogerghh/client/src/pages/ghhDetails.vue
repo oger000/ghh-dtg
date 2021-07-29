@@ -47,21 +47,22 @@ export default {
     switch (props.bestandteil) {
       case 'ergebnishaushalt':
         columns = [
-          { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false },
-          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false },
-          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false }
+          { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false, style: 'width:5%' },
+          { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false, style: 'width:30%' },
+          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false, style: 'width:30%' },
+          { name: 'verguetung', label: 'Verg', field: 'verguetung_text', align: 'center', required: true, sortable: false, style: 'width:5%' }
         ]
         if (props.va_ra === 'VA') {
           columns = columns.concat([
-            { name: 'wert1', label: `Voranschlag ${props.finanzjahr}`, field: 'wert1', align: 'right', sortable: false },
-            { name: 'wert2', label: `Voranschlag ${props.finanzjahr - 1}`, field: 'wert2', align: 'right', sortable: false },
-            { name: 'wert3', label: `Abschluss ${props.finanzjahr - 2}`, field: 'wert3', align: 'right', sortable: false }
+            { name: 'wert1', label: `Voranschlag ${props.finanzjahr}`, field: 'wert1', align: 'right', sortable: false, style: 'width:10%' },
+            { name: 'wert2', label: `Voranschlag ${props.finanzjahr - 1}`, field: 'wert2', align: 'right', sortable: false, style: 'width:10%' },
+            { name: 'wert3', label: `Abschluss ${props.finanzjahr - 2}`, field: 'wert3', align: 'right', sortable: false, style: 'width:10%' }
           ])
         } else if (props.va_ra === 'RA') {
           columns = columns.concat([
-            { name: 'wert1', label: `Abschluss ${props.finanzjahr}`, field: 'wert1', align: 'right', sortable: false },
-            { name: 'wert2', label: `Voranschlag ${props.finanzjahr}`, align: 'right', sortable: false },
-            { name: 'wert3', label: 'Abweichung', field: 'wert3', align: 'right', sortable: false }
+            { name: 'wert1', label: `Abschluss ${props.finanzjahr}`, field: 'wert1', align: 'right', sortable: false, style: 'width:10%' },
+            { name: 'wert2', label: `Voranschlag ${props.finanzjahr}`, align: 'right', sortable: false, style: 'width:10%' },
+            { name: 'wert3', label: 'Abweichung', field: 'wert3', align: 'right', sortable: false, style: 'width:10%' }
           ])
         }
         detailUrl = 'ehh_details'
@@ -71,7 +72,8 @@ export default {
         columns = [
           { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false },
           { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false },
-          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false }
+          { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false },
+          { name: 'verguetung', label: 'Verg', field: 'verguetung_text', align: 'center', required: true, sortable: false }
         ]
         if (props.va_ra === 'VA') {
           columns = columns.concat([
@@ -94,6 +96,7 @@ export default {
           { name: 'dummy1', label: '[x]', field: '', align: 'left', required: false, sortable: false },
           { name: 'ansatz', label: 'Ansatz', field: 'ansatz_plus_text', align: 'left', required: true, sortable: false },
           { name: 'konto', label: 'Konto', field: 'konto_plus_text', align: 'left', required: true, sortable: false },
+          { name: 'verguetung', label: '', field: 'verguetung_text', align: 'center', required: true, sortable: false },
           { name: 'wert1', label: `Wert 01.01.${props.finanzjahr}`, field: 'wert1', align: 'right', sortable: false },
           { name: 'wert2', label: `Wert 31.12.${props.finanzjahr}`, field: 'wert2', align: 'right', sortable: false },
           { name: 'wert3', label: 'Veränderung', field: 'wert3', align: 'right', sortable: false }

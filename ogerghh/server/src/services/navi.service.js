@@ -89,7 +89,7 @@ router.post('/ehh_details', async (req, resp) => {
   } catch(err) {
     return oger.sendError(resp, err)
   }
-})  // eo list of ergebnishauhalt
+})  // eo list of ergebnishaushalt
 
 
 // get details for finanzierungshaushalt
@@ -114,7 +114,7 @@ router.post('/vhh_details', async (req, resp) => {
 })  // eo list of vermoegenshaushalt
 
 
-// get details for ergebnishauhalt or finanzierungshaushalt
+// get details for ergebnishaushalt or finanzierungshaushalt
 async function xhh_details(req, tableName, mvagTable, mvagField) {
   const vals = req.body
 
@@ -157,7 +157,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
   // try {
     const rows = await query
       .select(knex.raw(`
-        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, id_vhh AS id_xhh, ' : 'wert, wert_fj0,') +
+        hh.iid, ` + (tableName === 'vermoegenshaushalt' ? 'endstand_vj, endstand_rj, id_vhh AS id_xhh, ' : 'wert, wert_fj0, verguetung,') +
         `CONCAT(ansatz_uab, ansatz_ugl, ' ', ansatz_text) AS ansatz_plus_text,
         CONCAT(konto_grp, konto_ugl, ' ', konto_text) AS konto_plus_text,
 
@@ -172,7 +172,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
         CONCAT(mvag1.mvag, ' ', mvag1.name) AS mvag1_plus_text,
         CONCAT(mvag2.mvag, ' ', mvag2.name) AS mvag2_plus_text,
 
-        finanzjahr, va_ra, hh.${mvagField} AS mvag_xhh,
+        finanzjahr, va_ra, hh.${mvagField} AS mvag_xhh, vorhabencode,
         ansatz_uab, ansatz_ugl, konto_grp, konto_ugl
       `))
       .from(`${tableName} AS hh`)
@@ -203,10 +203,14 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
         ansatz_ugl: row.ansatz_ugl,
         konto_grp: row.konto_grp,
         konto_ugl: row.konto_ugl,
+        vorhabencode: row.vorhabencode   // nur wegen Mehrfacheinträgen ???
       }
-      valuesWhere[mvagField] = row[mvagField]
+      valuesWhere[mvagField] = row.mvag_xhh   // nur wegen Mehrfacheinträgen !!!
       if (tableName === 'vermoegenshaushalt') {
-        valuesWhere.id_vhh = row.id_xhh
+        valuesWhere.id_vhh = row.id_xhh   // nur wegen Mehrfacheinträgen ???
+      }
+      else {
+        valuesWhere.verguetung = row.verguetung   // nur wegen Mehrfacheinträgen ???
       }
 
       const valueRows = await knex
@@ -225,6 +229,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
         values[vRow.finanzjahr][vRow.va_ra].push(vRow)
       }
 
+      // prep vergangenheitswerte
       for (const finanzjahr in values) {
         for (const va_ra in values[finanzjahr]) {
 
@@ -235,11 +240,13 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
               msg += `${vRow.iid}, `
             }
             logger.error(msg)
-            values[finanzjahr][va_ra] = [ vRows[0] ]
-            values[finanzjahr][va_ra][0].valueCount = true
+            const vRow = vRows[0]
+            vRow.valueCount = vRows.length
+            vRows = [ vRow ]
           }
 
           for (const vRow of vRows) {
+            vRow.valueCount = vRow.valueCount ? vRow.valueCount : vRows.length   // set length if not multucount
             const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
             let fromField = ''
             if (tableName === 'vermoegenshaushalt') {
@@ -254,18 +261,37 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
             if (vRow.valueCount) {
               row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
             } else {
-              row[toField] = `${valueCount} Einträge`
+              row[toField] = `${vRow.valueCount} Einträge`
             }
           } // eo vRows
         } // loop / va_ra
-      } // loop / finanzjahr
+      } // loop / finanzjahr (vergangenheitswerte)
+
+      // verfeinern der vergangenheitswerte
+      for (const finanzjahr in values) {
+        for (const va_ra in values[finanzjahr]) {
+          const vRows = values[finanzjahr][va_ra]
+          for (const vRow of vRows) {
+            const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
+            if (tableName === 'vermoegenshaushalt' && va_ra === 'VA') {
+              row[toField] = `(${row[toField]})`
+            }
+            if (tableName !== 'vermoegenshaushalt' && va_ra === 'RA' && vRow.valueCount == 1) {
+              const toFieldVa = `wert_va_vj` + (row.finanzjahr - vRow.finanzjahr)
+              row[toFieldVa] = parseFloat(vRow.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+            }
+          } // eo vRows
+        } // loop / va_ra
+      } // loop / finanzjahr (verfeinern vergangenheitswerte)
+
 
       if (tableName === 'vermoegenshaushalt') {
         row.wert1 = parseFloat(row.endstand_vj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
         row.wert2 = parseFloat(row.endstand_rj).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
         row.wert3 = (parseFloat(row.endstand_rj) - parseFloat(row.endstand_vj)).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+        row.verguetung_text = ''
       }
-      else { // ergebnishauhalt und finanzierungshaushalt
+      else { // ergebnishaushalt und finanzierungshaushalt
         if (row.va_ra === 'RA') {
           row.wert1 = parseFloat(row.wert).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
           row.wert2 = parseFloat(row.wert_fj0).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
@@ -279,6 +305,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
         else {
           throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
         }
+        row.verguetung_text = row.verguetung == 0 ? 'Nein' : 'Ja'
       }
 
     } // eo post prep hh rows
@@ -286,7 +313,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
   //   return err
   // }
   return { rows, total }
-}  // eo list of ergebnishauhalt or finanzierungshaushalt details
+}  // eo list of ergebnishaushalt or finanzierungshaushalt details
 
 
 // get details for vermoegenshaushalt
