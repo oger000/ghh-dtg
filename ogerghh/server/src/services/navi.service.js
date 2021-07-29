@@ -242,7 +242,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
             logger.error(msg)
             const vRow = vRows[0]
             vRow.valueCount = vRows.length
-            vRows = [ vRow ]
+            vRows.splice(0, vRows.length).push(vRow)
           }
 
           for (const vRow of vRows) {
