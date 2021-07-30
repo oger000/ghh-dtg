@@ -224,16 +224,32 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
 
       const values = {}
       for (const vRow of valueRows) {
-        values[vRow.finanzjahr] = values[vRow.finanzjahr] ? values[vRow.finanzjahr] : {}
-        values[vRow.finanzjahr][vRow.va_ra] = values[vRow.finanzjahr][vRow.va_ra] ? values[vRow.finanzjahr][vRow.va_ra] : []
+        values[vRow.finanzjahr] = values[vRow.finanzjahr] || {}
+        values[vRow.finanzjahr][vRow.va_ra] = values[vRow.finanzjahr][vRow.va_ra] || []
         values[vRow.finanzjahr][vRow.va_ra].push(vRow)
       }
+//logger.error(JSON.stringify(values))
 
       // prep vergangenheitswerte
       for (const finanzjahr in values) {
         for (const va_ra in values[finanzjahr]) {
 
           const vRows = values[finanzjahr][va_ra]
+          // do some heuristic
+          // if we meet the "own" iid this is always correct
+          if (vRows.length > 1) {
+            if (finanzjahr === row.finanzjahr && va_ra === row.va_ra) {
+              for (const vRow of vRows) {
+                if (vRow.iid === row.iid) {
+                  vRows.splice(0, vRows.length)
+                  vRows.push(vRow)
+                  vRow.valueCount = vRows.length  // should be 1
+                  break
+                }
+              }
+            }
+          }
+          // handle mehrfacheinträge, if heuristic not successful
           if (vRows.length > 1) {
             let msg = `${vRows.length} Mehrfacheinträge ${tableName}/${finanzjahr}/${va_ra} zu iid=${row.iid}: `
             for (const vRow of vRows) {
@@ -242,11 +258,13 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
             logger.error(msg)
             const vRow = vRows[0]
             vRow.valueCount = vRows.length
-            vRows.splice(0, vRows.length).push(vRow)
+            vRows.splice(0, vRows.length)
+            vRows.push(vRow)
           }
 
+          // get values for old years
           for (const vRow of vRows) {
-            vRow.valueCount = vRow.valueCount ? vRow.valueCount : vRows.length   // set length if not multucount
+            vRow.valueCount = vRow.valueCount || vRows.length   // set length if not multucount - should be 1 at this point
             const toField = `wert_${ vRow.va_ra.toLowerCase() }_vj` + (row.finanzjahr - vRow.finanzjahr)
             let fromField = ''
             if (tableName === 'vermoegenshaushalt') {
@@ -258,11 +276,16 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
             else {
               fromField = 'wert_fj0'
             }
-            if (vRow.valueCount) {
-              row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+            if (vRow.valueCount > 1) {
+              row[toField] = `#${vRow.valueCount} Einträge`
             } else {
-              row[toField] = `${vRow.valueCount} Einträge`
+              row[toField] = parseFloat(vRow[fromField]).toLocaleString('de-DE', { minimumFractionDigits: 2, useGrouping: true })
+              if (vRow.heuristic) {
+                row[toField] = `?${row[toField]}?`
+              }
             }
+
+
           } // eo vRows
         } // loop / va_ra
       } // loop / finanzjahr (vergangenheitswerte)
@@ -305,7 +328,7 @@ async function xhh_details(req, tableName, mvagTable, mvagField) {
         else {
           throw new Error(`Unbekannte VA/RA Kennung '${row.va_ra}'.`)
         }
-        row.verguetung_text = row.verguetung == 0 ? 'Nein' : 'Ja'
+        row.verguetung_text = row.verguetung == 0 ? 'N' : 'J'
       }
 
     } // eo post prep hh rows

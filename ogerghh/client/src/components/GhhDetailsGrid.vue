@@ -94,6 +94,21 @@
      @request="fetchRowsAndTotal"
      binary-state-sort
     >
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th class="text-center" style="width:5%">
+            {{ props.cols[0].label }}
+          </q-th>
+          <q-th class="text-left" style="width:30%">{{ props.cols[1].label }}</q-th>
+          <q-th class="text-left" style="width:30%">{{ props.cols[2].label }}</q-th>
+          <q-th class="text-center" style="width:5%">{{ props.cols[3].label }}</q-th>
+          <q-th class="text-right" style="width:10%">{{ props.cols[4].label }}</q-th>
+          <q-th class="text-right" style="width:10%">{{ props.cols[5].label }}</q-th>
+          <q-th class="text-right" style="width:10%">{{ props.cols[6].label }}</q-th>
+        </q-tr>
+      </template>
+
       <template v-slot:item="props">
         <div class="q-pa-xs col-xs-12 col-sm-12col-md-12">
           <!--
