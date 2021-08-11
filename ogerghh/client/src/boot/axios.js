@@ -9,7 +9,8 @@ import { getUrlBase } from '../lib/ogerlib'
 // "export default () => {}" function below (which runs individually
 // for each client)
 // const api = axios.create({ baseURL: getUrlBase() })
-const api = axios.create({ baseURL: getUrlBase(), timeout: 2500 })
+// const api = axios.create({ baseURL: getUrlBase(), timeout: 2500 })
+const api = axios.create({ baseURL: getUrlBase(), timeout: 5000 })
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
