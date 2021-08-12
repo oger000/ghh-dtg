@@ -70,7 +70,7 @@
 <script>
 import { ref, onMounted, defineComponent } from 'vue'
 // import { Dialog } from 'quasar'
-import api from '../lib/axios'
+import { api } from '../boot/axios'
 import { axiosError, prepPagingParams } from '../lib/ogerlib'
 
 

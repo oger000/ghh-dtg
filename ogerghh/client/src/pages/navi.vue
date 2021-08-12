@@ -15,7 +15,7 @@
 <script>
 import { ref } from 'vue'
 import { Dialog } from 'quasar'
-import api from '../lib/axios'
+import { api } from '../boot/axios'
 import { axiosError } from '../lib/ogerlib'
 import { useRouter } from 'vue-router'
 
